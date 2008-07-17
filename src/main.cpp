@@ -7,5 +7,6 @@ int main( int argc, char *argv[] )
 		std::cout<<"Could not init SDL:"<<SDL_GetError()<<"\n";
 		exit(1);
 	}	
+	SDL_Quit();
 	return 0;
 }
