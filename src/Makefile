@@ -15,5 +15,5 @@ test: main.o
 main.o: main.cpp
 	$(CC) -c $? $(CFLAGS) $(INCLUDES)
 
-clean: all
-	rm -f $(TARGETS)
+clean:
+	rm -f $(TARGETS) *.o
