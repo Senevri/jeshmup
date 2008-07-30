@@ -1,0 +1,75 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXFileReference section */
+		444B64480E331A7E009576AC /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		444B64360E3319F4009576AC = {
+			isa = PBXGroup;
+			children = (
+				444B64470E331A4A009576AC /* Common */,
+			);
+			sourceTree = "<group>";
+		};
+		444B64470E331A4A009576AC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				444B64480E331A7E009576AC /* main.cpp */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		444B64380E3319F4009576AC /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 444B643B0E3319F4009576AC /* Build configuration list for PBXProject "jeshmup" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 0;
+			mainGroup = 444B64360E3319F4009576AC;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		444B64390E3319F4009576AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		444B643A0E3319F4009576AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		444B643B0E3319F4009576AC /* Build configuration list for PBXProject "jeshmup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				444B64390E3319F4009576AC /* Debug */,
+				444B643A0E3319F4009576AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 444B64380E3319F4009576AC /* Project object */;
+}
