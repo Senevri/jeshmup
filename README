@@ -1,0 +1,21 @@
+JESHMUP: Jarin ja Esan Shoot 'Em UP!
+
+To compile, you need UnitTest++ and SDL (Simple Directmedia Library).
+
+FIXME:
+You shouldn't need UnitTest++ to compile the Release version, though...
+
+
+UnitTest++
+----------
+Get it from
+
+	http://unittest.cpp.sourceforge.net 
+
+Simple Directmedia Library
+--------------------------
+Get it from
+
+	http://www.libsdl.org
+
+That should do for right now, okyes?
