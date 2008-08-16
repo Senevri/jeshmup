@@ -8,7 +8,8 @@ BUILD:=debug
 
 CFLAGS:= -g -Wall
 INCLUDES:=-I$(SDL) -I$(UNITTEST)/src
-LIBS:=-lSDL -L$(UNITTEST)/libUnitTest++.a
+LIBS:=-lSDL -lUnitTest++
+LIBDIRS:=-L$(UNITTEST)
 DEFS:=
 bindir:=../bin/$(BUILD)
 
@@ -26,7 +27,7 @@ all: test
 
 test: main.o
 	-mkdir -p $(bindir)
-	$(CC) -o $(bindir)/$@ $? $(LIBS)
+	$(CC) -o $(bindir)/$@ $? $(LIBS) $(LIBDIRS)
 
 main.o: main.cpp
 	$(CC) -c $? $(CFLAGS) $(DEFS) $(INCLUDES)
