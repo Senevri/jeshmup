@@ -10,6 +10,7 @@
 		002F39FA09D0881F00EBEB88 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
 		002F3A0009D0884600EBEB88 /* SDL.framework in Copy Frameworks into .app bundle */ = {isa = PBXBuildFile; fileRef = 002F39F909D0881F00EBEB88 /* SDL.framework */; };
 		002F3A2E09D0888800EBEB88 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 002F3A2C09D0888800EBEB88 /* SDLMain.m */; };
+		445293680E5B61B200BA03DA /* 3dsLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 445293670E5B61B200BA03DA /* 3dsLoader.cpp */; };
 		44CCB3E80E569B5800868AE7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44CCB3E70E569B5800868AE7 /* main.cpp */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -38,6 +39,9 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* jeshmup_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jeshmup_Prefix.pch; path = osx/jeshmup_Prefix.pch; sourceTree = "<group>"; };
+		445293660E5B61B200BA03DA /* 3dsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 3dsLoader.h; path = src/util/3dsLoader.h; sourceTree = "<group>"; };
+		445293670E5B61B200BA03DA /* 3dsLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = 3dsLoader.cpp; path = src/util/3dsLoader.cpp; sourceTree = "<group>"; };
+		4464A96F0E9A78F300ECFAA5 /* 3dsFileFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = 3dsFileFormat.h; path = src/util/3dsFileFormat.h; sourceTree = "<group>"; };
 		44CCB3E70E569B5800868AE7 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* jeshmup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jeshmup.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +111,7 @@
 		29B97315FDCFA39411CA2CEA /* src */ = {
 			isa = PBXGroup;
 			children = (
+				445293650E5B617500BA03DA /* util */,
 				44CCB3E70E569B5800868AE7 /* main.cpp */,
 			);
 			name = src;
@@ -128,6 +133,16 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		445293650E5B617500BA03DA /* util */ = {
+			isa = PBXGroup;
+			children = (
+				445293660E5B61B200BA03DA /* 3dsLoader.h */,
+				445293670E5B61B200BA03DA /* 3dsLoader.cpp */,
+				4464A96F0E9A78F300ECFAA5 /* 3dsFileFormat.h */,
+			);
+			name = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +202,7 @@
 			files = (
 				002F3A2E09D0888800EBEB88 /* SDLMain.m in Sources */,
 				44CCB3E80E569B5800868AE7 /* main.cpp in Sources */,
+				445293680E5B61B200BA03DA /* 3dsLoader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
