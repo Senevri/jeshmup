@@ -1,5 +1,5 @@
 #pragma once 
-#include "sdl.h"
+#include "SDL.h"
 
 class CMyGame{
 
@@ -10,7 +10,6 @@ public:
 
 	//methods
 	void runGame();
-
 
 private:
 	

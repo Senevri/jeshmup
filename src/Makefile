@@ -12,6 +12,7 @@ LIBS:=-lSDL -lUnitTest++
 LIBDIRS:=-L$(UNITTEST)
 DEFS:=
 bindir:=../bin/$(BUILD)
+outfile:=jeshmup
 
 ifeq ($(BUILD), release)
 	CFLAGS:=$(CFLAGS) -O2
@@ -21,16 +22,25 @@ else
 	DEFS:=-DDEBUG
 endif	
 
+SRCS:=main.cpp game.cpp
+OBJS:=$(SRCS:.cpp=.o)
+
 TARGETS:=test
 
-all: test
+%.o: %.cpp
+	$(CC) -o $@ -c $< $(CFLAGS) $(DEFS) $(INCLUDES)
 
-test: main.o
+
+.PHONY : all
+
+test: $(OBJS)
 	-mkdir -p $(bindir)
-	$(CC) -o $(bindir)/$@ $? $(LIBS) $(LIBDIRS)
+	$(CC) -o $(bindir)/$@ $(OBJS) $(LIBS) $(LIBDIRS)
 
-main.o: main.cpp
-	$(CC) -c $? $(CFLAGS) $(DEFS) $(INCLUDES)
+all: $(OBJS)
+	-mkdir -p $(bindir)
+	$(CC) -o $(bindir)/$(outfile) $(OBJS) $(LDFLAGS) $(INCLUDES)
+		
 
 clean:
 	rm -f $(TARGETS) *.o $(bindir)/*
