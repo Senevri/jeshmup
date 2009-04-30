@@ -22,10 +22,10 @@ else
 	DEFS:=-DDEBUG
 endif	
 
-SRCS:=main.cpp game.cpp
+SRCS:=main.cpp game.cpp object.cpp world.cpp
 OBJS:=$(SRCS:.cpp=.o)
 
-TARGETS:=test
+TARGETS:=all
 
 %.o: %.cpp
 	$(CC) -o $@ -c $< $(CFLAGS) $(DEFS) $(INCLUDES)
@@ -33,15 +33,16 @@ TARGETS:=test
 
 .PHONY : all
 
-test: $(OBJS)
+test: $(OBJS:main.o=test.o)
 	-mkdir -p $(bindir)
-	$(CC) -o $(bindir)/$@ $(OBJS) $(LIBS) $(LIBDIRS)
+	$(CC) -o $(bindir)/$@ $(OBJS:main.o=test.o) $(LIBS) $(LIBDIRS)
+	-$(bindir)/$@
 
 all: $(OBJS)
 	-mkdir -p $(bindir)
-	$(CC) -o $(bindir)/$(outfile) $(OBJS) $(LDFLAGS) $(INCLUDES)
+	$(CC) -o $(bindir)/$(outfile) $(OBJS) $(LIBS) $(LIBDIRS)
 		
 
 clean:
 	rm -f $(TARGETS) *.o $(bindir)/*
-	rmdir $(bindir)
+	-rmdir $(bindir)

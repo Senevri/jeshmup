@@ -18,4 +18,15 @@ Get it from
 
 	http://www.libsdl.org
 
-That should do for right now, okyes?
+
+Compiling on Linux:
+-------------------
+
+1. Compile UnitTest++ and SDL as needed
+2. Modify the Makefile
+	SDL should point to SDL root directory, 
+	UNITTEST should point to UnitTest++ root directory.
+
+	You can change the bindir to point wherever you want, naturally.
+	
+
