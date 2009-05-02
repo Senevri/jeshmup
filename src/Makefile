@@ -23,23 +23,24 @@ else
 endif	
 
 SRCS:=main.cpp game.cpp object.cpp world.cpp
-OBJS:=$(SRCS:.cpp=.o)
+OBJS:=$(patsubst %.cpp,$(bindir)/%.o, $(SRCS))
 
-TARGETS:=all
 
-%.o: %.cpp
+.PHONY : all test clean
+
+TARGETS:=all test
+
+
+$(bindir)/%.o: %.cpp
+	@[ -d $(bindir) ] || mkdir -p $(bindir)
 	$(CC) -o $@ -c $< $(CFLAGS) $(DEFS) $(INCLUDES)
 
 
-.PHONY : all
-
 test: $(OBJS:main.o=test.o)
-	-mkdir -p $(bindir)
 	$(CC) -o $(bindir)/$@ $(OBJS:main.o=test.o) $(LIBS) $(LIBDIRS)
 	-$(bindir)/$@
 
 all: $(OBJS)
-	-mkdir -p $(bindir)
 	$(CC) -o $(bindir)/$(outfile) $(OBJS) $(LIBS) $(LIBDIRS)
 		
 
