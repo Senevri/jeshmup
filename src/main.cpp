@@ -27,9 +27,9 @@ int main( int argc, char *argv[] )
 	run_tests();
 	//std::string str_test = "";
 	//std::cin>>str_test;
-	//CMyGame * game = new CMyGame();
-	//game->runGame();
-	//delete game;	
+	CMyGame * game = new CMyGame();
+	game->runGame();
+	delete game;	
 	return 0;
 }
 

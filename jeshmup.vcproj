@@ -30,6 +30,7 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -64,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdlMain.lib sdl.lib"
+				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib"
 				Version="0.01"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;G:\devel\ext\UnitTest++\Release&quot;;&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
