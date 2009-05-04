@@ -7,6 +7,11 @@
  *
  */
 
+#ifdef _WINDOWS
+	typedef unsigned int uint;
+	typedef unsigned short ushort;
+#endif
+
 class dsLoader
 {
 public:

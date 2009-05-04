@@ -40,7 +40,7 @@ ushort dsLoader::ReadUShort(){
   ushort first = ReadChar();
   ushort second = ReadChar();
   second << 8;
-  return second or first;
+  return (second || first);
 }
 
 uint dsLoader::ReadUInt(){
@@ -87,6 +87,6 @@ bool dsLoader::FindChunk(int chunk_id, bool beginning){
     mInputFile.seekg(0);
     mChunkPointer = -1;
   }
-  
+ return false; 
   
 }
