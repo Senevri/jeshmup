@@ -1,4 +1,6 @@
+#ifdef _TEST
 #include <iostream>
+#include "sdl.h"
 #include "UnitTest++.h"
 #include "world.h"
 
@@ -23,5 +25,9 @@ SUITE(ZaWarudoTests) {
 ;
 
 int main(int argc, char * argv[]){
-	return UnitTest::RunAllTests();
+	int result = 0;
+	result = UnitTest::RunAllTests();
+	cin.get();
+	return result;
 }
+#endif //_TEST

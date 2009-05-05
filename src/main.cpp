@@ -1,3 +1,4 @@
+#ifndef _TEST
 #include <iostream>
 //#include "SDL.h"
 #include "game.h"
@@ -37,3 +38,4 @@ int run_tests(void){
 	return UnitTest::RunAllTests();
 }
 
+#endif // not _TEST
