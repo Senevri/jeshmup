@@ -176,23 +176,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\src\util\3dsFileFormat.h"
+				RelativePath="..\src\util\3dsFileFormat.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\util\3dsLoader.h"
+				RelativePath="..\src\util\3dsLoader.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\game.h"
+				RelativePath="..\src\game.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\object.h"
+				RelativePath="..\src\object.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\world.h"
+				RelativePath="..\src\world.h"
 				>
 			</File>
 		</Filter>
