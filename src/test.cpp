@@ -1,6 +1,6 @@
 #ifdef _TEST
 #include <iostream>
-#include "sdl.h"
+#include "SDL.h"
 #include "UnitTest++.h"
 #include "world.h"
 
@@ -17,10 +17,6 @@ SUITE(ZaWarudoTests) {
 		CHECK(0==o->name.compare("test object"));
 		delete o;
 	}
-
-	TEST(FailAlways){
-		CHECK(false);
-	}
 }
 ;
 
@@ -31,3 +27,4 @@ int main(int argc, char * argv[]){
 	return result;
 }
 #endif //_TEST
+

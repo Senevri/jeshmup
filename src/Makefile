@@ -22,14 +22,8 @@ else
 	DEFS:=-DDEBUG
 endif	
 
-ifdef test 
-	DEFS:=$(DEFS) -DTEST
-endif
-
-
 SRCS:=main.cpp game.cpp object.cpp world.cpp
 OBJS:=$(patsubst %.cpp,$(bindir)/%.o, $(SRCS))
-
 
 .PHONY : all test clean
 
