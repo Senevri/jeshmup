@@ -1,5 +1,6 @@
 #pragma once 
 #include "SDL.h"
+#include "GLScene.h"
 
 class CMyGame{
 
@@ -14,8 +15,12 @@ public:
 private:
 	
 	SDL_Surface *m_screen;
+	GLScene * m_scene;
 	void initialize();
 	void myWaitEvent();
 	void mainLoop();
+
+	//test
+	void setupTestObject(void);
 
 };

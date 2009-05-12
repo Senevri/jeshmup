@@ -21,8 +21,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="..\windows\Debug"
+			IntermediateDirectory="..\windows\Debug"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib"
+				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;G:\devel\ext\UnitTest++\Release&quot;;&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
@@ -271,6 +271,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\GLScene.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\object.h"
 				>
 			</File>
@@ -296,6 +300,10 @@
 			</File>
 			<File
 				RelativePath="..\src\game.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\GLScene.cpp"
 				>
 			</File>
 			<File

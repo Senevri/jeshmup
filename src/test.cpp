@@ -1,4 +1,8 @@
 #ifdef _TEST
+/**
+ * Use this class for running tests from a shell.
+ */
+
 #include <iostream>
 #include "SDL.h"
 #include "UnitTest++.h"
@@ -23,6 +27,7 @@ SUITE(ZaWarudoTests) {
 int main(int argc, char * argv[]){
 	int result = 0;
 	result = UnitTest::RunAllTests();
+	cout<<"Enter Key Exits" << endl;
 	cin.get();
 	return result;
 }
