@@ -8,7 +8,7 @@ BUILD:=debug
 
 CFLAGS:= -g -Wall
 INCLUDES:=-I$(SDL) -I$(UNITTEST)/src
-LIBS:=-lSDL -lUnitTest++
+LIBS:=-lUnitTest++ -lGL -lGLU -lSDL -lpthread
 LIBDIRS:=-L$(UNITTEST)
 DEFS:=
 bindir:=../bin/$(BUILD)
@@ -22,7 +22,7 @@ else
 	DEFS:=-DDEBUG
 endif	
 
-SRCS:=main.cpp game.cpp object.cpp world.cpp
+SRCS:=main.cpp game.cpp object.cpp world.cpp GLScene.cpp
 OBJS:=$(patsubst %.cpp,$(bindir)/%.o, $(SRCS))
 
 .PHONY : all test clean
