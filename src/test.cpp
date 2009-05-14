@@ -7,7 +7,7 @@
 #include "SDL.h"
 #include "UnitTest++.h"
 #include "world.h"
-#include "mesh.h"
+#include "Mesh.h"
 
 using namespace std;
 
