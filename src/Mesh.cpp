@@ -62,3 +62,4 @@ float * Mesh::vertexToArray(vertex v){
 	output[2] = v.z;
 	return output;
 }
+

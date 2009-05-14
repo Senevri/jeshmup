@@ -22,7 +22,7 @@ else
 	DEFS:=-DDEBUG
 endif	
 
-SRCS:=main.cpp game.cpp object.cpp world.cpp GLScene.cpp
+SRCS:=main.cpp game.cpp object.cpp world.cpp GLScene.cpp Mesh.cpp
 OBJS:=$(patsubst %.cpp,$(bindir)/%.o, $(SRCS))
 
 .PHONY : all test clean
