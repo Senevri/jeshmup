@@ -7,6 +7,7 @@
 #include "SDL.h"
 #include "UnitTest++.h"
 #include "world.h"
+#include "mesh.h"
 
 using namespace std;
 
@@ -21,6 +22,32 @@ SUITE(ZaWarudoTests) {
 		CHECK(0==o->name.compare("test object"));
 		delete o;
 	}
+	TEST(ConstructMesh){
+		Mesh *m = new Mesh();
+		delete m;
+	}
+	TEST(FillMesh) {
+		float obj[] = {
+		1.000000f, 1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, 
+1.000000f, 0.999999f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, 0.999999f, -1.000001f, 1.000000f, 
+1.000000f, 1.000000f, -1.000000f, 1.000000f, 0.999999f, 1.000000f, 0.999999f, -1.000001f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 
+1.000000f, -1.000000f, -1.000000f, 0.999999f, -1.000001f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, -1.000000f, 
+-1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, 1.000000f, -1.000000f, 
+1.000000f, 0.999999f, 1.000000f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, 1.000000
+		};
+		Mesh *m = new Mesh();
+		std::vector<float *> mesh;
+
+		/*6 faces, 4 vertices*/
+		m->meshFromFloatArray(obj, Mesh::QUADS, (6*4));
+		CHECK(Mesh::QUADS == m->getType());
+		//mesh = m->getMesh();
+		std::vector<Mesh::vertex *> verts = m->getMeshVertices();
+		CHECK(verts[0]->x == (float)1);
+
+		delete m;
+	}
+
 }
 ;
 

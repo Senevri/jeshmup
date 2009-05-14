@@ -148,7 +148,7 @@ void CMyGame::mainLoop(){
 				bFlagQuit = true;
 				break;
 		}
-		m_scene->drawQuads();
+		m_scene->drawMesh(0);
 		/* draw stuff here */
 		SDL_GL_SwapBuffers();
 	}
@@ -156,27 +156,22 @@ void CMyGame::mainLoop(){
 }
 	
 void CMyGame::setupTestObject(void){
-	static int test[] = { -1, -1, 1,
-		1, -1, 1,
-		1, 1, 1,
-		-1, 1, 1,
+	// copypaste from a blender - outputted .raw file, + regex (s/ /f, /g),
+	// and removed the final comma.
+		static float obj[] = { 
+		1.000000f, 1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, 
+1.000000f, 0.999999f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, 0.999999f, -1.000001f, 1.000000f, 
+1.000000f, 1.000000f, -1.000000f, 1.000000f, 0.999999f, 1.000000f, 0.999999f, -1.000001f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 
+1.000000f, -1.000000f, -1.000000f, 0.999999f, -1.000001f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, -1.000000f, 
+-1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, 1.000000f, -1.000000f, 
+1.000000f, 0.999999f, 1.000000f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, 1.000000
+		};
+		Mesh *m = new Mesh();
+		std::vector<float *> mesh;
 
-		-1, -1, -1,
-		1, -1, -1,
-		1, 1, -1,
-		-1, 1, -1,
-
-		1, 1, 1,
-		1, 1, -1,
-		1, -1, -1,
-		1, -1, 1,
-
-		-1, 1, 1,
-		-1, 1, -1,
-		-1, -1, -1,
-		-1, -1, 1};
-	m_scene->intArrayToVertices(test, 48);
-
+		/*6 faces, 4 vertices*/
+		m->meshFromFloatArray(obj, Mesh::QUADS, (6*4*3)); /* 6 faces, 4 corners, 3 floats per coord */
+		m_scene->addMesh(m);
 }
 
 //EOF

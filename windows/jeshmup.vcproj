@@ -218,7 +218,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib"
+				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;G:\devel\ext\UnitTest++\Release&quot;;&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
@@ -275,6 +275,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\InputHandler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Mesh.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\object.h"
 				>
 			</File>
@@ -307,7 +315,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\InputHandler.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Mesh.cpp"
 				>
 			</File>
 			<File
