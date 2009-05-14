@@ -1,6 +1,5 @@
 #include "Mesh.h"
 
-
 //public:
 Mesh::Mesh(void)
 {
@@ -14,10 +13,11 @@ Mesh::Mesh(std::string name)
 
 Mesh::~Mesh(void)
 {
-	for each (vertex *v in m_data){
+	std::vector<vertex *>::iterator itr;
+	for ( itr = m_data.begin(); itr < m_data.end(); ++itr )
+	{	
 		/*FIXME: for some reason breaks */
-		//if(v)
-		//	delete v; 
+		//delete *itr;
 	}
 }
 
