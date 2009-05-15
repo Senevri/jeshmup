@@ -74,8 +74,8 @@ SUITE(ZaWarudoTests) {
 		
 		delete m;
 		
-		delete [6] triangle;
-		delete [4] quad;
+		delete [] triangle;
+		delete [] quad;
 
 		/* test loading */
 		std::vector<Mesh::vertex *> vertices;

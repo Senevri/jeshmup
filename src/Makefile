@@ -22,7 +22,7 @@ else
 	DEFS:=-DDEBUG
 endif	
 
-SRCS:=main.cpp game.cpp object.cpp world.cpp GLScene.cpp Mesh.cpp
+SRCS:=main.cpp game.cpp object.cpp world.cpp GLScene.cpp Mesh.cpp InputHandler.cpp util/RawLoader.cpp
 OBJS:=$(patsubst %.cpp,$(bindir)/%.o, $(SRCS))
 
 .PHONY : all test clean
@@ -32,6 +32,7 @@ TARGETS:=all test
 
 $(bindir)/%.o: %.cpp
 	@[ -d $(bindir) ] || mkdir -p $(bindir)
+	@[ -d $(bindir)/util ] || mkdir -p $(bindir)/util
 	$(CC) -o $@ -c $< $(CFLAGS) $(DEFS) $(INCLUDES)
 
 all: $(OBJS)
@@ -43,5 +44,6 @@ test: $(OBJS:main.o=test.o)
 
 
 clean:
-	rm -f $(TARGETS) *.o $(bindir)/*
-	-rmdir $(bindir)
+
+	rm -f $(TARGETS) *.o 
+	rm -rf $(bindir)

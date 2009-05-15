@@ -141,3 +141,4 @@ Mesh::vertex * RawLoader::quadToTriangle(Mesh::vertex *quad)
 	return triangle;
 
 }
+
