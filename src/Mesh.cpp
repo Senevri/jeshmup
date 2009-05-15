@@ -5,9 +5,17 @@ Mesh::Mesh(void)
 {
 }
 
+Mesh::Mesh(std::vector<Mesh::vertex *> vpVertices, Mesh::format type)
+{
+	//let's copy
+	this->m_data.assign(vpVertices.begin(), vpVertices.end());
+	this->m_type = type;
+}
+
+
 Mesh::Mesh(std::string name)
 {
-	m_name = name;
+	this->m_name = name;
 }
 
 
@@ -38,6 +46,20 @@ std::string Mesh::getName(){
 //	}	
 //	return output;
 //}
+
+Mesh::vertex * Mesh::vertexArrayFromMesh(void){
+	std::vector<vertex *>::iterator itr;
+	int size = m_data.size();
+	vertex *v = new vertex[(const int)size]; /* cannot allocate since we don't know size...*/
+	int i = 0;
+	for ( itr = m_data.begin(); itr < m_data.end(); ++itr )
+	{	
+		v[i] = **itr; /* so many pointer ops in c++ project ... nojustno */
+		i++;
+	}
+	return v;
+}
+
 std::vector<Mesh::vertex *> Mesh::getMeshVertices(){
 	return this->m_data;
 }
@@ -60,6 +82,6 @@ float * Mesh::vertexToArray(vertex v){
 	output[0] = v.x;
 	output[1] = v.y;
 	output[2] = v.z;
-	return output;
+	return output; /* gets warning, but seems to return correct data...*/
 }
 

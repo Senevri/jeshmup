@@ -1,4 +1,6 @@
 #include "game.h"
+
+#include "util/RawLoader.h"
 #include <iostream>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -148,7 +150,12 @@ void CMyGame::mainLoop(){
 				bFlagQuit = true;
 				break;
 		}
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    
 		m_scene->drawMesh(0);
+		m_scene->drawMesh(1);
+		m_scene->drawMesh(2);
+
 		/* draw stuff here */
 		SDL_GL_SwapBuffers();
 	}
@@ -166,12 +173,27 @@ void CMyGame::setupTestObject(void){
 -1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, 1.000000f, -1.000000f, 
 1.000000f, 0.999999f, 1.000000f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, 1.000000
 		};
-		Mesh *m = new Mesh();
+		RawLoader *r = new RawLoader();
+		r->load("..\\data\\model\\Arby_bottom.raw");
+		Mesh *m1 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
+		m_scene->addMesh(m1);
+		delete r;
+		r = new RawLoader();
+		r->load("..\\data\\model\\Arby_head.raw");
+		Mesh *m2 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
+		m_scene->addMesh(m2);
+		delete r;
+		r = new RawLoader();
+		r->load("..\\data\\model\\Arby_back.raw");
+		Mesh *m3 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
+		m_scene->addMesh(m3);
+
 		std::vector<float *> mesh;
 
+		delete r;
 		/*6 faces, 4 vertices*/
-		m->meshFromFloatArray(obj, Mesh::QUADS, (6*4*3)); /* 6 faces, 4 corners, 3 floats per coord */
-		m_scene->addMesh(m);
+		//m->meshFromFloatArray(obj, Mesh::QUADS, (6*4*3)); /* 6 faces, 4 corners, 3 floats per coord */
+		
 }
 
 //EOF
