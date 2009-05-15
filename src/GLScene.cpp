@@ -10,7 +10,12 @@
 
 GLScene::GLScene(void)
 {
-
+	this->camera.location.x = 0.0f;
+	this->camera.location.y = 0.0f;
+	this->camera.location.z = -2.0f;
+	this->camera.angle.x = 0.0f;
+	this->camera.angle.y = 0.0f;
+	this->camera.angle.z = 0.0f;
 }
 
 GLScene::~GLScene(void)
@@ -31,7 +36,7 @@ void GLScene::init(void)
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
 
     /* Depth buffer setup */
-    glClearDepth( 1.0f );
+    glClearDepth( 100.0f );
 	
     /* Enables Depth Testing */
     glEnable( GL_DEPTH_TEST );
@@ -64,7 +69,7 @@ void GLScene::setup(int width, int height)
  
     /* Protect against a divide by zero */
    if ( height == 0 )
-	height = 1;
+		height = 1;
 
     ratio = ( GLfloat )width / ( GLfloat )height;
 
@@ -76,14 +81,13 @@ void GLScene::setup(int width, int height)
     glLoadIdentity( );
 
     /* Set our perspective */
-    gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
+    gluPerspective( 45.0f, ratio, 0.01f, 1000.0f );
 
     /* Make sure we're chaning the model view and not the projection */
     glMatrixMode( GL_MODELVIEW );
 
     /* Reset The View */
     glLoadIdentity( );
-
 }
 
 void GLScene::addMesh(Mesh * mesh){
@@ -94,22 +98,51 @@ void GLScene::drawMesh(unsigned int index){
 	this->drawMesh(*meshes[index]);
 }
 
+void GLScene::drawScene(void){
+	/* clear buffers */
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+	glMatrixMode( GL_MODELVIEW );
+	glLoadIdentity( );
+	glTranslatef( this->camera.location.x, this->camera.location.y, this->camera.location.z );
+	/*camera moves HERE.*/
+
+	std::vector<Mesh *>::iterator itr;
+	for ( itr = this->meshes.begin(); itr < this->meshes.end(); ++itr )
+	{	
+		this->drawMesh(**itr);
+	}
+
+//	translate += tradd;
+}
+
+void GLScene::translateMesh(int mesh_id, float x, float y, float z)
+{
+
+}
+
+void GLScene::rotateMesh(int mesh_id, float x, float y, float z)
+{
+
+}
 
 
 void GLScene::drawMesh(Mesh mesh)
 {    
+	
 	static GLfloat rotate = 0.0f;
-	GLubyte color[] = {128, 0, 128, 128}; /* rgba? a no effect*/
-    glMatrixMode( GL_MODELVIEW );
-	/* Clear the color and depth buffers. */
-    glLoadIdentity( );
+	GLubyte white[] = {224, 224, 224, 128}; /* rgba? a no effect*/
+	GLubyte green[] = {0, 196, 0, 128}; 
+    //glMatrixMode( GL_MODELVIEW );
+	//glLoadIdentity( );
+	GLubyte * color = white;
 
 	/* jottei olla naamassa kiinni*/
-	glTranslatef( 0.0f, 0.0f, -2.0f );
+	//glTranslatef( 0.0f, 0.0f, -2.0f );
 
 	if(rotate==360.0f) rotate=0.0f;
 
-    glRotatef( rotate, 0.2f, 1.0f, 1.0f );
+    glRotatef( rotate, 1.0f, 1.0f, 1.0f );
 
 	GLubyte tmp=0;
 
@@ -139,15 +172,14 @@ void GLScene::drawMesh(Mesh mesh)
 			glColor4ubv( color );
 			//glVertex3fv( v->xyz );
 			glVertex3f( v->x, v->y, v->z );
-			if(i%3 == 0){ /*if face then change color */
-				tmp =color[0];
-				color[0] = color [1];
-				color[1] = tmp;
+			if( i%3 == 0) { /*if face then change color */
+				if(color == white) color = green;
+				else color = white;
 			}
 			i++;
 		}
 	glEnd();
-	rotate += 1.0f;
+	//rotate += 0.2f;
 }
 
 

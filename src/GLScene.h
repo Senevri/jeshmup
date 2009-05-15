@@ -25,9 +25,18 @@ public:
 	void drawMesh(Mesh mesh);
 	void drawMesh(unsigned int index); /* use nth mesh in meshes */
 	void addMesh(Mesh * mesh);
-	void testDrawing(void);
+	void translateMesh(int mesh_id, float x, float y, float z);
+	void rotateMesh(int mesh_id, float x, float y, float z);
 
+	void drawScene(void);
+
+	/* TODO: seems insufficient */
+	struct camera {
+		Mesh::vertex location;
+		Mesh::vertex angle;
+	} camera;	
 private:	
+	/* this won't do, at least not alone. */
 	std::vector<Mesh *> meshes; /* so meshy */
 
 };

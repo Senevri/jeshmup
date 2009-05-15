@@ -10,7 +10,7 @@ public:
 	InputHandler(void);
 	~InputHandler(void);
 	/* add a potential action to look out for */
-	int registerAction(const std::string name, unsigned int id, unsigned char sdl_event_type);
+	void registerAction(const std::string name, unsigned int id, unsigned char sdl_event_type, Uint16 value);
 	int queryEvent(const SDL_Event *event); /* returns ID of event. */
 	std::string queryEventName(unsigned int id);
 private:
@@ -18,6 +18,8 @@ private:
 		std::string name;
 		unsigned int id;
 		unsigned char sdl_event_type;
+		Uint16 value;
 	} action;
-	std::vector<action *> actions;
+	std::vector<action> actions;
+	SDL_Joystick * m_pjoystick;
 };

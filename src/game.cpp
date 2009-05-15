@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "util/RawLoader.h"
+#include "InputHandler.h"
 #include <iostream>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -110,6 +111,7 @@ void CMyGame::initialize(){
 
 void CMyGame::mainLoop(){
 
+	enum actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT};
 	static int ticks;
 	int now = SDL_GetTicks();
 	ticks = now + 33;
@@ -120,6 +122,17 @@ void CMyGame::mainLoop(){
 
 	setupTestObject();
 
+	InputHandler * input = new InputHandler();
+	input->registerAction("quit", QUIT, SDL_QUIT, 0);
+	input->registerAction("quit_esc", QUIT, SDL_KEYDOWN, SDLK_ESCAPE);
+	input->registerAction("up", UP, SDL_KEYDOWN, SDLK_UP);
+	input->registerAction("down", DOWN, SDL_KEYDOWN, SDLK_DOWN);
+	input->registerAction("left", LEFT, SDL_KEYDOWN, SDLK_LEFT);
+	input->registerAction("right", RIGHT, SDL_KEYDOWN, SDLK_RIGHT);
+	input->registerAction("in", ZOOM_IN, SDL_KEYDOWN, SDLK_PAGEUP);
+	input->registerAction("out", ZOOM_OUT, SDL_KEYDOWN, SDLK_PAGEDOWN);
+
+
 	while ( (SDL_PollEvent(&event) || bFlagQuit == false)) {
 		
 		now = SDL_GetTicks();
@@ -129,50 +142,39 @@ void CMyGame::mainLoop(){
 			SDL_Delay(ticks-now);
 		}
 	
-		switch (event.type) {			
-			case SDL_KEYDOWN: 
-				switch( event.key.keysym.sym ){	
-					case SDLK_ESCAPE:
-						bFlagQuit = true;
-						break;					
-					default:
-						break;
-				}
-				break;
-			case SDL_KEYUP :
-				break;
-			case SDL_USEREVENT :
-				break;
-
-			case SDL_QUIT: 
-				//	printf("Quit requested, quitting.\n");
-				// exit(0);
+		switch (input->queryEvent(&event)) {						
+			case(QUIT):
 				bFlagQuit = true;
 				break;
-		}
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
-		m_scene->drawMesh(0);
-		m_scene->drawMesh(1);
-		m_scene->drawMesh(2);
-
+			case(UP):
+				m_scene->camera.location.y -=0.01f;
+				break;
+			case(DOWN):
+				m_scene->camera.location.y +=0.01f;
+				break;
+			case(LEFT):
+				m_scene->camera.location.x -=0.02f;
+				break;
+			case(RIGHT):
+				m_scene->camera.location.x +=0.02f;
+				break;
+			case(ZOOM_IN):
+				m_scene->camera.location.z +=0.05f;
+				break;
+			case(ZOOM_OUT):
+				m_scene->camera.location.z -=0.05f;
+				break;
+		}    
+		m_scene->drawScene();
+		
 		/* draw stuff here */
 		SDL_GL_SwapBuffers();
 	}
+	delete input;
 
 }
 	
 void CMyGame::setupTestObject(void){
-	// copypaste from a blender - outputted .raw file, + regex (s/ /f, /g),
-	// and removed the final comma.
-		static float obj[] = { 
-		1.000000f, 1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, 
-1.000000f, 0.999999f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, 0.999999f, -1.000001f, 1.000000f, 
-1.000000f, 1.000000f, -1.000000f, 1.000000f, 0.999999f, 1.000000f, 0.999999f, -1.000001f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 
-1.000000f, -1.000000f, -1.000000f, 0.999999f, -1.000001f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, -1.000000f, 
--1.000000f, -1.000000f, -1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, 1.000000f, 1.000000f, -1.000000f, 1.000000f, -1.000000f, 
-1.000000f, 0.999999f, 1.000000f, 1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, -1.000000f, -1.000000f, 1.000000f, 1.000000
-		};
 		RawLoader *r = new RawLoader();
 		r->load("..\\data\\model\\Arby_bottom.raw");
 		Mesh *m1 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
@@ -188,12 +190,7 @@ void CMyGame::setupTestObject(void){
 		Mesh *m3 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
 		m_scene->addMesh(m3);
 
-		std::vector<float *> mesh;
-
-		delete r;
-		/*6 faces, 4 vertices*/
-		//m->meshFromFloatArray(obj, Mesh::QUADS, (6*4*3)); /* 6 faces, 4 corners, 3 floats per coord */
-		
+		delete r;		
 }
 
 //EOF
