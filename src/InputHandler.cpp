@@ -52,8 +52,12 @@ int InputHandler::queryEvent(const SDL_Event *event){
 			case SDL_JOYBUTTONUP:
 				break;
 			case SDL_JOYBUTTONDOWN:
+				if(itr->value==event->jbutton.button)
+					return itr->id;
 				break;
 			case SDL_JOYAXISMOTION:
+				if(itr->value==event->jaxis.axis)
+					return ( itr->id );
 				break;
 			case SDL_JOYBALLMOTION:
 				break;

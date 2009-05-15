@@ -111,7 +111,7 @@ void CMyGame::initialize(){
 
 void CMyGame::mainLoop(){
 
-	enum actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT};
+	enum actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT, UPDOWN, LEFTRIGHT};
 	static int ticks;
 	int now = SDL_GetTicks();
 	ticks = now + 33;
@@ -131,7 +131,9 @@ void CMyGame::mainLoop(){
 	input->registerAction("right", RIGHT, SDL_KEYDOWN, SDLK_RIGHT);
 	input->registerAction("in", ZOOM_IN, SDL_KEYDOWN, SDLK_PAGEUP);
 	input->registerAction("out", ZOOM_OUT, SDL_KEYDOWN, SDLK_PAGEDOWN);
-
+	input->registerAction("joy_upleft", UPDOWN, SDL_JOYAXISMOTION, 1);
+	input->registerAction("joy_downright", LEFTRIGHT, SDL_JOYAXISMOTION, 0);
+	
 
 	while ( (SDL_PollEvent(&event) || bFlagQuit == false)) {
 		
@@ -142,7 +144,24 @@ void CMyGame::mainLoop(){
 			SDL_Delay(ticks-now);
 		}
 	
-		switch (input->queryEvent(&event)) {						
+		int motion = input->queryEvent(&event);
+		
+		/* joystick workaround */
+		int deadzone = 8000;
+		if (motion == UPDOWN ){
+			if(event.jaxis.value < -deadzone)
+				motion = UP;
+			if(event.jaxis.value > deadzone)
+				motion = DOWN;
+		}else if (motion == LEFTRIGHT ){
+			if(event.jaxis.value < -deadzone)
+				motion = LEFT;
+			if(event.jaxis.value > deadzone)
+				motion = RIGHT;
+		}
+		/* end joystick workaround */
+
+		switch (motion) {						
 			case(QUIT):
 				bFlagQuit = true;
 				break;
