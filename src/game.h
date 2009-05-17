@@ -1,3 +1,10 @@
+/**
+ *	game.h 
+ *	
+ *	by: Esa Karjalainen
+ *	has: main loop
+ */
+
 #pragma once 
 #include "SDL.h"
 #include "GLScene.h"

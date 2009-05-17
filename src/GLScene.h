@@ -1,3 +1,9 @@
+/* 
+ * GLScene. h
+ * by: Esa Karjalaine
+ * has: wrapper class for OpenGL. Knows objects and how to render.
+ */
+
 #pragma once
 #include "SDL.h"
 #ifdef _WINDOWS
@@ -7,6 +13,7 @@
 #include "GL/glu.h"
 
 #include "Mesh.h"
+#include "object.h"
 #include <vector>
 /**
  *  OpenGL wrapper for the disgusting state machine
@@ -33,9 +40,23 @@ public:
 	/* TODO: seems insufficient */
 	struct camera {
 		Mesh::vertex location;
-		Mesh::vertex angle;
+		Mesh::vertex angle; /* hey, it's an array of three floats. */
 	} camera;	
 private:	
+
+	/* mesh = mesh. 
+	 * visible = "do we render this? 
+	 * data = location, name, facing etc.
+	 */
+	typedef struct {
+		Mesh *mesh; /* should mesh keep model/texture ? or new class?*/
+		bool visible;
+		Mesh::vertex location;
+		Mesh::vertex angle; /* hey, it's an array of three floats. */		
+	} scene_obj;
+	std::vector<scene_obj> scene_objs; /* stupid ? */
+	
+
 	/* this won't do, at least not alone. */
 	std::vector<Mesh *> meshes; /* so meshy */
 

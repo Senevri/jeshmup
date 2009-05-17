@@ -1,4 +1,6 @@
 #include "Mesh.h"
+//Mesh: surfaces in a 3d object, at least.
+//TODO: Switch to internally using a list of verts + list of faces instead.
 
 //public:
 Mesh::Mesh(void)
@@ -49,7 +51,7 @@ std::string Mesh::getName(){
 
 Mesh::vertex * Mesh::vertexArrayFromMesh(void){
 	std::vector<vertex *>::iterator itr;
-	int size = m_data.size();
+	unsigned int size = m_data.size();
 	vertex *v = new vertex[(const int)size]; /* cannot allocate since we don't know size...*/
 	int i = 0;
 	for ( itr = m_data.begin(); itr < m_data.end(); ++itr )

@@ -10,9 +10,23 @@
 
 class World {
 	public:
+
+	typedef struct {
+		float x;
+		float y;
+		float z;
+	} coordinate;
+
 	World();
 	~World();
 
 	private:
-	std::vector<Object> objects;
+		/* object-in-world, world-object -> wob */
+		typedef struct {
+			Object object;
+			coordinate location;
+			coordinate facing; /* (effectively a vector) */
+			coordinate velocity; /* motion vector */
+		}actor;
+		std::vector<actor> actors;
 };

@@ -1,3 +1,9 @@
+/*
+ * InputHandler.h
+ * by: Esa Karjalainen
+ * has: InputHandler class abstracting user input somewhat.
+ */
+
 #pragma once
 #include <iostream>
 #include <string>
@@ -12,7 +18,9 @@ public:
 	/* add a potential action to look out for */
 	void registerAction(const std::string name, unsigned int id, unsigned char sdl_event_type, Uint16 value);
 	int queryEvent(const SDL_Event *event); /* returns ID of event. */
-	std::string queryEventName(unsigned int id);
+	std::string queryEventName(unsigned int id);	
+	enum joy_motion {JOYUP, JOYDOWN, JOYLEFT, JOYRIGHT};
+
 private:
 	typedef struct{
 		std::string name;

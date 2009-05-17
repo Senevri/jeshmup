@@ -111,7 +111,7 @@ void CMyGame::initialize(){
 
 void CMyGame::mainLoop(){
 
-	enum actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT, UPDOWN, LEFTRIGHT};
+	enum actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT};
 	static int ticks;
 	int now = SDL_GetTicks();
 	ticks = now + 33;
@@ -131,8 +131,10 @@ void CMyGame::mainLoop(){
 	input->registerAction("right", RIGHT, SDL_KEYDOWN, SDLK_RIGHT);
 	input->registerAction("in", ZOOM_IN, SDL_KEYDOWN, SDLK_PAGEUP);
 	input->registerAction("out", ZOOM_OUT, SDL_KEYDOWN, SDLK_PAGEDOWN);
-	input->registerAction("joy_upleft", UPDOWN, SDL_JOYAXISMOTION, 1);
-	input->registerAction("joy_downright", LEFTRIGHT, SDL_JOYAXISMOTION, 0);
+	input->registerAction("joy_up", UP, SDL_JOYAXISMOTION, input->JOYUP);
+	input->registerAction("joy_down", DOWN, SDL_JOYAXISMOTION, input->JOYDOWN);
+	input->registerAction("joy_left", LEFT, SDL_JOYAXISMOTION, input->JOYLEFT);
+	input->registerAction("joy_right", RIGHT, SDL_JOYAXISMOTION, input->JOYRIGHT);
 	
 
 	while ( (SDL_PollEvent(&event) || bFlagQuit == false)) {
@@ -144,23 +146,8 @@ void CMyGame::mainLoop(){
 			SDL_Delay(ticks-now);
 		}
 	
-		int motion = input->queryEvent(&event);
+		int motion = input->queryEvent(&event);		
 		
-		/* joystick workaround */
-		int deadzone = 8000;
-		if (motion == UPDOWN ){
-			if(event.jaxis.value < -deadzone)
-				motion = UP;
-			if(event.jaxis.value > deadzone)
-				motion = DOWN;
-		}else if (motion == LEFTRIGHT ){
-			if(event.jaxis.value < -deadzone)
-				motion = LEFT;
-			if(event.jaxis.value > deadzone)
-				motion = RIGHT;
-		}
-		/* end joystick workaround */
-
 		switch (motion) {						
 			case(QUIT):
 				bFlagQuit = true;
@@ -185,6 +172,7 @@ void CMyGame::mainLoop(){
 				break;
 		}    
 		m_scene->drawScene();
+		//glTranslate
 		
 		/* draw stuff here */
 		SDL_GL_SwapBuffers();
@@ -195,21 +183,20 @@ void CMyGame::mainLoop(){
 	
 void CMyGame::setupTestObject(void){
 		RawLoader *r = new RawLoader();
-		r->load("..\\data\\model\\Arby_bottom.raw");
+		r->load("..\\data\\model\\Arby_whole.raw");
 		Mesh *m1 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
 		m_scene->addMesh(m1);
 		delete r;
-		r = new RawLoader();
-		r->load("..\\data\\model\\Arby_head.raw");
-		Mesh *m2 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
-		m_scene->addMesh(m2);
-		delete r;
-		r = new RawLoader();
-		r->load("..\\data\\model\\Arby_back.raw");
-		Mesh *m3 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
-		m_scene->addMesh(m3);
-
-		delete r;		
+		//r = new RawLoader();
+		//r->load("..\\data\\model\\Arby_head.raw");
+		//Mesh *m2 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
+		//m_scene->addMesh(m2);
+		//delete r;
+		//r = new RawLoader();
+		//r->load("..\\data\\model\\Arby_back.raw");
+		//Mesh *m3 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
+		//m_scene->addMesh(m3);
+		//delete r;		
 }
 
 //EOF

@@ -32,6 +32,8 @@ void InputHandler::registerAction(const std::string name,
 /*TODO: IN PROGRESS!!!1one*/
 int InputHandler::queryEvent(const SDL_Event *event){
 	std::vector<action>::iterator itr;
+	int deadzone = 8000;
+	int motion=-1;
 	for ( itr = this->actions.begin(); itr < this->actions.end(); ++itr ){
 		if(event->type == itr->sdl_event_type){
 			switch(event->type){
@@ -56,8 +58,20 @@ int InputHandler::queryEvent(const SDL_Event *event){
 					return itr->id;
 				break;
 			case SDL_JOYAXISMOTION:
-				if(itr->value==event->jaxis.axis)
-					return ( itr->id );
+				if(1 == event->jaxis.axis){
+				if(event->jaxis.value < -deadzone)
+					motion = JOYUP;
+				if(event->jaxis.value > deadzone)
+					motion = JOYDOWN;
+				}else if (0 == event->jaxis.axis ){
+				if(event->jaxis.value < -deadzone)
+					motion = JOYLEFT;
+				if(event->jaxis.value > deadzone)
+					motion = JOYRIGHT;
+				}
+				if(itr->value == motion){
+					return itr->id;
+				}			
 				break;
 			case SDL_JOYBALLMOTION:
 				break;
