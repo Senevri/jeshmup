@@ -7,6 +7,7 @@
  **/
 #include "object.h"
 #include <vector>
+#include <string>
 
 class World {
 	public:
@@ -19,6 +20,15 @@ class World {
 
 	World();
 	~World();
+
+	unsigned int createActor(std::string name); /* returnvalue ID */
+	bool createActor(std::string name, unsigned int id);
+	bool setActorLocation(unsigned int id, float x, float y, float z);
+	bool setActorFacing(unsigned int id, float x, float y, float z);
+	bool setActorVelocity(unsigned int id, float x, float y, float z);
+	bool moveActorForward(unsigned int id, float amount);
+	bool moveActorSideways(unsigned int id, float amount);
+	bool moveActorVertically(unsigned int id, float amount);
 
 	private:
 		/* object-in-world, world-object -> wob */

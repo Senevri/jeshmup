@@ -13,4 +13,5 @@ class Object{
   ~Object();
   std::string name;
   unsigned int type; /* if complicated types, go polymorphic */
+  unsigned int id;
 };

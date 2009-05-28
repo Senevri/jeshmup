@@ -35,7 +35,9 @@ CMyGame::~CMyGame(){
 ***********************************************************************/
 void CMyGame::runGame(){	
 	//the one, the only....
+	this->m_world = new World();
 	mainLoop();
+	delete this->m_world;
 }
 
 
@@ -120,8 +122,11 @@ void CMyGame::mainLoop(){
 	
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);	
 
+	/* TEST */
 	setupTestObject();
 
+	this->m_world->setActorLocation(0, 10, 10, 10);
+	/* END TEST */
 	InputHandler * input = new InputHandler();
 	input->registerAction("quit", QUIT, SDL_QUIT, 0);
 	input->registerAction("quit_esc", QUIT, SDL_KEYDOWN, SDLK_ESCAPE);

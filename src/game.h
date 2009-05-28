@@ -7,6 +7,7 @@
 
 #pragma once 
 #include "SDL.h"
+#include "world.h"
 #include "GLScene.h"
 
 class CMyGame{
@@ -23,6 +24,7 @@ private:
 	
 	SDL_Surface *m_screen;
 	GLScene * m_scene;
+	World * m_world;
 	void initialize();
 	void myWaitEvent();
 	void mainLoop();
