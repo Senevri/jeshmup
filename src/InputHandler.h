@@ -4,11 +4,13 @@
  * has: InputHandler class abstracting user input somewhat.
  */
 
-#pragma once
+#ifndef _INPUTHANDLER_H_
+#define _INPUTHANDLER_H_
+
 #include <iostream>
 #include <string>
 #include <vector>
-#include "SDL.h"
+#include <SDL/SDL.h>
 
 class InputHandler
 {
@@ -31,3 +33,5 @@ private:
 	std::vector<action> actions;
 	SDL_Joystick * m_pjoystick;
 };
+
+#endif //_INPUTHANDLER_H_

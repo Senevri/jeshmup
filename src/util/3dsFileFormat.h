@@ -6,6 +6,8 @@
  *  Copyright 2008. All rights reserved.
  *
  */
+#ifndef _3DSFILEFORMAT_H_
+#define _3DSFILEFORMAT_H_
 
 //>------ Primary chunk
 
@@ -68,6 +70,7 @@
 #define TRI_SMOOTH    0x4150
 #define TRI_LOCAL     0x4160
 #define TRI_VISIBLE   0x4165
+#define MAPPING_COORDINATES_LIST 0x4140
 
 //>>------ sub defs of KEYF3DS
 
@@ -96,6 +99,4 @@
 #define BOGUS         0x0011
 
 
-
-
-
+#endif //_3DSFILEFORMAT_H_

@@ -1,4 +1,7 @@
 #include "GLScene.h"
+
+#include "util/Logging.h"
+
 #include <iostream>
 
 /**
@@ -10,12 +13,16 @@
 
 GLScene::GLScene(void)
 {
-	this->camera.location.x = 0.0f;
-	this->camera.location.y = 0.0f;
-	this->camera.location.z = -2.0f;
-	this->camera.angle.x = 0.0f;
-	this->camera.angle.y = 0.0f;
-	this->camera.angle.z = 0.0f;
+    this->Camera.location.x = 0.0f;
+    this->Camera.location.y = 0.0f;
+    this->Camera.location.z = -2.0f;
+    this->Camera.angle.x = 0.0f;
+    this->Camera.angle.y = 0.0f;
+    this->Camera.angle.z = 0.0f;
+
+    Point3D point(0.0f, 10.0f, 5.0f);
+    m_mainLight.setPosition(point);
+
 }
 
 GLScene::~GLScene(void)
@@ -40,6 +47,9 @@ void GLScene::init(void)
 	
     /* Enables Depth Testing */
     glEnable( GL_DEPTH_TEST );
+
+    /*Lights enabled in the scene */
+    glEnable( GL_LIGHTING );
 
     /* The Type Of Depth Test To Do */
     glDepthFunc( GL_LEQUAL );
@@ -95,16 +105,18 @@ void GLScene::addMesh(Mesh * mesh){
 }
 
 void GLScene::drawMesh(unsigned int index){
-	this->drawMesh(*meshes[index]);
+    this->drawMesh(*meshes[index]);
 }
 
 void GLScene::drawScene(void){
 	/* clear buffers */
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity( );
-	glTranslatef( this->camera.location.x, this->camera.location.y, this->camera.location.z );
+
+    glTranslatef( this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
+    Logger::LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
 	/*camera moves HERE.*/
 
 	std::vector<Mesh *>::iterator itr;
@@ -112,6 +124,7 @@ void GLScene::drawScene(void){
 	{	
 		this->drawMesh(**itr);
 	}
+    glFlush();
 
 //	translate += tradd;
 }
@@ -127,7 +140,7 @@ void GLScene::rotateMesh(int mesh_id, float x, float y, float z)
 }
 
 
-void GLScene::drawMesh(Mesh mesh)
+void GLScene::drawMesh(Mesh &mesh)
 {    
 	
 	static GLfloat rotate = 0.0f;
@@ -146,7 +159,8 @@ void GLScene::drawMesh(Mesh mesh)
 
 	GLubyte tmp=0;
 
-	std::vector<Mesh::vertex *> vertices = mesh.getMeshVertices();
+    std::vector<Mesh::Vertex *> vertices = mesh.vertices();
+    std::vector<Mesh::Face*> faces = mesh.faces();
 	
 	GLenum type;
 
@@ -162,21 +176,17 @@ void GLScene::drawMesh(Mesh mesh)
 			break;
 	}
 
-	//glPointSize(4.0f);
-	int i=1;
-	glBegin( type );
-		std::vector<Mesh::vertex *>::iterator itr;
-		for ( itr = vertices.begin(); itr < vertices.end(); ++itr )
-		{	
-			Mesh::vertex *v = *itr;
-			glColor4ubv( color );
-			//glVertex3fv( v->xyz );
-			glVertex3f( v->x, v->y, v->z );
-			if( i%3 == 0) { /*if face then change color */
-				if(color == white) color = green;
-				else color = white;
-			}
-			i++;
+    glColor3f(0.0f,1.0f,0.0f);
+    glBegin( GL_TRIANGLES );
+        std::vector<Mesh::Face*>::iterator itr;
+        for ( itr = faces.begin(); itr < faces.end(); ++itr )
+        {
+            Mesh::Face* face = *itr;
+            for(int i = 0; i < face->format; i++)
+            {
+                Mesh::Vertex *v = vertices[face->vertices[i]];
+                glVertex3f(v->x, v->y, v->z);
+            }
 		}
 	glEnd();
 	//rotate += 0.2f;

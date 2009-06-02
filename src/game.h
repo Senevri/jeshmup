@@ -5,8 +5,10 @@
  *	has: main loop
  */
 
-#pragma once 
-#include "SDL.h"
+#ifndef _GAME_H_
+#define _GAME_H_
+
+#include <SDL/SDL.h>
 #include "world.h"
 #include "GLScene.h"
 
@@ -33,3 +35,5 @@ private:
 	void setupTestObject(void);
 
 };
+
+#endif //_GAME_H_

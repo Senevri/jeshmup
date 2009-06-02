@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _RAWLOADER_H_
+#define _RAWLOADER_H_
+
 #include "../Mesh.h"
 #include <iostream>
 #include <fstream>
@@ -23,12 +25,14 @@ class RawLoader
 public:
 	RawLoader(void);
 	~RawLoader(void);
-	Mesh::vertex * quadToTriangle(Mesh::vertex * quad);
+    Mesh::Vertex * quadToTriangle(Mesh::Vertex * quad);
 	bool load(std::string filename);
-	std::vector<Mesh::vertex *> getVertices(void);
+    std::vector<Mesh::Vertex *> getVertices(void);
 
 private:
 	float strToFloat(std::string);
 	std::ifstream m_InputFile;
-	std::vector<Mesh::vertex *> m_vpVertices;
+    std::vector<Mesh::Vertex *> m_vpVertices;
 };
+
+#endif //_RAWLOADER_H_

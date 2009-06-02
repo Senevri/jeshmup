@@ -4,7 +4,9 @@
  * has: lol wut?
  */
 
-#pragma once
+#ifndef _OBJECT_H_
+#define _OBJECT_H_
+
 #include <string>
 
 class Object{
@@ -15,3 +17,5 @@ class Object{
   unsigned int type; /* if complicated types, go polymorphic */
   unsigned int id;
 };
+
+#endif //_OBJECT_H_

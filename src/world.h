@@ -5,6 +5,9 @@
  *  - Object statuses?
  *  - functions for manipulating, loading, saving, etc. of the world
  **/
+#ifndef _WORLD_H_
+#define _WORLD_H_
+
 #include "object.h"
 #include <vector>
 #include <string>
@@ -40,3 +43,5 @@ class World {
 		}actor;
 		std::vector<actor> actors;
 };
+
+#endif //_WORLD_H_

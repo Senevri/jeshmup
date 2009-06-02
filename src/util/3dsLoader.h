@@ -6,32 +6,43 @@
  *  Copyright 2008. All rights reserved.
  *
  */
+#ifndef _3DSLOADER_H_
+#define _3DSLOADER_H_
 
-#ifdef _WINDOWS
-	typedef unsigned int uint;
-	typedef unsigned short ushort;
-#endif
+#include "Definitions.h"
+
+#include <string>
+#include <fstream>
+
+class Mesh;
 
 class dsLoader
 {
 public:
   dsLoader(void);
   ~dsLoader(void);
-  void load(string file);
+  Mesh* load(std::string file);
 private:
-  uint ReadUInt();
-  ushort ReadUShort();
-  char ReadChar();
+  uint readUInt();
+  ushort readUShort();
+  float readFloat();
+  char readChar();
+  bool finished();
   
   //possible interface?!?
 private:
-  int ReadChunkId();
-  int ReadChunkPointer();
-  bool FindChunk(int,bool);
-  int NextChunk();
-  bool OpenChunk(int);
+  std::string readString();
+  ushort readChunkId();
+  uint readChunkLength();
+  int readChunkPointer();
+  bool findChunk(int,bool);
+  void nextChunk();
+  bool openChunk();
     
 private:
-  ifstream mInputFile;
-  long mChunkPointer;
+  std::ifstream mInputFile;
+  ushort mChunkId;
+  uint mChunkLength;
 };
+
+#endif // _3DSLOADER_H_

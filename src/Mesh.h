@@ -5,45 +5,64 @@
  *		maybe add texture stuff here too?
  */
 
-#pragma once
+#ifndef _MESH_H_
+#define _MESH_H_
+
 #include <vector>
 #include <string>
 
 class Mesh
 {
 public:
-	typedef struct {
+    enum Format{ POINTS = 1, TRIANGLES = 3, QUADS = 4 };
+
+    struct Vertex{
 		float x;
 		float y;
 		float z;
-	} vertex;
-	enum format{ POINTS, TRIANGLES, QUADS };
+    };
+
+    struct UVCoordinate
+    {
+        float u;
+        float v;
+        unsigned int vertexIndex;
+    };
+
+    struct Face
+    {
+        unsigned int *vertices;
+        Mesh::Format format;
+    };
 	
 	Mesh(void);
-	Mesh(std::vector<Mesh::vertex *> vpVertices, Mesh::format type);
-	Mesh(std::string);
+    Mesh(std::vector<Mesh::Vertex *> vpVertices, Mesh::Format type);
+    Mesh(std::string name);
+    Mesh(Mesh::Format format);
 	~Mesh(void);
-
-	std::string m_name;
-
-	typedef struct {
-		vertex * vertices;
-		Mesh::format format;
-	} face;
 	
 	int getType();
-	std::string getName();
+    std::string name();
+    void setName(std::string name);
+
 	//std::vector<float *> getMesh(); /*FIXME: does not work: do not use*/
-	std::vector<vertex *> getMeshVertices();
-	void meshFromFloatArray(const float * mesh, format type, int mesh_size);
-	vertex * vertexArrayFromMesh(void);
+    std::vector<Vertex *> vertices();
+    std::vector<Face*> faces();
+    void setFaces(const unsigned short *faces, Mesh::Format type, int length);
+    void setUVMap(const float *coords, int length);
+    void meshFromFloatArray(const float * mesh, int mesh_size);
+    Vertex* vertexArrayFromMesh(void);
 	
 private:	
-	std::vector<vertex *> m_data;
+    std::vector<Vertex *> m_data;
 	/* todo: list of verts + list of faces, better? */
-	std::vector<vertex *> m_vpVertices;
-	std::vector<face *> m_fpFaces;
-	
+    std::vector<Vertex *> m_vpVertices;
+    std::vector<Face *> m_fpFaces;
+    std::vector<UVCoordinate*> m_uvCoordinates;
+    std::string m_name;
+
 	int m_type;
-	float * vertexToArray(vertex v);
+    float* vertexToArray(Vertex v);
 };
+
+#endif // _MESH_H

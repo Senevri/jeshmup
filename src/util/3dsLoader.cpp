@@ -6,87 +6,210 @@
  *  Copyright 2008. All rights reserved.
  *
  */
-#include<string>
-#include<iostream>
-#include<fstream>
-using namespace std;
-
-#include "3dsFileFormat.h"
 #include "3dsLoader.h"
 
-dsLoader::dsLoader(void){
+#include "3dsFileFormat.h"
+#include "Mesh.h"
+#include "Logging.h"
+
+#include <string>
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+dsLoader::dsLoader(){
 
 }
 
-dsLoader::~dsLoader(void){
+dsLoader::~dsLoader(){
 
 }
 
-void dsLoader::load(string file) {
-    mInputFile.open(file.c_str(), ios::binary);
+Mesh* dsLoader::load(string file) {
+    mInputFile.open(file.c_str(), ifstream::in | ifstream::binary);
     if(!mInputFile.is_open()){
-        return;
+        return 0;
     }
-    bool main = OpenChunk(MAIN3DS);
-    if(!main){
-        return;
+    // get length of file:
+    mInputFile.seekg (0, ios::end);
+    int length = mInputFile.tellg();
+    mInputFile.seekg (0, ios::beg);
+    Logger::LOG("File: %s length: %d", file.c_str(),length);
+
+    openChunk();
+    if(mChunkId != MAIN3DS){
+        Logger::LOG("Cannot open MAIN3DS chunk!");
+        return 0;
     }
-    bool edit = FindChunk(EDIT3DS,false);
+    //main3ds is the main chunk containing the whole file
+    openChunk();
+    while(mChunkId != EDIT3DS && !mInputFile.eof())
+    {
+        nextChunk();
+        openChunk();
+    }
+
+    if(mChunkId != EDIT3DS)
+    {
+        Logger::LOG("Cannot open EDIT3DS chunk!");
+        return 0;
+    }
+
+    Mesh *mesh = new Mesh();
+    openChunk();
+    while(!finished() && mChunkId > 0)
+    {
+        switch(mChunkId)
+        {
+            case EDIT_OBJECT:
+            {
+                std::string name = readString();
+                Logger::LOG("Object name: %s",name.c_str());
+                mesh->setName(name);
+                break;
+            }
+            case OBJ_TRIMESH:
+            {
+                //no data in chunk
+                break;
+            }
+            case TRI_VERTEXL: //vertex data
+            {
+                ushort amount = readUShort();
+                Logger::LOG("Object: %s vertices: %d",mesh->name().c_str(),amount);
+                float *vertices = new float[amount*3];
+                for(int i = 0; i < amount; i++)
+                {
+                    vertices[i*3] = readFloat();
+                    vertices[i*3+1] = readFloat();
+                    vertices[i*3+2] = readFloat();
+                }
+                mesh->meshFromFloatArray(vertices,amount*3);
+                break;
+            }
+            case TRI_FACEL1: //face data
+            {
+                ushort amount = readUShort();
+                Logger::LOG("Object: %s face caount: %d",mesh->name().c_str(),amount);
+                ushort *faces = new ushort[amount*3];
+                for(int i = 0; i < amount; i++)
+                {
+                    faces[i*3] = readUShort();
+                    faces[i*3+1] = readUShort();
+                    faces[i*3+2] = readUShort();
+                    //face info not needed now,,,
+                    readUShort();
+                }
+                mesh->setFaces(faces, Mesh::TRIANGLES, amount*3);
+                break;
+            }
+            case MAPPING_COORDINATES_LIST:
+            {
+                ushort amount = readUShort();
+                Logger::LOG("Object: %s mapping coords count: %d",
+                    mesh->name().c_str(),amount);
+                float *coords = new float[amount*2];
+                for(int i = 0; i < amount; i++)
+                {
+                    coords[i*2] = readFloat();
+                    coords[i*2+1] = readFloat();
+                }
+                mesh->setUVMap(coords,amount*2);
+                break;
+            }
+            default:
+            {
+                //if we were not interested in a chunk, skip it altogether
+                nextChunk();
+            }
+        }
+        //open the next chunk, for the while loop
+        openChunk();
+    }
     
-    
+    mInputFile.close();
+    return mesh;
 }
 
-ushort dsLoader::ReadUShort(){
-  ushort first = ReadChar();
-  ushort second = ReadChar();
-  second << 8;
-  return (second || first);
+bool dsLoader::finished()
+{
+    return mInputFile.eof();
 }
 
-uint dsLoader::ReadUInt(){
-  uint value = ReadChar();
-  value = ReadChar() | (value<<8);
-  value = ReadChar() | (value<<8);
-  value = ReadChar() | (value<<8);
-  return value;
+uint dsLoader::readChunkLength()
+{
+    uint st = readUShort();
+    st |= readUShort() << 8;
+    return st;
 }
 
-char dsLoader::ReadChar(){
-  return mInputFile.get();
+ushort dsLoader::readChunkId()
+{
+    return readUShort();
+}
+
+std::string dsLoader::readString()
+{
+    std::string str;
+    char c = readChar();
+    while(c > 0)
+    {
+        str.push_back(c);
+        c = readChar();
+    }
+    return str;
+}
+
+ushort dsLoader::readUShort(){
+   ushort data;
+   mInputFile.read((char*)&data,sizeof(ushort));
+   return data;
+}
+
+float dsLoader::readFloat()
+{
+    float f;
+    mInputFile.read((char*)&f,sizeof(float));
+    return f;
+}
+
+uint dsLoader::readUInt(){
+    uint value;
+    mInputFile.read((char*)&value,sizeof(uint));
+    return value;
+}
+
+char dsLoader::readChar()
+{
+    return mInputFile.get();
 }
 
 /*
  Try to keep all the chunk reader interface under here
  */
-bool dsLoader::OpenChunk(int chunkID){
-  int id = ReadChunkId();
-  if(id != chunkID){
+bool dsLoader::openChunk()
+{
+    mChunkId = readChunkId();
+    mChunkLength = readChunkLength();
+}
+
+int dsLoader::readChunkPointer(){
+    return readUInt();
+}
+
+void dsLoader::nextChunk(){
+    int toJump = mChunkLength - sizeof(mChunkLength) - sizeof(mChunkId);
+    mInputFile.seekg(toJump, ios_base::cur);
+}
+
+bool dsLoader::findChunk(int chunk_id, bool beginning)
+{
+    if(beginning)
+    {
+        mInputFile.seekg(0);
+        mChunkLength = -1;
+    }
+
     return false;
-  }
-  mChunkPointer = ReadChunkPointer();
-  return true;
-}
-
-int dsLoader::ReadChunkId(){
-  return ReadUShort();
-}
-
-int dsLoader::ReadChunkPointer(){
-  return ReadUInt();   
-}
-
-int dsLoader::NextChunk(){
-  mInputFile.seekg(mChunkPointer - sizeof(mChunkPointer));
-  int id = ReadChunkId();
-  mChunkPointer = ReadChunkPointer();
-  return id;
-}
-
-bool dsLoader::FindChunk(int chunk_id, bool beginning){
-  if(beginning){
-    mInputFile.seekg(0);
-    mChunkPointer = -1;
-  }
- return false; 
-  
 }

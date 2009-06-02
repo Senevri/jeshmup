@@ -1,8 +1,9 @@
 #ifndef _TEST
 #include <iostream>
+#include <unittest++/UnitTest++.h>
+
 //#include "SDL.h"
 #include "game.h"
-#include "UnitTest++.h"
 
 //Private declarations
 int run_tests(void);
@@ -25,7 +26,7 @@ SUITE(MyTestSuite){
  */
 int main( int argc, char *argv[] )
 {
-	run_tests();
+    //run_tests();
 	CMyGame * game = new CMyGame();
 	game->runGame();
 	delete game;	

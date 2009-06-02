@@ -28,7 +28,7 @@ bool RawLoader::load(string filename){
         return false;
     }
 	float coords[12]; /* enough space for a quad */
-	Mesh::vertex * triangle = 0;
+    Mesh::Vertex * triangle = 0;
 				
 	int ncoords = 0;
 	string strcoord=""; /* to parse input with */
@@ -51,7 +51,7 @@ bool RawLoader::load(string filename){
 				if(ncoords == 12){ /* we have a quad, convert to tris */
 					/* first, make a quad */
 					n_tris = 2;
-					Mesh::vertex *quad = new Mesh::vertex[4];
+                    Mesh::Vertex *quad = new Mesh::Vertex[4];
 					for (int i=0;i<4;i++){
 						quad[i].x = coords[i*3];
 						quad[i].y = coords[i*3+1];
@@ -62,7 +62,7 @@ bool RawLoader::load(string filename){
 
 				} else if (ncoords == 9){
 					n_tris =1;
-					triangle = new Mesh::vertex[3];
+                    triangle = new Mesh::Vertex[3];
 					for (int i = 0; i<3;i++){
 						triangle[i].x = coords[i*3];
 						triangle[i].y = coords[i*3+1];
@@ -83,7 +83,7 @@ bool RawLoader::load(string filename){
 }
 
 /* getter */
-std::vector<Mesh::vertex *> RawLoader::getVertices(){
+std::vector<Mesh::Vertex *> RawLoader::getVertices(){
 	return this->m_vpVertices;
 }
 
@@ -101,9 +101,9 @@ float RawLoader::strToFloat(string str){
 /* Description: Turn a quad (4 vertices) to two triangles
  * (six vertices)
  */
-Mesh::vertex * RawLoader::quadToTriangle(Mesh::vertex *quad)
+Mesh::Vertex* RawLoader::quadToTriangle(Mesh::Vertex *quad)
 {
-	Mesh::vertex * triangle = new Mesh::vertex[6];
+    Mesh::Vertex *triangle = new Mesh::Vertex[6];
 	/* make quad to triangles. */
 	/*
 		QUAD = 

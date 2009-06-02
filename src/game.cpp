@@ -1,7 +1,9 @@
 #include "game.h"
 
+#include "util/3dsLoader.h"
 #include "util/RawLoader.h"
 #include "InputHandler.h"
+
 #include <iostream>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -87,7 +89,7 @@ void CMyGame::initialize(){
     SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
     SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
     SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 32 );
+    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
     /* Sets up OpenGL double buffering  - redundant w/flag ? */
     //SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 	
@@ -101,7 +103,7 @@ void CMyGame::initialize(){
 	m_scene = new GLScene();
 	m_scene->init();
 	m_scene->setup(SCREEN_WIDTH, SCREEN_HEIGHT);
-	
+
 
 }
 	
@@ -111,9 +113,9 @@ void CMyGame::initialize(){
 *By: Esa Karjalainen, 04. June, 2005
 ***********************************************************************/
 
-void CMyGame::mainLoop(){
-
-	enum actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT};
+void CMyGame::mainLoop()
+{
+    enum Actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT};
 	static int ticks;
 	int now = SDL_GetTicks();
 	ticks = now + 33;
@@ -158,25 +160,27 @@ void CMyGame::mainLoop(){
 				bFlagQuit = true;
 				break;
 			case(UP):
-				m_scene->camera.location.y -=0.01f;
+                m_scene->Camera.location.y -=0.01f;
 				break;
 			case(DOWN):
-				m_scene->camera.location.y +=0.01f;
+                m_scene->Camera.location.y +=0.01f;
 				break;
 			case(LEFT):
-				m_scene->camera.location.x -=0.02f;
+                m_scene->Camera.location.x -=0.02f;
 				break;
 			case(RIGHT):
-				m_scene->camera.location.x +=0.02f;
+                m_scene->Camera.location.x +=0.02f;
 				break;
 			case(ZOOM_IN):
-				m_scene->camera.location.z +=0.05f;
+                m_scene->Camera.location.z +=0.05f;
 				break;
 			case(ZOOM_OUT):
-				m_scene->camera.location.z -=0.05f;
+                m_scene->Camera.location.z -=0.05f;
 				break;
-		}    
-		m_scene->drawScene();
+        }
+        if (motion != -1) {
+            m_scene->drawScene();
+        }
 		//glTranslate
 		
 		/* draw stuff here */
@@ -187,11 +191,20 @@ void CMyGame::mainLoop(){
 }
 	
 void CMyGame::setupTestObject(void){
-		RawLoader *r = new RawLoader();
+        /*RawLoader *r = new RawLoader();
 		r->load("..\\data\\model\\Arby_whole.raw");
 		Mesh *m1 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
 		m_scene->addMesh(m1);
-		delete r;
+        delete r;*/
+
+        std::cout << "Trying to load model!";
+        dsLoader load;
+        Mesh *mesh = load.load("data/model/monkey.3ds");
+        if(!mesh){
+            std::cout << "Cannot load 3ds!";
+        } else {
+            m_scene->addMesh(mesh);
+        }
 		//r = new RawLoader();
 		//r->load("..\\data\\model\\Arby_head.raw");
 		//Mesh *m2 = new Mesh(r->getVertices(), Mesh::TRIANGLES);
