@@ -13,7 +13,7 @@ SDL_LDFLAGS := -L$(SDL)\lib -lSDLMain
 CFLAGS:=-g -Wall -O3 
 LDFLAGS:=-L$(MINGW32_PATH)\lib -lmingw32 -mwindows 
 
-CFLAGS:= -g -Wall
+CFLAGS:= -g -Wall 
 INCLUDES:=$(SDL_CFLAGS) 
 LIBS:=$(LDFLAGS) $(SDL_LDFLAGS) -lSDL -lopengl32 -lglu32 -lSDL
 DEFS:=
@@ -22,13 +22,13 @@ outfile:=jeshmup
 
 ifeq ($(BUILD), release)
 	CFLAGS:=$(CFLAGS) -O2
-	DEFS:=-DRELEASE -DNOTEST
+	DEFS:=-DRELEASE -D_MINGW
 else 
 	CFLAGS:=$(CFLAGS) 
-	DEFS:=-DDEBUG -DNOTEST
+	DEFS:=-DDEBUG -D_MINGW
 endif	
 
-SRCS:=main.cpp game.cpp object.cpp world.cpp GLScene.cpp Mesh.cpp InputHandler.cpp util\RawLoader.cpp
+SRCS:=main.cpp game.cpp object.cpp world.cpp Light.cpp GLScene.cpp Mesh.cpp InputHandler.cpp util\RawLoader.cpp util\3dsLoader.cpp
 OBJS:=$(patsubst %.cpp,$(bindir)\\%.o, $(SRCS))
 
 TARGETS:=test
