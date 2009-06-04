@@ -3,11 +3,11 @@
 
 #include <GL/gl.h>
 
-class Point3D
+class Point3d
 {
 public:
-    Point3D() : x(0.0f),y(0.0f),z(0.0f){}
-    Point3D(GLfloat fx, GLfloat fy, GLfloat fz) : x(fx),y(fy),z(fz){}
+    Point3d() : x(0.0f),y(0.0f),z(0.0f){}
+    Point3d(GLfloat fx, GLfloat fy, GLfloat fz) : x(fx),y(fy),z(fz){}
 
     GLfloat x;
     GLfloat y;

@@ -21,13 +21,12 @@ namespace Logger
 
         std::clog << timestamp << " --- " << file << " --- " << function << " --- " << line << " --- " << fullmsg << std::endl;
     }
+}
 
 #ifdef DEBUG
-#define LOG(...) log(__TIMESTAMP__, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
+#define LOG(...) Logger::log(__TIMESTAMP__, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
 #else
 #define LOG(...)
 #endif
-
-}
 
 #endif //_LOGGING_H_

@@ -2,8 +2,10 @@ TARGET = jeshmup
 TEMPLATE = app
 DESTDIR = ../.
 QT -= gui \
-    core # No qt is used
-DEFINES += DEBUG
+    core \ # No qt is used
+    DEFINES \
+    += \
+    DEBUG
 LIBS += -lSDL \
     -lUnitTest++ \
     -lGL \
@@ -18,9 +20,9 @@ SOURCES += game.cpp \
     Mesh.cpp \
     InputHandler.cpp \
     Light.cpp \
+    DirectionalLight.cpp \
 
-HEADERS += \
-    game.h \
+HEADERS += game.h \
     world.h \
     object.h \
     GLScene.h \
@@ -28,7 +30,9 @@ HEADERS += \
     InputHandler.h \
     Definitions.h \
     Light.h \
-    Point3D.h
+    Point3d.h \
+    Color.h \
+    DirectionalLight.h \
 
 # utils
 SOURCES += util/RawLoader.cpp \

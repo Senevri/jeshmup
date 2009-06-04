@@ -40,6 +40,11 @@ public:
 
 	void drawScene(void);
 
+    /**
+     * "Draws" the lights i.e. sets up the lights in the GL scene
+     */
+    void drawLights();
+
 	/* TODO: seems insufficient */
     struct Camera {
         Mesh::Vertex location;

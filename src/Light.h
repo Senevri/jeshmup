@@ -1,7 +1,7 @@
-#ifndef LIGHT_H
-#define LIGHT_H
+#pragma once
 
-#include "Point3D.h"
+#include "Point3d.h"
+#include "Color.h"
 
 #include <GL/gl.h>
 
@@ -9,16 +9,27 @@ class Light
 {
 public:
     Light();
-    Light(Point3D position);
+    Light(Point3d position);
 
     virtual ~Light();
 
-    Point3D position() const;
-    void setPosition(const Point3D position);
-    void setPosition(const GLfloat x, const GLfloat y, const GLfloat z);
+    Point3d virtual position() const;
+    void virtual setPosition(const Point3d position);
+    void virtual setPosition(const GLfloat x, const GLfloat y, const GLfloat z);
 
-private:
-    Point3D m_position;
+    void virtual setSpecular(Color::RGBA specular);
+    Color::RGBA virtual specular();
+
+    void virtual setDiffuse(Color::RGBA diffuse);
+    Color::RGBA virtual diffuse();
+
+    void virtual setAmbient(Color::RGBA ambient);
+    Color::RGBA virtual ambient();
+
+protected:
+    Point3d m_position;
+
+    Color::RGBA m_specular;
+    Color::RGBA m_diffuse;
+    Color::RGBA m_ambient;
 };
-
-#endif // LIGHT_H

@@ -35,11 +35,11 @@ Mesh* dsLoader::load(string file) {
     mInputFile.seekg (0, ios::end);
     int length = mInputFile.tellg();
     mInputFile.seekg (0, ios::beg);
-    Logger::LOG("File: %s length: %d", file.c_str(),length);
+    LOG("File: %s length: %d", file.c_str(),length);
 
     openChunk();
     if(mChunkId != MAIN3DS){
-        Logger::LOG("Cannot open MAIN3DS chunk!");
+        LOG("Cannot open MAIN3DS chunk!");
         return 0;
     }
     //main3ds is the main chunk containing the whole file
@@ -52,7 +52,7 @@ Mesh* dsLoader::load(string file) {
 
     if(mChunkId != EDIT3DS)
     {
-        Logger::LOG("Cannot open EDIT3DS chunk!");
+        LOG("Cannot open EDIT3DS chunk!");
         return 0;
     }
 
@@ -65,7 +65,7 @@ Mesh* dsLoader::load(string file) {
             case EDIT_OBJECT:
             {
                 std::string name = readString();
-                Logger::LOG("Object name: %s",name.c_str());
+                LOG("Object name: %s",name.c_str());
                 mesh->setName(name);
                 break;
             }
@@ -77,7 +77,7 @@ Mesh* dsLoader::load(string file) {
             case TRI_VERTEXL: //vertex data
             {
                 ushort amount = readUShort();
-                Logger::LOG("Object: %s vertices: %d",mesh->name().c_str(),amount);
+                LOG("Object: %s vertices: %d",mesh->name().c_str(),amount);
                 float *vertices = new float[amount*3];
                 for(int i = 0; i < amount; i++)
                 {
@@ -91,7 +91,7 @@ Mesh* dsLoader::load(string file) {
             case TRI_FACEL1: //face data
             {
                 ushort amount = readUShort();
-                Logger::LOG("Object: %s face caount: %d",mesh->name().c_str(),amount);
+                LOG("Object: %s face caount: %d",mesh->name().c_str(),amount);
                 ushort *faces = new ushort[amount*3];
                 for(int i = 0; i < amount; i++)
                 {
@@ -107,7 +107,7 @@ Mesh* dsLoader::load(string file) {
             case MAPPING_COORDINATES_LIST:
             {
                 ushort amount = readUShort();
-                Logger::LOG("Object: %s mapping coords count: %d",
+                LOG("Object: %s mapping coords count: %d",
                     mesh->name().c_str(),amount);
                 float *coords = new float[amount*2];
                 for(int i = 0; i < amount; i++)

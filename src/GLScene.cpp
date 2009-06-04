@@ -20,7 +20,7 @@ GLScene::GLScene(void)
     this->Camera.angle.y = 0.0f;
     this->Camera.angle.z = 0.0f;
 
-    Point3D point(0.0f, 10.0f, 5.0f);
+    Point3d point(0.0f, 10.0f, 5.0f);
     m_mainLight.setPosition(point);
 
 }
@@ -50,6 +50,12 @@ void GLScene::init(void)
 
     /*Lights enabled in the scene */
     glEnable( GL_LIGHTING );
+    /* Which polygons face forwards, affects lightning and */
+    glFrontFace( GL_CCW );
+
+    /* something to do with easying the color declaration i.e. Color tracking*/
+    glEnable( GL_COLOR_MATERIAL );
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
     /* The Type Of Depth Test To Do */
     glDepthFunc( GL_LEQUAL );
@@ -115,8 +121,11 @@ void GLScene::drawScene(void){
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity( );
 
+    //how to handle moving lights? etc...
+    drawLights();
+
     glTranslatef( this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
-    Logger::LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
+    LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
 	/*camera moves HERE.*/
 
 	std::vector<Mesh *>::iterator itr;
@@ -127,6 +136,15 @@ void GLScene::drawScene(void){
     glFlush();
 
 //	translate += tradd;
+}
+
+void GLScene::drawLights()
+{
+    GLfloat light[4];
+    m_mainLight.ambient().fillArray(light);
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light);
+
+
 }
 
 void GLScene::translateMesh(int mesh_id, float x, float y, float z)
@@ -175,6 +193,10 @@ void GLScene::drawMesh(Mesh &mesh)
 			type = GL_QUADS;
 			break;
 	}
+
+    //how we incorporate material to mesh....
+    GLfloat reddish[] = {0.8f, 0.3f, 0.3f, 1.0f};
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, reddish);
 
     glColor3f(0.0f,1.0f,0.0f);
     glBegin( GL_TRIANGLES );
