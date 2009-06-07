@@ -95,7 +95,7 @@ void Mesh::setFaces(const unsigned short *faces, Mesh::Format type, int facesSiz
         {
             tmpFace[j] = faces[i+j];
         }
-        f->vertices = tmpFace;
+        f->indices = tmpFace;
         f->format = type;
         m_fpFaces.push_back(f);
     }

@@ -26,8 +26,15 @@ public:
     void virtual setAmbient(Color::RGBA ambient);
     Color::RGBA virtual ambient();
 
+    void virtual setDistant(bool isDistant);
+    bool virtual isDistant();
+
+    void virtual fillWithPosition(GLfloat *array);
+
 protected:
     Point3d m_position;
+
+    GLfloat m_distant;
 
     Color::RGBA m_specular;
     Color::RGBA m_diffuse;

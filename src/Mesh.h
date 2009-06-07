@@ -5,8 +5,10 @@
  *		maybe add texture stuff here too?
  */
 
-#ifndef _MESH_H_
-#define _MESH_H_
+#pragma once
+
+#include "Point3d.h"
+#include "Vector.h"
 
 #include <vector>
 #include <string>
@@ -16,12 +18,14 @@ class Mesh
 public:
     enum Format{ POINTS = 1, TRIANGLES = 3, QUADS = 4 };
 
-    struct Vertex{
-		float x;
-		float y;
-		float z;
-    };
+    /**
+      * Typedef of point to vertex as it is more describing here.
+      */
+    typedef Point3d Vertex;
 
+    /**
+      * Simple structure for UV coordinates.
+      */
     struct UVCoordinate
     {
         float u;
@@ -29,10 +33,35 @@ public:
         unsigned int vertexIndex;
     };
 
+    /**
+      * Structure to define a polygon via indices to list of vertices.
+      */
     struct Face
     {
-        unsigned int *vertices;
+        /**
+          * Destructor.
+          */
+        ~Face()
+        {
+            delete indices;
+        }
+
+        unsigned int *indices;
         Mesh::Format format;
+
+        /**
+          * Calculates this faces normal vector with the given
+          * vertex list. The face indices must match the given vertices vector.
+          * @param vertices The std::vector of vertex data to use to calculate
+          * the normal
+          * @return The normal vector of the face
+          */
+        Vector faceNormal(std::vector<Mesh::Vertex*>& vertices)
+        {
+            return Vector::normalVector(*vertices[indices[0]],
+                                        *vertices[indices[1]],
+                                        *vertices[indices[2]]);
+        }
     };
 	
 	Mesh(void);
@@ -64,5 +93,3 @@ private:
 	int m_type;
     float* vertexToArray(Vertex v);
 };
-
-#endif // _MESH_H

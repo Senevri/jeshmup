@@ -1,5 +1,6 @@
 #include "GLScene.h"
 
+#include "Vector.h"
 #include "util/Logging.h"
 
 #include <iostream>
@@ -20,8 +21,10 @@ GLScene::GLScene(void)
     this->Camera.angle.y = 0.0f;
     this->Camera.angle.z = 0.0f;
 
-    Point3d point(0.0f, 10.0f, 5.0f);
+    Point3d point(0.0f, 50.0f, 5.0f);
     m_mainLight.setPosition(point);
+    m_mainLight.setAmbient(Color::GRAY);
+    m_mainLight.setDiffuse(Color::RED);
 
 }
 
@@ -37,7 +40,7 @@ GLScene::~GLScene(void)
 // int sdl gl stuff
 void GLScene::init(void)
 {
-    glShadeModel( GL_SMOOTH ); /* GL_FLAT, GL_SMOOTH shade model */
+    glShadeModel( GL_FLAT ); /* GL_FLAT, GL_SMOOTH shade model */
 
     /* Set the background black */
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -52,6 +55,9 @@ void GLScene::init(void)
     glEnable( GL_LIGHTING );
     /* Which polygons face forwards, affects lightning and */
     glFrontFace( GL_CCW );
+
+    //no insides
+    glEnable(GL_CULL_FACE);
 
     /* something to do with easying the color declaration i.e. Color tracking*/
     glEnable( GL_COLOR_MATERIAL );
@@ -140,11 +146,22 @@ void GLScene::drawScene(void){
 
 void GLScene::drawLights()
 {
-    GLfloat light[4];
-    m_mainLight.ambient().fillArray(light);
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light);
+    GLfloat tmp[4];
+    m_mainLight.ambient().fillArray(tmp);
+    //glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, tmp);
 
+    m_mainLight.diffuse().fillArray(tmp);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, tmp);
 
+    glEnable(GL_LIGHT0);
+
+    m_mainLight.fillWithPosition(tmp);
+    glLightfv(GL_LIGHT0, GL_POSITION, tmp);
+
+    //automatically rescales normals
+    //should the removed, and implemented faster by ourselves
+    //glEnable( GL_NORMALIZE );
 }
 
 void GLScene::translateMesh(int mesh_id, float x, float y, float z)
@@ -167,6 +184,13 @@ void GLScene::drawMesh(Mesh &mesh)
     //glMatrixMode( GL_MODELVIEW );
 	//glLoadIdentity( );
 	GLubyte * color = white;
+
+    glBegin( GL_POINTS );
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(m_mainLight.position().x,
+                   m_mainLight.position().y,
+                   m_mainLight.position().z);
+    glEnd();
 
 	/* jottei olla naamassa kiinni*/
 	//glTranslatef( 0.0f, 0.0f, -2.0f );
@@ -195,7 +219,7 @@ void GLScene::drawMesh(Mesh &mesh)
 	}
 
     //how we incorporate material to mesh....
-    GLfloat reddish[] = {0.8f, 0.3f, 0.3f, 1.0f};
+    GLfloat reddish[] = {0.3f, 0.3f, 0.5f, 1.0f};
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, reddish);
 
     glColor3f(0.0f,1.0f,0.0f);
@@ -204,9 +228,12 @@ void GLScene::drawMesh(Mesh &mesh)
         for ( itr = faces.begin(); itr < faces.end(); ++itr )
         {
             Mesh::Face* face = *itr;
+            Vector normal = face->faceNormal(vertices);
+            normal.normalize();
+            glNormal3f(normal.x(), normal.y(), normal.z());
             for(int i = 0; i < face->format; i++)
             {
-                Mesh::Vertex *v = vertices[face->vertices[i]];
+                Mesh::Vertex *v = vertices[face->indices[i]];
                 glVertex3f(v->x, v->y, v->z);
             }
 		}

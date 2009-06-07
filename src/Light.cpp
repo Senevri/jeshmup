@@ -63,3 +63,27 @@ RGBA Light::ambient()
 {
     return m_ambient;
 }
+
+void Light::setDistant(bool isDistant)
+{
+    if(isDistant)
+    {
+        m_distant = 0.0f;
+    }
+    else
+    {
+        m_distant = 1.0f;
+    }
+}
+
+bool Light::isDistant()
+{
+    return m_distant;
+}
+
+void Light::fillWithPosition(GLfloat *array)
+{
+    m_position.fillArray(array);
+    array[3] = m_distant;
+}
+
