@@ -53,7 +53,7 @@ void GLScene::init(void)
 
     /*Lights enabled in the scene */
     glEnable( GL_LIGHTING );
-    /* Which polygons face forwards, affects lightning and */
+    /* Which polygons face forwards, affects lighting and */
     glFrontFace( GL_CCW );
 
     //no insides
@@ -222,7 +222,7 @@ void GLScene::drawMesh(Mesh &mesh)
     GLfloat reddish[] = {0.3f, 0.3f, 0.5f, 1.0f};
     glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, reddish);
 
-    glColor3f(0.0f,1.0f,0.0f);
+    //glColor3f(0.0f,1.0f,0.0f);
     glBegin( GL_TRIANGLES );
         std::vector<Mesh::Face*>::iterator itr;
         for ( itr = faces.begin(); itr < faces.end(); ++itr )
