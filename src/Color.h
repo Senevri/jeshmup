@@ -1,5 +1,9 @@
 #pragma once
 
+#ifdef WIN32
+#include <windows.h>
+#undef RGB
+#endif
 #include <GL/gl.h>
 
 namespace Color {

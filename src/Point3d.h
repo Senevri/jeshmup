@@ -1,6 +1,10 @@
 #ifndef POINT3D_H
 #define POINT3D_H
 
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 #include <GL/gl.h>
 
 /**
