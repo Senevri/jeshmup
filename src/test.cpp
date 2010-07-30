@@ -62,16 +62,22 @@ SUITE(ZaWarudoTests) {
 		std::vector<float *> mesh;
 
 		/*6 faces, 4 vertices*/
-		m->meshFromFloatArray(obj, Mesh::QUADS);
+		m->meshFromFloatArray(obj, 3*4); // 4 verts, 3 coords per vert
 		quad = m->vertexArrayFromMesh();
 		triangle = r->quadToTriangle(quad);
 
  		CHECK(triangle[0].x == 1.0f);
+		cout<<triangle[0].x<<endl;
 		CHECK(triangle[1].x == 2.0f);
+		cout<<triangle[1].x<<endl;
 		CHECK(triangle[2].x == 3.0f);
+		cout<<triangle[2].x<<endl;
 		CHECK(triangle[3].x == 3.0f);
+		cout<<triangle[3].x<<endl;
 		CHECK(triangle[4].x == 4.0f);
+		cout<<triangle[4].x<<endl;
 		CHECK(triangle[5].x == 1.0f);
+		cout<<triangle[5].x<<endl;
 		
 		delete m;
 		
