@@ -32,7 +32,7 @@ void InputHandler::registerAction(const std::string name,
 /*TODO: IN PROGRESS!!!1one*/
 int InputHandler::queryEvent(const SDL_Event *event){
 	std::vector<action>::iterator itr;
-	int deadzone = 8000;
+	int deadzone = 8000; /* FIXME make configurable */
 	int motion=-1;
 	for ( itr = this->actions.begin(); itr < this->actions.end(); ++itr ){
 		if(event->type == itr->sdl_event_type){

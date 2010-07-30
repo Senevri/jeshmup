@@ -44,10 +44,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;G:\devel\ext\UnitTest++\src&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;"
+				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="true"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -68,7 +69,7 @@
 				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;G:\devel\ext\UnitTest++\Release&quot;;&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
+				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -119,7 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;G:\devel\ext\UnitTest++\src&quot;"
+				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -141,7 +142,7 @@
 				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib"
 				Version="0.01"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;;&quot;G:\devel\ext\UnitTest++\Release&quot;"
+				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -196,7 +197,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;G:\devel\ext\UnitTest++\src&quot;"
+				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_TEST"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -222,7 +223,7 @@
 				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;G:\devel\ext\UnitTest++\Release&quot;;&quot;G:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
+				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -268,6 +269,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\Color.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Definitions.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\DirectionalLight.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\game.h"
 				>
 			</File>
@@ -280,6 +293,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\Light.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\Mesh.h"
 				>
 			</File>
@@ -288,7 +305,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\Point3d.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\util\RawLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Vector.h"
 				>
 			</File>
 			<File
@@ -312,6 +337,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\DirectionalLight.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\game.cpp"
 				>
 			</File>
@@ -321,6 +350,10 @@
 			</File>
 			<File
 				RelativePath="..\src\InputHandler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Light.cpp"
 				>
 			</File>
 			<File
@@ -354,6 +387,10 @@
 		</File>
 		<File
 			RelativePath=".\ClassDiagram.cd"
+			>
+		</File>
+		<File
+			RelativePath=".\ClassDiagram1.cd"
 			>
 		</File>
 	</Files>

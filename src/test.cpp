@@ -15,13 +15,13 @@ using namespace std;
 SUITE(ZaWarudoTests) {
 	TEST(InitTest){
 		cout << "ZA WARUDO TESTS\n";
-		Object *o = new Object();
+		/*Object *o = new Object();
 		o->name = "test object";
 		o->coord.x = 10;
 		o->coord.y = 20;
 		o->coord.z = 30;
 		CHECK(0==o->name.compare("test object"));
-		delete o;
+		delete o; */
 	}
 	TEST(ConstructMesh){
 		Mesh *m = new Mesh();
@@ -40,10 +40,11 @@ SUITE(ZaWarudoTests) {
 		std::vector<float *> mesh;
 
 		/*6 faces, 4 vertices*/
-		m->meshFromFloatArray(obj, Mesh::QUADS, (6*4*3));
+		m->meshFromFloatArray(obj, (6*4*3));
+		m->setType(Mesh::QUADS);
 		CHECK(Mesh::QUADS == m->getType());
 		//mesh = m->getMesh();
-		std::vector<Mesh::vertex *> verts = m->getMeshVertices();
+		std::vector<Mesh::Vertex *> verts = m->vertices();
 		CHECK(verts[0]->x == (float)1);
 
 		delete m;
@@ -53,15 +54,15 @@ SUITE(ZaWarudoTests) {
 		float obj[] = {
 			1.0f,  1.0f,  1.0f,  2.0f,  2.0f,  2.0f,  3.0f,  3.0f,  3.0f,  4.0f,  4.0f,  4.0f
 		};
-		Mesh::vertex * triangle = new Mesh::vertex[6];
-		Mesh::vertex * quad = new Mesh::vertex[4];
+		Mesh::Vertex * triangle = new Mesh::Vertex[6];
+		Mesh::Vertex * quad = new Mesh::Vertex[4];
 
 		RawLoader *r = new RawLoader();
 		Mesh *m = new Mesh();
 		std::vector<float *> mesh;
 
 		/*6 faces, 4 vertices*/
-		m->meshFromFloatArray(obj, Mesh::QUADS, (6*4*3));
+		m->meshFromFloatArray(obj, Mesh::QUADS);
 		quad = m->vertexArrayFromMesh();
 		triangle = r->quadToTriangle(quad);
 
@@ -78,7 +79,7 @@ SUITE(ZaWarudoTests) {
 		delete [] quad;
 
 		/* test loading */
-		std::vector<Mesh::vertex *> vertices;
+		std::vector<Mesh::Vertex *> vertices;
 		if (r->load("..\\data\\model\\blendertest.raw")) {
 			vertices = r->getVertices();
 			//cout << vertices[0]->x << endl;

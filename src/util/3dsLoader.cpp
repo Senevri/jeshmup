@@ -192,6 +192,7 @@ bool dsLoader::openChunk()
 {
     mChunkId = readChunkId();
     mChunkLength = readChunkLength();
+	return false; //FIXME
 }
 
 int dsLoader::readChunkPointer(){

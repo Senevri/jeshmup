@@ -199,9 +199,11 @@ void CMyGame::setupTestObject(void){
 
         std::cout << "Trying to load model!";
         dsLoader load;
-        Mesh *mesh = load.load("data/model/monkey.3ds");
+        Mesh *mesh = load.load("../data/model/untitled.3ds");
         if(!mesh){
             std::cout << "Cannot load 3ds!";
+			SDL_Quit();
+			return;
         } else {
             m_scene->addMesh(mesh);
         }

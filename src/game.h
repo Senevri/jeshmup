@@ -8,7 +8,9 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include <SDL/SDL.h>
+//this is just wrong according to examples.
+//#include <SDL/SDL.h>
+#include <SDL.h>
 #include "world.h"
 #include "GLScene.h"
 

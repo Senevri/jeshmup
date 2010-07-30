@@ -43,6 +43,10 @@ int Mesh::getType(){
 	return this->m_type;
 }
 
+void Mesh::setType(Mesh::Format type){
+	this->m_type = type;
+}
+
 /* m_name is public, but for completion's sake... */
 std::string Mesh::name(){
 	return this->m_name;
@@ -64,7 +68,7 @@ void Mesh::setName(std::string name)
 
 Mesh::Vertex * Mesh::vertexArrayFromMesh(void){
     std::vector<Vertex *>::iterator itr;
-	unsigned int size = m_data.size();
+	size_t size = m_data.size();
     Vertex *v = new Vertex[(const int)size]; /* cannot allocate since we don't know size...*/
 	int i = 0;
 	for ( itr = m_data.begin(); itr < m_data.end(); ++itr )

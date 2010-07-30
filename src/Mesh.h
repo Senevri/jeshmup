@@ -70,6 +70,7 @@ public:
     Mesh(Mesh::Format format);
 	~Mesh(void);
 	
+	void setType(Mesh::Format type);
 	int getType();
     std::string name();
     void setName(std::string name);
