@@ -1,40 +1,32 @@
 #ifndef _TEST
 #include <iostream>
-#include <unittest++/UnitTest++.h>
+#include <UnitTest++.h>
 
-//#include "SDL.h"
 #include "game.h"
+#include "LevelFactory.h"
+#include "world.h"
 
-//Private declarations
-int run_tests(void);
-
-//Implementations start here
-//
-SUITE(MyTestSuite){
-	TEST(Autosucceed){
-		CHECK(true);
-	}
-
-	TEST(AutoFail){
-		CHECK(false);
-	}
+int run_tests(void)
+{
+    return UnitTest::RunAllTests();
 }
 
-
-/* Main Function
- *
- */
 int main( int argc, char *argv[] )
 {
-    //run_tests();
-	CMyGame * game = new CMyGame();
-	game->runGame();
-	delete game;	
-	return 0;
-}
-
-int run_tests(void){
-	return UnitTest::RunAllTests();
+//    if( run_tests() )
+//    {
+//        return 5;
+//    }
+//    else
+//    {
+//        return 0;
+//    }
+    LevelFactory factory;
+    World world;
+    CMyGame *game = new CMyGame(world, factory);
+    game->runGame();
+    delete game;
+    return 0;
 }
 
 #endif // not _TEST

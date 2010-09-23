@@ -39,7 +39,8 @@ Mesh::~Mesh(void)
 	}
 }
 
-int Mesh::getType(){
+int Mesh::getType() const
+{
 	return this->m_type;
 }
 
@@ -48,7 +49,8 @@ void Mesh::setType(Mesh::Format type){
 }
 
 /* m_name is public, but for completion's sake... */
-std::string Mesh::name(){
+std::string Mesh::name() const
+{
 	return this->m_name;
 }
 
@@ -57,34 +59,28 @@ void Mesh::setName(std::string name)
     m_name = name;
 }
 
-//std::vector<float *> Mesh::getMesh(){
-//	std::vector<float *> output;
-//	for each(Vertex *v in this->m_data) {
-//		float * arr = VertexToArray(*v); /* returns a pointer to an array */
-//		output.push_back(arr); /* ...profit? */
-//	}	
-//	return output;
-//}
 
-Mesh::Vertex * Mesh::vertexArrayFromMesh(void){
+Mesh::Vertex * Mesh::vertexArrayFromMesh(void) const
+{
     std::vector<Vertex *>::iterator itr;
 	size_t size = m_data.size();
+
     Vertex *v = new Vertex[(const int)size]; /* cannot allocate since we don't know size...*/
-	int i = 0;
-	for ( itr = m_data.begin(); itr < m_data.end(); ++itr )
-	{	
-		v[i] = **itr; /* so many pointer ops in c++ project ... nojustno */
-		i++;
-	}
-	return v;
+    int i = 0;
+    for (; itr != m_data.end(); ++itr )
+    {
+        v[i] = **itr; /* so many pointer ops in c++ project ... nojustno */
+        i++;
+    }
+    return v;
 }
 
-std::vector<Mesh::Vertex *> Mesh::vertices()
+std::vector<Mesh::Vertex *> Mesh::vertices() const
 {
 	return this->m_data;
 }
 
-std::vector<Mesh::Face*> Mesh::faces()
+std::vector<Mesh::Face*> Mesh::faces() const
 {
     return this->m_fpFaces;
 }

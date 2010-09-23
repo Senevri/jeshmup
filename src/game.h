@@ -8,34 +8,36 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-//this is just wrong according to examples.
-//#include <SDL/SDL.h>
-#include <SDL.h>
-#include "world.h"
-#include "GLScene.h"
+#include <SDL/SDL.h>
+
+class LevelFactory;
+class GLScene;
+class DrawEngine;
+class World;
 
 class CMyGame{
 
 public:
 	//constructor, destructor
-	CMyGame();
+    CMyGame(World &world, LevelFactory &factory);
 	~CMyGame();
 
 	//methods
 	void runGame();
 
 private:
-	
+    void initialize();
+    void myWaitEvent();
+    void mainLoop();
+    void setupTestObject();
+
+private: //data
 	SDL_Surface *m_screen;
-	GLScene * m_scene;
-	World * m_world;
-	void initialize();
-	void myWaitEvent();
-	void mainLoop();
+    GLScene *m_scene;
+    DrawEngine *m_drawEngine;
 
-	//test
-	void setupTestObject(void);
-
+    World &m_world;
+    LevelFactory &m_levelFactory;
 };
 
 #endif //_GAME_H_

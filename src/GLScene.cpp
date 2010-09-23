@@ -1,7 +1,10 @@
 #include "GLScene.h"
 
+#include "object.h"
+#include "DrawEngine.h"
 #include "Vector.h"
-#include "util/Logging.h"
+#include "Level.h"
+#include "Logging.h"
 
 #include <iostream>
 
@@ -12,11 +15,13 @@
 
 
 
-GLScene::GLScene(void)
+GLScene::GLScene(DrawEngine *drawEngine) :
+        m_level(0),
+        m_drawEngine(drawEngine)
 {
     this->Camera.location.x = 0.0f;
     this->Camera.location.y = 0.0f;
-    this->Camera.location.z = -2.0f;
+    this->Camera.location.z = -150.0f;
     this->Camera.angle.x = 0.0f;
     this->Camera.angle.y = 0.0f;
     this->Camera.angle.z = 0.0f;
@@ -30,11 +35,7 @@ GLScene::GLScene(void)
 
 GLScene::~GLScene(void)
 {
-	std::vector<Mesh *>::iterator itr;
-	for ( itr = meshes.begin(); itr < meshes.end(); ++itr )
-	{	
-		delete *itr;
-	}
+    LOG("Deleteting GLScene");
 }
 
 // int sdl gl stuff
@@ -112,36 +113,46 @@ void GLScene::setup(int width, int height)
     glLoadIdentity( );
 }
 
-void GLScene::addMesh(Mesh * mesh){
-	this->meshes.push_back(mesh);
+void GLScene::setLevel(Level* level)
+{
+    m_level = level;
 }
 
-void GLScene::drawMesh(unsigned int index){
-    this->drawMesh(*meshes[index]);
+void GLScene::updateScene(int ticks)
+{
+    const std::vector<Object*>& objects = m_level->objects();
+    std::vector<Object*>::const_iterator itr = objects.begin();
+    std::vector<Object*>::const_iterator itrEnd = objects.end();
+
+    itr = objects.begin();
+    for(; itr != itrEnd; ++itr)
+    {
+        (*itr)->update(ticks);
+    }
 }
 
 void GLScene::drawScene(void){
-	/* clear buffers */
+    /* clear buffers */
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity( );
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity( );
 
     //how to handle moving lights? etc...
     drawLights();
 
     glTranslatef( this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
     LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
-	/*camera moves HERE.*/
 
-	std::vector<Mesh *>::iterator itr;
-	for ( itr = this->meshes.begin(); itr < this->meshes.end(); ++itr )
-	{	
-		this->drawMesh(**itr);
-	}
+    std::vector<Object*> objects = m_level->objects();
+    std::vector<Object*>::const_iterator itr = objects.begin();
+    std::vector<Object*>::const_iterator itrEnd = objects.end();
+
+    for(; itr != itrEnd; ++itr)
+    {
+        (*itr)->draw(*m_drawEngine);
+    }
     glFlush();
-
-//	translate += tradd;
 }
 
 void GLScene::drawLights()
@@ -162,83 +173,6 @@ void GLScene::drawLights()
     //automatically rescales normals
     //should the removed, and implemented faster by ourselves
     //glEnable( GL_NORMALIZE );
-}
-
-void GLScene::translateMesh(int mesh_id, float x, float y, float z)
-{
-
-}
-
-void GLScene::rotateMesh(int mesh_id, float x, float y, float z)
-{
-
-}
-
-
-void GLScene::drawMesh(Mesh &mesh)
-{    
-	
-	static GLfloat rotate = 0.0f;
-	GLubyte white[] = {224, 224, 224, 128}; /* rgba? a no effect*/
-	GLubyte green[] = {0, 196, 0, 128}; 
-    //glMatrixMode( GL_MODELVIEW );
-	//glLoadIdentity( );
-	GLubyte * color = white;
-
-    glBegin( GL_POINTS );
-        glColor3f(1.0f, 0.0f, 0.0f);
-        glVertex3f(m_mainLight.position().x,
-                   m_mainLight.position().y,
-                   m_mainLight.position().z);
-    glEnd();
-
-	/* jottei olla naamassa kiinni*/
-	//glTranslatef( 0.0f, 0.0f, -2.0f );
-
-	if(rotate==360.0f) rotate=0.0f;
-
-    glRotatef( rotate, 1.0f, 1.0f, 1.0f );
-
-	GLubyte tmp=0;
-
-    std::vector<Mesh::Vertex *> vertices = mesh.vertices();
-    std::vector<Mesh::Face*> faces = mesh.faces();
-	
-	GLenum type;
-
-	switch(mesh.getType()){
-		case Mesh::POINTS:
-			type = GL_POINTS;
-			break;
-		case Mesh::TRIANGLES:
-			type = GL_TRIANGLES;
-			break;
-		case Mesh::QUADS:
-			type = GL_QUADS;
-			break;
-	}
-
-    //how we incorporate material to mesh....
-    GLfloat reddish[] = {0.3f, 0.3f, 0.5f, 1.0f};
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, reddish);
-
-    //glColor3f(0.0f,1.0f,0.0f);
-    glBegin( GL_TRIANGLES );
-        std::vector<Mesh::Face*>::iterator itr;
-        for ( itr = faces.begin(); itr < faces.end(); ++itr )
-        {
-            Mesh::Face* face = *itr;
-            Vector normal = face->faceNormal(vertices);
-            normal.normalize();
-            glNormal3f(normal.x(), normal.y(), normal.z());
-            for(int i = 0; i < face->format; i++)
-            {
-                Mesh::Vertex *v = vertices[face->indices[i]];
-                glVertex3f(v->x, v->y, v->z);
-            }
-		}
-	glEnd();
-	//rotate += 0.2f;
 }
 
 

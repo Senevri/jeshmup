@@ -10,6 +10,7 @@
 
 #include "3dsFileFormat.h"
 #include "Mesh.h"
+#include "MeshMaterial.h"
 #include "Logging.h"
 
 #include <string>
@@ -28,7 +29,8 @@ dsLoader::~dsLoader(){
 
 Mesh* dsLoader::load(string file) {
     mInputFile.open(file.c_str(), ifstream::in | ifstream::binary);
-    if(!mInputFile.is_open()){
+    if(!mInputFile.is_open())
+    {
         return 0;
     }
     // get length of file:
@@ -62,19 +64,23 @@ Mesh* dsLoader::load(string file) {
     {
         switch(mChunkId)
         {
-            case EDIT_OBJECT:
+        case EDIT_OBJECT:
             {
                 std::string name = readString();
                 LOG("Object name: %s",name.c_str());
                 mesh->setName(name);
                 break;
             }
-            case OBJ_TRIMESH:
+        case EDIT_MATERIAL:
+            {
+                loadMaterialChunk(mesh, mChunkLength);
+            }
+        case OBJ_TRIMESH:
             {
                 //no data in chunk
                 break;
             }
-            case TRI_VERTEXL: //vertex data
+        case TRI_VERTEXL: //vertex data
             {
                 ushort amount = readUShort();
                 LOG("Object: %s vertices: %d",mesh->name().c_str(),amount);
@@ -88,7 +94,7 @@ Mesh* dsLoader::load(string file) {
                 mesh->meshFromFloatArray(vertices,amount*3);
                 break;
             }
-            case TRI_FACEL1: //face data
+        case TRI_FACEL1: //face data
             {
                 ushort amount = readUShort();
                 LOG("Object: %s face caount: %d",mesh->name().c_str(),amount);
@@ -104,7 +110,7 @@ Mesh* dsLoader::load(string file) {
                 mesh->setFaces(faces, Mesh::TRIANGLES, amount*3);
                 break;
             }
-            case MAPPING_COORDINATES_LIST:
+        case MAPPING_COORDINATES_LIST:
             {
                 ushort amount = readUShort();
                 LOG("Object: %s mapping coords count: %d",
@@ -118,7 +124,7 @@ Mesh* dsLoader::load(string file) {
                 mesh->setUVMap(coords,amount*2);
                 break;
             }
-            default:
+        default:
             {
                 //if we were not interested in a chunk, skip it altogether
                 nextChunk();
@@ -130,6 +136,52 @@ Mesh* dsLoader::load(string file) {
     
     mInputFile.close();
     return mesh;
+}
+
+void dsLoader::loadMaterialChunk(Mesh* mesh, int chunkLength)
+{
+    MeshMaterial material;
+    openChunk();
+    int readAmount = mChunkLength;
+    while(readAmount < chunkLength)
+    {
+        switch(mChunkId)
+        {
+        case MATNAME:
+            {
+                std::string materialName = readString();
+                LOG("Material found: %s", materialName.c_str());
+                break;
+            }
+        case MATLUMINANCE:
+            {
+                Color::RGB ambient = loadColorChunk();
+                break;
+            }
+        default:
+            {
+                nextChunk();
+            }
+        }
+        openChunk();
+        readAmount += mChunkLength;
+    }
+}
+
+Color::RGB dsLoader::loadColorChunk()
+{
+    openChunk();
+    Color::RGB color;
+    if( mChunkId == 0x0011)
+    {
+        color.red = readChar() / 255.0f;
+        color.green = readChar() / 255.0f;
+        color.blue = readChar() / 255.0f;
+    }
+    openChunk();
+    openChunk();
+    openChunk();
+
 }
 
 bool dsLoader::finished()
@@ -195,22 +247,8 @@ bool dsLoader::openChunk()
 	return false; //FIXME
 }
 
-int dsLoader::readChunkPointer(){
-    return readUInt();
-}
-
 void dsLoader::nextChunk(){
     int toJump = mChunkLength - sizeof(mChunkLength) - sizeof(mChunkId);
     mInputFile.seekg(toJump, ios_base::cur);
 }
 
-bool dsLoader::findChunk(int chunk_id, bool beginning)
-{
-    if(beginning)
-    {
-        mInputFile.seekg(0);
-        mChunkLength = -1;
-    }
-
-    return false;
-}

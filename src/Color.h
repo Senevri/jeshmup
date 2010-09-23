@@ -18,6 +18,17 @@ namespace Color {
             : red(red), green(green), blue(blue)
         {}
 
+        RGB(unsigned int rawColor)
+        {
+            unsigned int r = rawColor >> 16;
+            unsigned int g = 0xFF & (rawColor >> 8);
+            unsigned int b = 0xFF & rawColor;
+
+            red = static_cast<GLfloat>(r) / 0xFF;
+            green = static_cast<GLfloat>(g) / 0xFF;
+            blue = static_cast<GLfloat>(b) / 0xFF;
+        }
+
         virtual ~RGB()
         {}
 

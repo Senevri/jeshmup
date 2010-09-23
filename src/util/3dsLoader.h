@@ -16,6 +16,11 @@
 
 class Mesh;
 
+namespace Color
+{
+    class RGB;
+};
+
 class dsLoader
 {
 public:
@@ -28,14 +33,13 @@ private:
   float readFloat();
   char readChar();
   bool finished();
-  
-  //possible interface?!?
+
 private:
+  void loadMaterialChunk(Mesh* mesh, int chunkLength);
+  Color::RGB loadColorChunk();
   std::string readString();
   ushort readChunkId();
   uint readChunkLength();
-  int readChunkPointer();
-  bool findChunk(int,bool);
   void nextChunk();
   bool openChunk();
     

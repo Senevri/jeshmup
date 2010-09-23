@@ -1,27 +1,22 @@
 #ifndef _LOGGING_H_
 #define _LOGGING_H_
 
+#include <stdio.h>
 #include <stdarg.h>
 #include <iostream>
 
+#define VA_ARGS_TO_CHAR(variable, buffer) va_list args; \
+                                          va_start(args, variable); \
+                                          char* msg = va_arg(args, char *);\
+                                          vsprintf(buffer, msg, args);
+
 namespace Logger
 {
-    //static keyword is required so no multiple compile
-    //instances would be created  by the compiler
-    static void log(const char* timestamp, const char* file, const char* function, int line, ...)
-    {
-        va_list args;
-        va_start(args, line);
-
-        char* msg = va_arg(args, char *);
-
-        char fullmsg[512];
-
-        vsprintf(fullmsg, msg, args);
-
-        std::clog << timestamp << " --- " << file << " --- " << function << " --- " << line << " --- " << fullmsg << std::endl;
-    }
+    void log(const char* timestamp, const char* file, const char* function, int line, ...);
+    void error(const char* timestamp, const char* file, const char* function, int line, ...);
 }
+
+#define LOG_ERROR(...) Logger::error(__TIMESTAMP__, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
 
 #ifdef DEBUG
 #define LOG(...) Logger::log(__TIMESTAMP__, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)

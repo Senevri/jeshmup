@@ -13,6 +13,11 @@
 #include <vector>
 #include <string>
 
+namespace Color
+{
+    class RGB;
+};
+
 class Mesh
 {
 public:
@@ -70,18 +75,23 @@ public:
     Mesh(Mesh::Format format);
 	~Mesh(void);
 	
+
 	void setType(Mesh::Format type);
-	int getType();
-    std::string name();
+    int getType() const;
+    std::string name() const;
     void setName(std::string name);
 
+    void setMaterial(Color::RGB ambient,
+                     Color::RGB diffuse,
+                     Color::RGB specular);
+
 	//std::vector<float *> getMesh(); /*FIXME: does not work: do not use*/
-    std::vector<Vertex *> vertices();
-    std::vector<Face*> faces();
+    std::vector<Vertex *> vertices() const;
+    std::vector<Face*> faces() const;
     void setFaces(const unsigned short *faces, Mesh::Format type, int length);
     void setUVMap(const float *coords, int length);
     void meshFromFloatArray(const float * mesh, int mesh_size);
-    Vertex* vertexArrayFromMesh(void);
+    Vertex* vertexArrayFromMesh(void) const;
 	
 private:	
     std::vector<Vertex *> m_data;

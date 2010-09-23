@@ -9,39 +9,21 @@
 #define _WORLD_H_
 
 #include "object.h"
+#include "Vector.h"
 #include <vector>
 #include <string>
 
 class World {
-	public:
+public:
 
-	typedef struct {
-		float x;
-		float y;
-		float z;
-	} coordinate;
+    World();
+    ~World();
 
-	World();
-	~World();
+    void start(std::vector<Object*> objects);
+    void updateWorld(int ticks);
 
-	unsigned int createActor(std::string name); /* returnvalue ID */
-	bool createActor(std::string name, unsigned int id);
-	bool setActorLocation(unsigned int id, float x, float y, float z);
-	bool setActorFacing(unsigned int id, float x, float y, float z);
-	bool setActorVelocity(unsigned int id, float x, float y, float z);
-	bool moveActorForward(unsigned int id, float amount);
-	bool moveActorSideways(unsigned int id, float amount);
-	bool moveActorVertically(unsigned int id, float amount);
-
-	private:
-		/* object-in-world, world-object -> wob */
-		typedef struct {
-			Object object;
-			coordinate location;
-			coordinate facing; /* (effectively a vector) */
-			coordinate velocity; /* motion vector */
-		}actor;
-		std::vector<actor> actors;
+private:
+    std::vector<Object*> m_objects;
 };
 
 #endif //_WORLD_H_

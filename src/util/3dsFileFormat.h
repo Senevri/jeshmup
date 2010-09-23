@@ -31,6 +31,15 @@
 #define EDIT_AMBIENT  0x2100
 #define EDIT_OBJECT   0x4000
 
+//>------ sub defines of EDITMATERIAL
+#define MATNAME       0xA000
+#define MATLUMINANCE  0xA010
+#define MATDIFFUSE    0xA020
+#define MATSPECULAR   0xA030
+#define MATSHININESS  0xA040
+#define MATMAP        0xA200
+#define MATMAPFILE    0xA300
+
 #define EDIT_UNKNW01  0x1100
 #define EDIT_UNKNW02  0x1201
 #define EDIT_UNKNW03  0x1300

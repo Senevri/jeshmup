@@ -18,6 +18,9 @@
 #include "Light.h"
 #include "object.h"
 #include <vector>
+
+class Level;
+
 /**
  *  OpenGL wrapper for the disgusting state machine
  *  (well, not _that_ disgusting.)
@@ -25,50 +28,33 @@
 class GLScene
 {
 public:
-	GLScene(void);
-	~GLScene(void);
-	// int sdl gl stuff
-	void init(void);
-	/* takes screen /viewport w / h */
-	void setup(int width, int height);
-	void intArrayToVertices(int * arr, int size);
-    void drawMesh(Mesh& mesh);
-	void drawMesh(unsigned int index); /* use nth mesh in meshes */
-	void addMesh(Mesh * mesh);
-	void translateMesh(int mesh_id, float x, float y, float z);
-	void rotateMesh(int mesh_id, float x, float y, float z);
+    GLScene(DrawEngine *drawEngine);
+    ~GLScene();
+    // int sdl gl stuff
+    void init(void);
+    /* takes screen /viewport w / h */
+    void setup(int width, int height);
 
-	void drawScene(void);
+    void setLevel(Level* level);
+
+    void drawScene();
+    void updateScene(int ticks);
 
     /**
      * "Draws" the lights i.e. sets up the lights in the GL scene
      */
     void drawLights();
 
-	/* TODO: seems insufficient */
+    /* TODO: seems insufficient */
     struct Camera {
         Mesh::Vertex location;
         Mesh::Vertex angle; /* hey, it's an array of three floats. */
     } Camera;
 
-private:	
-
-	/* mesh = mesh. 
-	 * visible = "do we render this? 
-	 * data = location, name, facing etc.
-	 */
-	typedef struct {
-		Mesh *mesh; /* should mesh keep model/texture ? or new class?*/
-		bool visible;
-        Mesh::Vertex location;
-        Mesh::Vertex angle; /* hey, it's an array of three floats. */
-    } Scene_obj;
-    std::vector<Scene_obj> m_scene_objs; /* stupid ? */
-	
-
-	/* this won't do, at least not alone. */
-	std::vector<Mesh *> meshes; /* so meshy */
+private:
     Light m_mainLight;
+    Level *m_level;
+    DrawEngine *m_drawEngine;
 
 };
 
