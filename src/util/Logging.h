@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-#include <iostream>
 
 #define VA_ARGS_TO_CHAR(variable, buffer) va_list args; \
                                           va_start(args, variable); \

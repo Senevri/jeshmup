@@ -5,7 +5,10 @@ QT -= gui core # No qt is used
 
 DEFINES += DEBUG
 
-LIBS += -lSDL -lGL -lGLU
+LIBS += -lGL -lGLU
+
+CONFIG += link_pkgconfig
+PKGCONFIG += sdl
 
 DEPENDPATH += util
 INCLUDEPATH += util
@@ -24,7 +27,8 @@ SOURCES += game.cpp \
     DirectionalLight.cpp \
     LevelFactory.cpp \
     Level.cpp \
-    DrawEngine.cpp
+    DrawEngine.cpp \
+    UI.cpp
 
 HEADERS += game.h \
     world.h \
@@ -42,11 +46,13 @@ HEADERS += game.h \
     Vector.h \
     LevelFactory.h \
     Level.h \
-    DrawEngine.h
+    DrawEngine.h \
+    UI.h \
+    Point2d.h
 
 #include(../libs/SOIL.pri)
 include(../libs/UnitTest++.pri)
+include(../libs/SDL_ttf.pri)
 
 include($$PWD/util/utils.pri)
 include($$PWD/tests/tests.pri)
-

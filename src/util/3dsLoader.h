@@ -11,7 +11,6 @@
 
 #include "Definitions.h"
 
-#include <string>
 #include <fstream>
 
 class Mesh;

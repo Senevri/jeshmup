@@ -9,7 +9,8 @@ HEADERS += 3dsFileFormat.h \
     ChunkReader.h \
     List.h \
     Conversion.h \
-    Timer.h
+    Timer.h \
+    util/Math.h
 
 SOURCES += 3dsLoader.cpp \
     Logging.cpp \

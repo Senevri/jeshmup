@@ -9,6 +9,11 @@
 #include "GLScene.h"
 #include "DrawEngine.h"
 
+#include "UI.h"
+#include "Logging.h"
+
+#include "Point2d.h"
+
 #include <iostream>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -110,9 +115,23 @@ void CMyGame::initialize()
 
     m_screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, screenflags);
     if ( m_screen == NULL ) {
-        fprintf(stderr, "Unable to set video: %s\n", SDL_GetError());
+        LOG_ERROR("Unable to set video: %s\n", SDL_GetError());
         exit(1);
     }
+    else
+    {
+        LOG("Screen size h:%d w:%d", m_screen->h, m_screen->w);
+    }
+
+    // video mode set now can UI be instansiated
+    // does not do anything yet...
+    UI *ui = UI::instance();
+    if( !ui->initialize() )
+    {
+        LOG_ERROR("UI not initialized!");
+        exit(1);
+    }
+
 
     // this maybe stupid ::: scene not responsible for videomode.
     m_scene = new GLScene(m_drawEngine);

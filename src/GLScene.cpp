@@ -6,6 +6,9 @@
 #include "Level.h"
 #include "Logging.h"
 
+#include "UI.h"
+#include "Point2d.h"
+
 #include <iostream>
 
 /**
@@ -152,6 +155,10 @@ void GLScene::drawScene(void){
     {
         (*itr)->draw(*m_drawEngine);
     }
+
+    UI::drawText("Camera moved down!", Point2d(20,50));
+    LOG("text should be drawn!");
+
     glFlush();
 }
 
