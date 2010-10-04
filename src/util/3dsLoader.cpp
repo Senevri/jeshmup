@@ -182,6 +182,7 @@ Color::RGB dsLoader::loadColorChunk()
     openChunk();
     openChunk();
 
+    return color;
 }
 
 bool dsLoader::finished()

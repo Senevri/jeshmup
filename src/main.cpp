@@ -21,6 +21,10 @@ int main( int argc, char *argv[] )
 //    {
 //        return 0;
 //    }
+
+    (void*)(argc);
+    (void*)(argv);
+
     LevelFactory factory;
     World world;
     CMyGame *game = new CMyGame(world, factory);

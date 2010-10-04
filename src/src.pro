@@ -5,6 +5,8 @@ QT -= gui core # No qt is used
 
 DEFINES += DEBUG
 
+CXX_FLAGS += -Wall
+
 LIBS += -lGL -lGLU
 
 CONFIG += link_pkgconfig

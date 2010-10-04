@@ -145,9 +145,7 @@ void GLScene::drawScene(void){
         (*itr)->draw(*m_drawEngine);
     }
 
-    UI::drawText("Camera moved down!", Point2d(45,45));
-    LOG("text should be drawn!");
-
+    UI::instance()->update(*m_drawEngine);
     SDL_GL_SwapBuffers();
 
 }

@@ -125,13 +125,10 @@ void CMyGame::initialize()
         LOG("Screen size h:%d w:%d", m_screen->h, m_screen->w);
     }
 
-    // video mode set now can UI be instansiated
-    // does not do anything yet...
-    UI *ui = UI::instance();
-    if( !ui->initialize() )
+    if( !m_drawEngine->initialize() )
     {
-        LOG_ERROR("UI not initialized!");
-        exit(1);
+        LOG_ERROR("Cannot initialize drawing engine!");
+        exit(3);
     }
 
 

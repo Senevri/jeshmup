@@ -1,11 +1,9 @@
 #ifndef UI_H
 #define UI_H
 
-class Point2d;
-class SDL_Surface;
-
 #include <string>
-#include <SDL_ttf.h>
+
+class DrawEngine;
 
 /**
   * UI class hopefully something useful.
@@ -15,19 +13,17 @@ class UI
 {
 private:
     UI();
+    UI(const UI&);
     ~UI();
+    UI& operator=(const UI&);
 
 public:
     static UI* instance();
-    bool initialize();
 
-    static void drawText(const std::string& text, const Point2d& position);
-
-private:
-    bool initializeTTF();
+    void update(DrawEngine& engine);
 
 private:
-    TTF_Font *m_uiFont;
+    static UI* m_instance;
 };
 
 #endif // UI_H
