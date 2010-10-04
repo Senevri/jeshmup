@@ -14,6 +14,7 @@ class LevelFactory;
 class GLScene;
 class DrawEngine;
 class World;
+class SDL_Surface;
 
 class CMyGame{
 
@@ -27,6 +28,7 @@ public:
 
 private:
     void initialize();
+    char* initSDL(SDL_Surface **screen);
     void myWaitEvent();
     void mainLoop();
     void setupTestObject();

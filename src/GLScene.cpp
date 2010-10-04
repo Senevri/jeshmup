@@ -24,7 +24,7 @@ GLScene::GLScene(DrawEngine *drawEngine) :
 {
     this->Camera.location.x = 0.0f;
     this->Camera.location.y = 0.0f;
-    this->Camera.location.z = -150.0f;
+    this->Camera.location.z = -10.0f;
     this->Camera.angle.x = 0.0f;
     this->Camera.angle.y = 0.0f;
     this->Camera.angle.z = 0.0f;
@@ -44,7 +44,7 @@ GLScene::~GLScene(void)
 // int sdl gl stuff
 void GLScene::init(void)
 {
-    glShadeModel( GL_FLAT ); /* GL_FLAT, GL_SMOOTH shade model */
+    glShadeModel( GL_SMOOTH ); /* GL_FLAT, GL_SMOOTH shade model */
 
     /* Set the background black */
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -73,15 +73,10 @@ void GLScene::init(void)
     /* Really Nice Perspective Calculations */
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
 
-	/*make stuff translucent */
-	glBlendFunc(GL_SRC_ALPHA,GL_ONE);
-	/* the following could be tweaked on per-mesh basis.*/
-	//glEnable(GL_BLEND);		// Turn Blending On 
-	//glDisable(GL_DEPTH_TEST);	// Turn Depth Testing Off
+    glBlendFunc(GL_ONE, GL_ONE);
+    glEnable(GL_BLEND);
 
-	/*end make stuff translucent*/
 
-	//return undefined();
 }
 
 /**
@@ -90,30 +85,24 @@ void GLScene::init(void)
 */
 void GLScene::setup(int width, int height)
 {
-    /* Height / width ration */
-    GLfloat ratio;
- 
-    /* Protect against a divide by zero */
-   if ( height == 0 )
-		height = 1;
+    /* Irrelevant stuff for this demo */
+    glShadeModel(GL_SMOOTH);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearDepth(1.0f);
+    glDepthFunc(GL_LEQUAL);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-    ratio = ( GLfloat )width / ( GLfloat )height;
+    /* Required if you want alpha-blended textures (for our fonts) */
+    glBlendFunc(GL_ONE, GL_ONE);
+    glEnable(GL_BLEND);
 
-    /* Setup our viewport. */
-    glViewport( 0, 0, ( GLsizei )width, ( GLsizei )height );
-
-    /* change to the projection matrix and set our viewing volume. */
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity( );
-
-    /* Set our perspective */
-    gluPerspective( 45.0f, ratio, 0.01f, 1000.0f );
-
-    /* Make sure we're chaning the model view and not the projection */
-    glMatrixMode( GL_MODELVIEW );
-
-    /* Reset The View */
-    glLoadIdentity( );
+    /* Required setup stuff */
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, width / (float)height, 0.1f, 50.0f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 void GLScene::setLevel(Level* level)
@@ -156,10 +145,11 @@ void GLScene::drawScene(void){
         (*itr)->draw(*m_drawEngine);
     }
 
-    UI::drawText("Camera moved down!", Point2d(20,50));
+    UI::drawText("Camera moved down!", Point2d(45,45));
     LOG("text should be drawn!");
 
-    glFlush();
+    SDL_GL_SwapBuffers();
+
 }
 
 void GLScene::drawLights()

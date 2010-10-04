@@ -91,29 +91,31 @@ void CMyGame::initialize()
         exit(1);
     }
 
-    screenflags =
-            SDL_HWPALETTE|
-            SDL_OPENGL|
-            SDL_GL_DOUBLEBUFFER|
-            SDL_ANYFORMAT;
+    screenflags = SDL_OPENGL;
 
     /* This checks to see if surfaces can be stored in memory */
     if ( videoinfo->hw_available )
-	screenflags |= SDL_HWSURFACE;
+    {
+        screenflags |= SDL_HWSURFACE;
+    }
     else
-	screenflags |= SDL_SWSURFACE;
+    {
+        screenflags |= SDL_SWSURFACE;
+    }
 
     /* This checks if hardware blits can be done */
     if ( videoinfo->blit_hw )
-	screenflags |= SDL_HWACCEL;
+    {
+        screenflags |= SDL_HWACCEL;
+    }
+
     SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
     SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
     SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
+    SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8);
     SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-    /* Sets up OpenGL double buffering  - redundant w/flag ? */
-    //SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
-    m_screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, screenflags);
+    m_screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, screenflags);
     if ( m_screen == NULL ) {
         LOG_ERROR("Unable to set video: %s\n", SDL_GetError());
         exit(1);
@@ -209,10 +211,6 @@ void CMyGame::mainLoop()
         if (motion != -1) {
             m_scene->drawScene();
         }
-        //glTranslate
-
-        /* draw stuff here */
-        SDL_GL_SwapBuffers();
     }
     delete input;
 }

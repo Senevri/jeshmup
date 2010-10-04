@@ -57,11 +57,11 @@ void UI::drawText(const std::string &text, const Point2d &position)
     // Render some text in solid black to a new surface
     // then blit to the upper left of the screen
     // then free the text surface
-    SDL_Color color={0,256,0};
+    SDL_Color color={255,255,255};
     SDL_Surface *text_surface;
-    if( !(text_surface=TTF_RenderText_Solid(instance()->m_uiFont, text.c_str(), color)) )
+    if( !(text_surface=TTF_RenderText_Blended(instance()->m_uiFont, text.c_str(), color)) )
     {
-        LOG("Text printing failed!");
+        LOG_ERROR("Text printing failed!");
     }
     else
     {
@@ -116,6 +116,7 @@ void UI::drawText(const std::string &text, const Point2d &position)
         SDL_FreeSurface(text_surface);
         SDL_FreeSurface(intermediary);
         glDeleteTextures(1, &texture);
+        glEnable(GL_DEPTH_TEST);
         glDisable2D();
 
     }
