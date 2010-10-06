@@ -3,10 +3,14 @@
 #include "Point3d.h"
 
 #include <assert.h>
-#include <math.h>
+
 #ifdef WIN32
-#include <windows.h>
+//#include <windows.h>
+#include <cmath>
+#else
+#include <math.h>
 #endif
+
 #include <GL/gl.h>
 
 /**

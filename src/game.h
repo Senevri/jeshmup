@@ -14,7 +14,7 @@ class LevelFactory;
 class GLScene;
 class DrawEngine;
 class World;
-class SDL_Surface;
+//class SDL_Surface;
 
 class CMyGame{
 

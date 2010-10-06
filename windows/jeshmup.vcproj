@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;"
+				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;;E:\devel\Source\MySRC\jeshmup\src\util;&quot;E:\devel\Source\MySRC\jeshmup\libs\sources\SDL_ttf-2.0.10&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -66,10 +66,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
+				AdditionalDependencies="sdlMain.lib sdl.lib sdl_ttf.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
+				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;;E:\devel\Source\MySRC\jeshmup\libs\windows"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				GenerateDebugInformation="true"
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;"
+				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;;E:\devel\Source\MySRC\jeshmup\src\util;&quot;E:\devel\Source\MySRC\jeshmup\libs\sources\SDL_ttf-2.0.10&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -140,10 +140,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
+				AdditionalDependencies="sdlMain.lib sdl.lib sdl_ttf.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
+				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;;E:\devel\Source\MySRC\jeshmup\libs\windows"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="false"
@@ -199,7 +199,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;"
+				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;;E:\devel\Source\MySRC\jeshmup\src\util;&quot;E:\devel\Source\MySRC\jeshmup\libs\sources\SDL_ttf-2.0.10&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_TEST"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -222,10 +222,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkLibraryDependencies="false"
-				AdditionalDependencies="sdlMain.lib sdl.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
+				AdditionalDependencies="sdlMain.lib sdl.lib sdl_ttf.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;"
+				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;;E:\devel\Source\MySRC\jeshmup\libs\windows"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -271,7 +271,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\util\ChunkReader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\Color.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\util\Conversion.h"
 				>
 			</File>
 			<File
@@ -280,6 +288,10 @@
 			</File>
 			<File
 				RelativePath="..\src\DirectionalLight.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\DrawEngine.h"
 				>
 			</File>
 			<File
@@ -295,7 +307,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\Level.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\LevelFactory.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\Light.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\util\List.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\util\Logging.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\util\Math.h"
 				>
 			</File>
 			<File
@@ -303,7 +335,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\MeshMaterial.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\MeshObject.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\object.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Point2d.h"
 				>
 			</File>
 			<File
@@ -312,6 +356,14 @@
 			</File>
 			<File
 				RelativePath="..\src\util\RawLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\util\Timer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\UI.h"
 				>
 			</File>
 			<File
@@ -339,7 +391,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\util\ChunkReader.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\DirectionalLight.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\DrawEngine.cpp"
 				>
 			</File>
 			<File
@@ -355,7 +415,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\Level.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\LevelFactory.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\Light.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\util\List.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\util\Logging.cpp"
 				>
 			</File>
 			<File
@@ -364,6 +440,14 @@
 			</File>
 			<File
 				RelativePath="..\src\Mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\MeshMaterial.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\MeshObject.cpp"
 				>
 			</File>
 			<File
@@ -376,6 +460,10 @@
 			</File>
 			<File
 				RelativePath="..\src\test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\UI.cpp"
 				>
 			</File>
 			<File

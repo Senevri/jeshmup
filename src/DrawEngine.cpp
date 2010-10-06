@@ -14,6 +14,10 @@
 #include <SDL_video.h>
 
 
+#ifndef GL_BGRA
+#define GL_BGRA GL_BGRA_EXT
+#endif
+
 DrawEngine::DrawEngine()
 {
 }
@@ -137,16 +141,20 @@ void DrawEngine::renderText(const std::string &text, const Point2d &position)
                That is why the TexCoords specify different corners
                than the Vertex coors seem to. */
             glTexCoord2f(0.0f, 1.0f);
-            glVertex2f(position.x, position.y);
+            //glVertex2f(position.x, (position.y);
+			glVertex2i(position.x, position.y);
 
             glTexCoord2f(1.0f, 1.0f);
-            glVertex2f(position.x + w, position.y);
+            //glVertex2f(position.x + w, position.y);
+			glVertex2i(position.x + w, position.y);
 
             glTexCoord2f(1.0f, 0.0f);
-            glVertex2f(position.x + w, position.y + h);
+            //glVertex2f(position.x + w, position.y + h);
+			glVertex2i(position.x + w, position.y + h);
 
             glTexCoord2f(0.0f, 0.0f);
-            glVertex2f(position.x    , position.y + h);
+            //glVertex2f(position.x    , position.y + h);
+			glVertex2i(position.x    , position.y + h);
         glEnd();
 
         /* Bad things happen if we delete the texture before it finishes */

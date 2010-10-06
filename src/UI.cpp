@@ -1,4 +1,8 @@
 #include "UI.h"
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 #include "Point2d.h"
 #include "Logging.h"
 #include "DrawEngine.h"

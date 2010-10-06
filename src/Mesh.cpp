@@ -62,12 +62,12 @@ void Mesh::setName(std::string name)
 
 Mesh::Vertex * Mesh::vertexArrayFromMesh(void) const
 {
-    std::vector<Vertex *>::iterator itr;
+    std::vector<Vertex *>::const_iterator itr;
 	size_t size = m_data.size();
 
     Vertex *v = new Vertex[(const int)size]; /* cannot allocate since we don't know size...*/
     int i = 0;
-    for (; itr != m_data.end(); ++itr )
+    for ( itr=m_data.begin(); itr != m_data.end(); ++itr )
     {
         v[i] = **itr; /* so many pointer ops in c++ project ... nojustno */
         i++;

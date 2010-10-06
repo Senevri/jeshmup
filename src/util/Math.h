@@ -1,8 +1,13 @@
 #ifndef MATH_H
 #define MATH_H
 
-#include <math.h>
+#ifdef WIN32
+#include <cmath>
+#endif
 
+#ifndef WIN32
+#include <math.h>
+#endif
 namespace Math {
 
     int round(double x)
@@ -12,7 +17,7 @@ namespace Math {
 
     int nextpoweroftwo(int x)
     {
-        double logbase2 = log(x) / log(2);
+        double logbase2 = log((float)x) / log((float)2);
         return round(pow(2,ceil(logbase2)));
     }
 
