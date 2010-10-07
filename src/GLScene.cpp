@@ -38,7 +38,7 @@ GLScene::GLScene(DrawEngine *drawEngine) :
 
 GLScene::~GLScene(void)
 {
-    LOG("Deleteting GLScene");
+    LOG("Deleting GLScene");
 }
 
 // int sdl gl stuff
