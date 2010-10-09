@@ -10,7 +10,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 class InputHandler
 {

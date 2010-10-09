@@ -3,7 +3,7 @@
 #include "Mesh.h"
 #include "Point3d.h"
 #include "Point2d.h"
-#include "Math.h"
+#include "MathHelp.h"
 #include "Logging.h"
 
 #include "SDL_ttf.h"

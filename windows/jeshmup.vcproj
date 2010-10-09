@@ -4,10 +4,7 @@
 	Version="9,00"
 	Name="jeshmup"
 	ProjectGUID="{78B7551F-B90D-450A-9040-60244C386D79}"
-	SccProjectName="Svn"
-	SccAuxPath="Svn"
-	SccLocalPath="Svn"
-	SccProvider="SubversionScc"
+	RootNamespace="jeshmup"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="0"
 	>
@@ -44,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;;E:\devel\Source\MySRC\jeshmup\src\util;&quot;E:\devel\Source\MySRC\jeshmup\libs\sources\SDL_ttf-2.0.10&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\libs\sources\UnitTest++\src&quot;;&quot;$(ProjectDir)\..\src&quot;;&quot;$(ProjectDir)\..\libs\windows\SDL_win\include&quot;;&quot;$(ProjectDir)\..\src\util&quot;;&quot;$(ProjectDir)\..\libs\sources\SDL_ttf-2.0.10&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -69,7 +66,8 @@
 				AdditionalDependencies="sdlMain.lib sdl.lib sdl_ttf.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;E:\devel\ext\UnitTest++\Release&quot;;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\lib&quot;;E:\devel\Source\MySRC\jeshmup\libs\windows"
+				AdditionalLibraryDirectories="&quot;$(ProjectDir)\..\libs\windows\&quot;;&quot;$(ProjectDir)\..\libs\windows\SDL_win\lib&quot;"
+				GenerateManifest="false"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				GenerateDebugInformation="true"
@@ -327,7 +325,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\util\Math.h"
+				RelativePath="..\src\util\MathHelp.h"
 				>
 			</File>
 			<File
@@ -471,18 +469,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\debug\BuildLog.htm"
-			>
-		</File>
-		<File
-			RelativePath=".\ClassDiagram.cd"
-			>
-		</File>
-		<File
-			RelativePath=".\ClassDiagram1.cd"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

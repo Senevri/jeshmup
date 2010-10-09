@@ -8,6 +8,7 @@
 #ifndef WIN32
 #include <math.h>
 #endif
+
 namespace Math {
 
     int round(double x)

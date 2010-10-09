@@ -7,7 +7,7 @@
 #ifndef _GLSCENE_H_
 #define _GLSCENE_H_
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #ifdef _WINDOWS
 	#include <windows.h>
 #endif
