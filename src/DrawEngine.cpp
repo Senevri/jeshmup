@@ -1,6 +1,7 @@
 #include "DrawEngine.h"
 
 #include "Mesh.h"
+#include "MeshObject.h"
 #include "Point3d.h"
 #include "Point2d.h"
 #include "MathHelp.h"
@@ -36,7 +37,10 @@ bool DrawEngine::initialize()
     }
 
     //! \todo this path should come from some resource class...
-    m_uiFont=TTF_OpenFont("data/fonts/ttf-bitstream-vera-1.10/Vera.ttf", 16);
+	// especially as it breaks windows :)
+	//std::string path = "data/fonts/ttf-bitstream-vera-1.10/Vera.ttf";
+	std::string path = "..\\data\\fonts\\ttf-bitstream-vera-1.10\\Vera.ttf";
+	m_uiFont=TTF_OpenFont(path.c_str(), 16);
     if( !m_uiFont )
     {
         LOG("TTF_OpenFont: %s\n", TTF_GetError());
@@ -50,7 +54,10 @@ void DrawEngine::translateTo(const Point3d& point)
     glLoadIdentity();
     glTranslatef(point.x, point.y, point.z);
 }
-
+void DrawEngine::renderMeshAt(const Mesh &mesh, Point3d &location){
+	this->m_location = location;
+	renderMesh(mesh);
+}
 void DrawEngine::renderMesh(const Mesh &mesh)
 {
     std::vector<Mesh::Vertex *> vertices = mesh.vertices();
@@ -71,8 +78,13 @@ void DrawEngine::renderMesh(const Mesh &mesh)
     }
     //how we incorporate material to mesh....
     GLfloat reddish[] = {0.3f, 0.3f, 0.5f, 1.0f};
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, reddish);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, reddish);
+	GLfloat diffmat[] = {0.8f, 0.8f, 0.8f, 1.0f};    
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffmat);
 
+	/* move object in coords*/
+	glPushMatrix();
+	glTranslatef(-m_location.x, -m_location.y, 0);
     glBegin( GL_TRIANGLES );
     std::vector<Mesh::Face*>::iterator itr;
     for ( itr = faces.begin(); itr < faces.end(); ++itr )
@@ -87,6 +99,7 @@ void DrawEngine::renderMesh(const Mesh &mesh)
             glVertex3f(v->x, v->y, v->z);
         }
     }
+	glPopMatrix();
     glEnd();
 }
 
@@ -141,20 +154,20 @@ void DrawEngine::renderText(const std::string &text, const Point2d &position)
                That is why the TexCoords specify different corners
                than the Vertex coors seem to. */
             glTexCoord2f(0.0f, 1.0f);
-            //glVertex2f(position.x, (position.y);
-			glVertex2i(position.x, position.y);
+            glVertex2f(position.x, position.y);
+			//glVertex2i(position.x, position.y);
 
             glTexCoord2f(1.0f, 1.0f);
-            //glVertex2f(position.x + w, position.y);
-			glVertex2i(position.x + w, position.y);
+            glVertex2f(position.x + w, position.y);
+			//glVertex2i(position.x + w, position.y);
 
             glTexCoord2f(1.0f, 0.0f);
-            //glVertex2f(position.x + w, position.y + h);
-			glVertex2i(position.x + w, position.y + h);
+            glVertex2f(position.x + w, position.y + h);
+			//glVertex2i(position.x + w, position.y + h);
 
             glTexCoord2f(0.0f, 0.0f);
-            //glVertex2f(position.x    , position.y + h);
-			glVertex2i(position.x    , position.y + h);
+            glVertex2f(position.x    , position.y + h);
+			//glVertex2i(position.x    , position.y + h);
         glEnd();
 
         /* Bad things happen if we delete the texture before it finishes */

@@ -34,6 +34,7 @@ public:
     void init(void);
     /* takes screen /viewport w / h */
     void setup(int width, int height);
+	Level * getLevel();
 
     void setLevel(Level* level);
 

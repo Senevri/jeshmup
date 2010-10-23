@@ -47,6 +47,7 @@
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="3"
+				StructMemberAlignment="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -63,11 +64,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdlMain.lib sdl.lib sdl_ttf.lib UnitTest++.vsnet2005.lib opengl32.lib glu32.lib"
+				AdditionalDependencies="sdlMain.lib sdl.lib sdl_ttf.lib UnitTest++.vsnet2005d.lib opengl32.lib glu32.lib"
 				Version="0.01"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)\..\libs\windows\&quot;;&quot;$(ProjectDir)\..\libs\windows\SDL_win\lib&quot;"
-				GenerateManifest="false"
+				GenerateManifest="true"
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				GenerateDebugInformation="true"
@@ -79,6 +80,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="true"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -121,7 +123,6 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="E:\devel\Source\MySRC\jeshmup\src;&quot;E:\devel\ext\SDL-devel-1.2.13-VC8\SDL-1.2.13\include&quot;;&quot;E:\devel\ext\UnitTest++\src&quot;;E:\devel\Source\MySRC\jeshmup\src\util;&quot;E:\devel\Source\MySRC\jeshmup\libs\sources\SDL_ttf-2.0.10&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;"
-				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"

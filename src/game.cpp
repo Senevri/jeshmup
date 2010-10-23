@@ -13,6 +13,9 @@
 #include "Logging.h"
 
 #include "Point2d.h"
+#include "Point3d.h"
+
+#include "MeshObject.h" /* test hack */
 
 #include <iostream>
 #define SCREEN_WIDTH 800
@@ -131,7 +134,6 @@ void CMyGame::initialize()
         exit(3);
     }
 
-
     // this maybe stupid ::: scene not responsible for videomode.
     m_scene = new GLScene(m_drawEngine);
     m_scene->init();
@@ -168,40 +170,69 @@ void CMyGame::mainLoop()
     input->registerAction("joy_left", LEFT, SDL_JOYAXISMOTION, input->JOYLEFT);
     input->registerAction("joy_right", RIGHT, SDL_JOYAXISMOTION, input->JOYRIGHT);
 
-
+	m_scene->drawScene(); //don't wait for input to draw the scene
     while ( (SDL_PollEvent(&event) || bFlagQuit == false))
     {
         ticks = SDL_GetTicks() - now;
-        if(ticks < 33)
-        {
+        if(ticks < 33) 
+		{
             SDL_Delay(33-ticks);
         }
         ticks = SDL_GetTicks() - now;
         now += ticks;
 
         int motion = input->queryEvent(&event);
+	
+
+		/*FIXME: hack start*/
+		Point3d location;
+		
+		MeshObject *meshobj;
+
+		const std::vector<Object*>& objects = m_scene->getLevel()->objects();
+		std::vector<Object*>::const_iterator itr = objects.begin();
+		std::vector<Object*>::const_iterator itrEnd = objects.end();
+
+		itr = objects.begin();
+		for(; itr != itrEnd; ++itr)
+		{
+			meshobj = dynamic_cast<MeshObject *>(*itr);
+			if(meshobj->getName().compare("apina")){
+				break;
+			}
+		}
+		/*hack end*/
+		location = meshobj->location();
 
         switch (motion) {
         case(QUIT):
             bFlagQuit = true;
             break;
         case(UP):
-            m_scene->Camera.location.y -=0.01f;
+            //m_scene->Camera.location.y -=0.05f;
+			location.y-=0.1f;
+			meshobj->location(location);
             break;
         case(DOWN):
-            m_scene->Camera.location.y +=0.01f;
+            //m_scene->Camera.location.y +=0.05f;
+			location.y+=0.1f;
+			meshobj->location(location);
             break;
         case(LEFT):
-            m_scene->Camera.location.x -=0.02f;
+            //m_scene->Camera.location.x -=0.1f;
+			location.x-=0.1f;
+			meshobj->location(location);
             break;
         case(RIGHT):
-            m_scene->Camera.location.x +=0.02f;
+            //m_scene->Camera.location.x +=0.1f;
+			location.x+=0.1f;
+			meshobj->location(location);
             break;
         case(ZOOM_IN):
-            m_scene->Camera.location.z +=0.05f;
+            m_scene->Camera.location.z +=0.25f;
             break;
         case(ZOOM_OUT):
-            m_scene->Camera.location.z -=0.05f;
+            m_scene->Camera.location.z -=0.25f;
             break;
         }
         m_scene->updateScene(ticks);

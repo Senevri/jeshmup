@@ -100,14 +100,19 @@ void GLScene::setup(int width, int height)
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.0f, width / (float)height, 0.1f, 50.0f);
+    gluPerspective(50.0f, static_cast<float>(width) / static_cast<float>(height), 0.01f, 100.0f);
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+	glLoadIdentity();
 }
 
 void GLScene::setLevel(Level* level)
 {
     m_level = level;
+}
+
+Level * GLScene::getLevel()
+{
+    return m_level;
 }
 
 void GLScene::updateScene(int ticks)
@@ -127,13 +132,20 @@ void GLScene::drawScene(void){
     /* clear buffers */
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity( );
+    //glMatrixMode( GL_PROJECTION );
+	glLoadIdentity( );
 
-    //how to handle moving lights? etc...
+	//how to handle moving lights? etc...
     drawLights();
 
-    glTranslatef( this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
+    //glTranslatef( this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
+	gluLookAt( this->Camera.location.x, 
+		this->Camera.location.y, 
+		this->Camera.location.z,
+		0, 0, 0, /* look at origo */ /* now we can look at object at some location*/
+		0, 1, 0
+		);
+	
     LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
 
     std::vector<Object*> objects = m_level->objects();

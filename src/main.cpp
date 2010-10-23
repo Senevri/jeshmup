@@ -2,6 +2,7 @@
 #include <iostream>
 #include <UnitTest++.h>
 
+#include "logging.h"
 #include "game.h"
 #include "LevelFactory.h"
 #include "world.h"
@@ -23,8 +24,7 @@ int main( int argc, char *argv[] )
 //    }
 
     (void*)(argc);
-    (void*)(argv);
-
+    (void*)(argv);	
     LevelFactory factory;
     World world;
     CMyGame *game = new CMyGame(world, factory);

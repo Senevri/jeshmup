@@ -21,7 +21,7 @@ public:
       * @param px The x coordinate of the point
       * @param py The y coordinate of the point
       */
-    Point2d(GLint px, GLint py) : x(px),y(py)
+    Point2d(GLfloat px, GLfloat py) : x(px),y(py)
     {}
 
     /**
@@ -29,7 +29,7 @@ public:
       * @param array The array to fill with the position. <b>NOTE</b>
       * make sure the array has at least the length of two GLints.
       */
-    void fillArray(GLint *array)
+    void fillArray(GLfloat *array)
     {
         array[0] = x;
         array[1] = y;
@@ -40,12 +40,14 @@ public: //data members
     /**
       * The x coordinate.
       */
-    GLint x;
+    //GLint x;
+	GLfloat x;
 
     /**
       * The y coordinate.
       */
-    GLint y;
+    //GLint y;
+	GLfloat y;
 };
 
 #endif // POINT2D_H

@@ -17,6 +17,9 @@ namespace Logger
 
 #define LOG_ERROR(...) Logger::error(__TIMESTAMP__, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
 
+#ifdef _DEBUG
+#define DEBUG
+#endif
 #ifdef DEBUG
 #define LOG(...) Logger::log(__TIMESTAMP__, __FILE__, __FUNCTION__, __LINE__, __VA_ARGS__)
 #else

@@ -19,9 +19,11 @@ public:
 
     virtual void update(int ticks) = 0;
     virtual void draw(DrawEngine &drawEngine) = 0;
+	std::string getName();
+	void setName(std::string name);
 
 private:
-    std::string name;
+    std::string m_name;
     unsigned int type; /* if complicated types, go polymorphic */
     unsigned int id;
 };

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+class MeshObject;
 class Level;
 
 class LevelFactory
@@ -16,7 +17,7 @@ public:
     int levels() const;
 
 private:
-    void loadObjectFromFile(Level& level, const std::string& fileName);
+    MeshObject * loadObjectFromFile(Level& level, const std::string& fileName);
 
 private: //data
     std::vector<Level*> m_loadedLevels;
