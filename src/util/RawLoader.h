@@ -1,7 +1,7 @@
 #ifndef _RAWLOADER_H_
 #define _RAWLOADER_H_
 
-#include "../Mesh.h"
+#include "Mesh.h"
 
 #include <fstream>
 
@@ -26,7 +26,7 @@ public:
 	RawLoader(void);
 	~RawLoader(void);
     Mesh::Vertex * quadToTriangle(Mesh::Vertex * quad);
-	bool load(std::string filename);
+	Mesh * load(std::string filename);
     std::vector<Mesh::Vertex *> getVertices(void);
 
 private:

@@ -9,18 +9,20 @@ class Mesh;
 class MeshObject : public Object
 {
 public:
-    MeshObject(Mesh *mesh);
+	MeshObject(Mesh *mesh);
     virtual ~MeshObject();
 
     void update(int){};
     void draw(DrawEngine &engine);
 
 	Point3d location();
-	void location(Point3d);
+	void location(const Point3d &location);
+	void setVisibility(bool val){ visible=val; }
 
 private:
     Mesh *m_mesh;
 	Point3d m_location;
+	bool visible:true;
 };
 
 #endif // MESHOBJECT_H

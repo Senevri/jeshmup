@@ -29,9 +29,9 @@ GLScene::GLScene(DrawEngine *drawEngine) :
     this->Camera.angle.y = 0.0f;
     this->Camera.angle.z = 0.0f;
 
-    Point3d point(0.0f, 50.0f, 5.0f);
+    Point3d point(0.0f, -5.0f, -5.0f);
     m_mainLight.setPosition(point);
-    m_mainLight.setAmbient(Color::GRAY);
+	m_mainLight.setAmbient(Color::DARKGRAY);
     m_mainLight.setDiffuse(Color::RED);
 
 }
@@ -75,8 +75,6 @@ void GLScene::init(void)
 
     glBlendFunc(GL_ONE, GL_ONE);
     glEnable(GL_BLEND);
-
-
 }
 
 /**
@@ -94,7 +92,9 @@ void GLScene::setup(int width, int height)
 
     /* Required if you want alpha-blended textures (for our fonts) */
     glBlendFunc(GL_ONE, GL_ONE);
-    glEnable(GL_BLEND);
+	/* then only do this for fonts by default!*/
+    glDisable(GL_BLEND);
+
 
     /* Required setup stuff */
     glViewport(0, 0, width, height);
@@ -138,14 +138,15 @@ void GLScene::drawScene(void){
 	//how to handle moving lights? etc...
     drawLights();
 
-    //glTranslatef( this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
+	//glTranslatef( -this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
 	gluLookAt( this->Camera.location.x, 
 		this->Camera.location.y, 
 		this->Camera.location.z,
-		0, 0, 0, /* look at origo */ /* now we can look at object at some location*/
+		0, 0, 0, // look at origo - now we can look at object at some location
 		0, 1, 0
 		);
-	
+	//doesn't quite do what I want....
+	//EDIT: Started working, actually. Huh.
     LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
 
     std::vector<Object*> objects = m_level->objects();

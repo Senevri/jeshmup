@@ -101,6 +101,24 @@ void Mesh::setFaces(const unsigned short *faces, Mesh::Format type, int facesSiz
     }
 }
 
+/*void Mesh::generateFaces()
+{
+    for(int i = 0; i < facesSize; i += type)
+    {
+        Face *f = new Face;
+        unsigned int* tmpFace = new unsigned int[type];
+        for(int j = 0; j < type; j++)
+        {
+            tmpFace[j] = faces[i+j];
+        }
+        f->indices = tmpFace;
+        f->format = type;
+        m_fpFaces.push_back(f);
+    }
+}*/
+
+
+
 void Mesh::setUVMap(const float *coords, int length)
 {
     assert(length % 2 == 0);

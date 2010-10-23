@@ -19,7 +19,7 @@ if(!this->m_vpVertices.empty()){
 }
 
 /* loads vertices from a raw file to a private vector */
-bool RawLoader::load(string filename){
+Mesh* RawLoader::load(string filename){
 	
 
     m_InputFile.open(filename.c_str(), ios::binary);
@@ -79,7 +79,8 @@ bool RawLoader::load(string filename){
 		}
 	}
 	m_InputFile.close();
-	return true;
+	Mesh * mesh = new Mesh(m_vpVertices, Mesh::TRIANGLES);
+	return mesh;
 }
 
 /* getter */

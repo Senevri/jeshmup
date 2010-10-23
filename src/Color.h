@@ -72,5 +72,7 @@ namespace Color {
     static const RGBA GREEN(0.0f, 1.0f, 0.0f, 1.0f);
     static const RGBA RED(1.0f, 0.0f, 0.0f, 1.0f);
     static const RGBA GRAY(0.5f, 0.5f, 0.5f, 1.0f);
+	static const RGBA DARKGRAY(0.1f, 0.1f, 0.1f, 1.0f);	
+	static const RGBA BLACK(0.0f, 0.0f, 0.0f, 1.0f);
 }
 

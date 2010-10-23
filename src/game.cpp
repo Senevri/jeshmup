@@ -148,7 +148,7 @@ void CMyGame::initialize()
 
 void CMyGame::mainLoop()
 {
-    enum Actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT};
+    enum Actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT, CLEAR};
     unsigned int now = SDL_GetTicks();
     unsigned int ticks = now;
     bool bFlagQuit = false;
@@ -169,6 +169,7 @@ void CMyGame::mainLoop()
     input->registerAction("joy_down", DOWN, SDL_JOYAXISMOTION, input->JOYDOWN);
     input->registerAction("joy_left", LEFT, SDL_JOYAXISMOTION, input->JOYLEFT);
     input->registerAction("joy_right", RIGHT, SDL_JOYAXISMOTION, input->JOYRIGHT);
+	input->registerAction("clear", CLEAR, SDL_KEYUP, 0);
 
 	m_scene->drawScene(); //don't wait for input to draw the scene
     while ( (SDL_PollEvent(&event) || bFlagQuit == false))
@@ -194,16 +195,17 @@ void CMyGame::mainLoop()
 		std::vector<Object*>::const_iterator itrEnd = objects.end();
 
 		itr = objects.begin();
-		for(; itr != itrEnd; ++itr)
+		for(; itr != itrEnd; itr++)
 		{
 			meshobj = dynamic_cast<MeshObject *>(*itr);
-			if(meshobj->getName().compare("apina")){
+			if(0==meshobj->getName().compare("apina2")){
 				break;
 			}
 		}
+		
 		/*hack end*/
 		location = meshobj->location();
-
+		/*this isn't right - set move direction on keydown, clear on keyup.*/
         switch (motion) {
         case(QUIT):
             bFlagQuit = true;
@@ -235,6 +237,8 @@ void CMyGame::mainLoop()
             m_scene->Camera.location.z -=0.25f;
             break;
         }
+		m_drawEngine->renderText(meshobj->getName(), Point2d(5, 5));
+		
         m_scene->updateScene(ticks);
         if (motion != -1) {
             m_scene->drawScene();

@@ -1,7 +1,6 @@
 #include "DrawEngine.h"
 
 #include "Mesh.h"
-#include "MeshObject.h"
 #include "Point3d.h"
 #include "Point2d.h"
 #include "MathHelp.h"
@@ -83,23 +82,38 @@ void DrawEngine::renderMesh(const Mesh &mesh)
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffmat);
 
 	/* move object in coords*/
-	glPushMatrix();
-	glTranslatef(-m_location.x, -m_location.y, 0);
+	//glPushMatrix();
+	glTranslatef(-this->m_location.x, -this->m_location.y, 0);
     glBegin( GL_TRIANGLES );
-    std::vector<Mesh::Face*>::iterator itr;
-    for ( itr = faces.begin(); itr < faces.end(); ++itr )
-    {
-        Mesh::Face* face = *itr;
-        Vector normal = face->faceNormal(vertices);
-        normal.normalize();
-        glNormal3f(normal.x(), normal.y(), normal.z());
-        for(int i = 0; i < face->format; i++)
-        {
-            Mesh::Vertex *v = vertices[face->indices[i]];
-            glVertex3f(v->x, v->y, v->z);
-        }
-    }
-	glPopMatrix();
+	if(faces.empty()){
+		std::vector<Mesh::Vertex*>::iterator itr;
+		for ( itr = vertices.begin(); itr < vertices.end(); ++itr )
+		{
+			Mesh::Vertex* face = *itr;
+			//Vector normal = face->faceNormal(vertices);
+			//normal.normalize();
+			//glNormal3f(normal.x(), normal.y(), normal.z());
+			
+			Mesh::Vertex *v = face;
+			glVertex3f(v->x, v->y, v->z);
+			
+		}
+	} else {
+		std::vector<Mesh::Face*>::iterator itr;
+		for ( itr = faces.begin(); itr < faces.end(); ++itr )
+		{
+			Mesh::Face* face = *itr;
+			Vector normal = face->faceNormal(vertices);
+			normal.normalize();
+			glNormal3f(normal.x(), normal.y(), normal.z());
+			for(int i = 0; i < face->format; i++)
+			{
+				Mesh::Vertex *v = vertices[face->indices[i]];
+				glVertex3f(v->x, v->y, v->z);
+			}
+		}
+	}
+	//glPopMatrix();
     glEnd();
 }
 
@@ -145,6 +159,7 @@ void DrawEngine::renderText(const std::string &text, const Point2d &position)
 
         /* prepare to render our texture */
         glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
         glBindTexture(GL_TEXTURE_2D, texture);
         glColor3f(1.0f, 1.0f, 1.0f);
 
@@ -179,7 +194,7 @@ void DrawEngine::renderText(const std::string &text, const Point2d &position)
         glDeleteTextures(1, &texture);
         glEnable(GL_DEPTH_TEST);
         glDisable2D();
-
+		glDisable(GL_BLEND);
     }
 }
 
