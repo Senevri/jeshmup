@@ -54,8 +54,9 @@ void DrawEngine::translateTo(const Point3d& point)
     glTranslatef(point.x, point.y, point.z);
 }
 void DrawEngine::renderMeshAt(const Mesh &mesh, Point3d &location){
-	this->m_location = location;
+	this->m_location = &location;
 	renderMesh(mesh);
+	this->m_location = 0;
 }
 void DrawEngine::renderMesh(const Mesh &mesh)
 {
@@ -82,9 +83,9 @@ void DrawEngine::renderMesh(const Mesh &mesh)
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffmat);
 
 	/* move object in coords*/
-	//glPushMatrix();
-	glTranslatef(-this->m_location.x, -this->m_location.y, 0);
-    glBegin( GL_TRIANGLES );
+	glPushMatrix();	
+	glTranslatef(-this->m_location->x, -this->m_location->y, 0);	
+	glBegin( GL_TRIANGLES );
 	if(faces.empty()){
 		std::vector<Mesh::Vertex*>::iterator itr;
 		for ( itr = vertices.begin(); itr < vertices.end(); ++itr )
@@ -113,8 +114,8 @@ void DrawEngine::renderMesh(const Mesh &mesh)
 			}
 		}
 	}
-	//glPopMatrix();
     glEnd();
+	glPopMatrix();
 }
 
 void DrawEngine::renderLine(const Point3d &start, const Point3d &end)

@@ -16,7 +16,7 @@ public:
     void draw(DrawEngine &engine);
 
 	Point3d location();
-	void location(const Point3d &location);
+	void location(Point3d location);
 	void setVisibility(bool val){ visible=val; }
 
 private:

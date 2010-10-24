@@ -23,7 +23,7 @@ public:
     void renderText(const std::string &text, const Point2d &position);
 
 private:
-	Point3d m_location; /* where to shift */
+	Point3d * m_location; /* where to shift */
     void glEnable2D() const;
     void glDisable2D() const;
 

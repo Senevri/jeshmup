@@ -186,9 +186,9 @@ void CMyGame::mainLoop()
 	
 
 		/*FIXME: hack start*/
-		Point3d location;
+		Point3d * location;
 		
-		MeshObject *meshobj;
+		MeshObject *meshobj = 0;
 
 		const std::vector<Object*>& objects = m_scene->getLevel()->objects();
 		std::vector<Object*>::const_iterator itr = objects.begin();
@@ -197,14 +197,14 @@ void CMyGame::mainLoop()
 		itr = objects.begin();
 		for(; itr != itrEnd; itr++)
 		{
-			meshobj = dynamic_cast<MeshObject *>(*itr);
-			if(0==meshobj->getName().compare("apina2")){
-				break;
+			MeshObject * tmp = dynamic_cast<MeshObject *>(*itr);
+			if(0==tmp->getName().compare("arbyfish")){
+				meshobj = tmp;
 			}
 		}
 		
 		/*hack end*/
-		location = meshobj->location();
+		location = &meshobj->location();
 		/*this isn't right - set move direction on keydown, clear on keyup.*/
         switch (motion) {
         case(QUIT):
@@ -212,23 +212,23 @@ void CMyGame::mainLoop()
             break;
         case(UP):
             //m_scene->Camera.location.y -=0.05f;
-			location.y-=0.1f;
-			meshobj->location(location);
+			location->y-=0.1f;
+			meshobj->location(*location);
             break;
         case(DOWN):
             //m_scene->Camera.location.y +=0.05f;
-			location.y+=0.1f;
-			meshobj->location(location);
+			location->y+=0.1f;
+			meshobj->location(*location);
             break;
         case(LEFT):
             //m_scene->Camera.location.x -=0.1f;
-			location.x-=0.1f;
-			meshobj->location(location);
+			location->x-=0.1f;
+			meshobj->location(*location);
             break;
         case(RIGHT):
             //m_scene->Camera.location.x +=0.1f;
-			location.x+=0.1f;
-			meshobj->location(location);
+			location->x+=0.1f;
+			meshobj->location(*location);
             break;
         case(ZOOM_IN):
             m_scene->Camera.location.z +=0.25f;
