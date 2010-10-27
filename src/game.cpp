@@ -154,8 +154,10 @@ void CMyGame::mainLoop()
     unsigned int ticks = now;
     bool bFlagQuit = false;
     SDL_Event event;
+	Point2d player_motion;
+	SDLKey k;
 
-    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+    SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL);
 
     InputHandler * input = new InputHandler();
     input->registerAction("quit", QUIT, SDL_QUIT, 0);
@@ -170,21 +172,25 @@ void CMyGame::mainLoop()
     input->registerAction("joy_down", DOWN, SDL_JOYAXISMOTION, input->JOYDOWN);
     input->registerAction("joy_left", LEFT, SDL_JOYAXISMOTION, input->JOYLEFT);
     input->registerAction("joy_right", RIGHT, SDL_JOYAXISMOTION, input->JOYRIGHT);
-	input->registerAction("clear", CLEAR, SDL_KEYUP, 0);
+	input->registerAction("clear", CLEAR, SDL_KEYUP, SDLK_LEFT);
+	input->registerAction("clear", CLEAR, SDL_KEYUP, SDLK_RIGHT);
+	input->registerAction("clear", CLEAR, SDL_KEYUP, SDLK_UP);
+	input->registerAction("clear", CLEAR, SDL_KEYUP, SDLK_DOWN);
 
 	m_scene->drawScene(); //don't wait for input to draw the scene
+	
     while ( (SDL_PollEvent(&event) || bFlagQuit == false))
     {
         ticks = SDL_GetTicks() - now;
-        if(ticks < 33) 
+        if(ticks < 40) 
 		{
-            SDL_Delay(33-ticks);
+            SDL_Delay(40-ticks);
         }
         ticks = SDL_GetTicks() - now;
         now += ticks;
 
         int motion = input->queryEvent(&event);
-	
+		k=event.key.keysym.sym;
 
 		/*FIXME: hack start*/
 		Point3d * location;
@@ -214,25 +220,25 @@ void CMyGame::mainLoop()
             bFlagQuit = true;
             break;
         case(UP):
-            //m_scene->Camera.location.y -=0.05f;
-			location->y-=0.1f;
-			meshobj->location(*location);
+			player_motion.y=-0.1f;
             break;
         case(DOWN):
-            //m_scene->Camera.location.y +=0.05f;
-			location->y+=0.1f;
-			meshobj->location(*location);
+			player_motion.y=0.1f;
             break;
         case(LEFT):
-            //m_scene->Camera.location.x -=0.1f;
-			location->x-=0.1f;
-			meshobj->location(*location);
+			player_motion.x=-0.1f;
             break;
         case(RIGHT):
-            //m_scene->Camera.location.x +=0.1f;
-			location->x+=0.1f;
-			meshobj->location(*location);
+			player_motion.x=0.1f;
             break;
+		case(CLEAR):			
+			if (k==SDLK_LEFT ||k==SDLK_RIGHT){
+				player_motion.x=0;
+			} 
+			if (k==SDLK_UP ||k==SDLK_DOWN){
+				player_motion.y=0;
+			}			
+			break;
         case(ZOOM_IN):
             m_scene->Camera.location.z +=0.25f;
             break;
@@ -240,6 +246,9 @@ void CMyGame::mainLoop()
             m_scene->Camera.location.z -=0.25f;
             break;
         }
+		location->x+=player_motion.x;
+		location->y+=player_motion.y;
+		meshobj->location(*location);
 		std::ostringstream os;
 		os << "FPS:" << (1000/ticks);
 		std::string rq(os.str());
