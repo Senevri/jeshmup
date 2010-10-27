@@ -24,7 +24,7 @@ GLScene::GLScene(DrawEngine *drawEngine) :
 {
     this->Camera.location.x = 0.0f;
     this->Camera.location.y = 0.0f;
-    this->Camera.location.z = -10.0f;
+    this->Camera.location.z = 10.0f;
     this->Camera.angle.x = 0.0f;
     this->Camera.angle.y = 0.0f;
     this->Camera.angle.z = 0.0f;
@@ -159,6 +159,7 @@ void GLScene::drawScene(void){
     }
 
     UI::instance()->update(*m_drawEngine);
+	
     SDL_GL_SwapBuffers();
 
 }

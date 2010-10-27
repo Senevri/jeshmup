@@ -26,24 +26,24 @@ Level* LevelFactory::level(int index)
 	mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
 	//mo->setVisibility(false);
     //loadObjectFromFile(*level, "data/model/monkey.3ds");
-	mo->location(Point3d(0, 0, 0));
+	mo->location(Point3d(0, 0, -2));
 	mo->setName("apina");
 	level->addObject(mo);
 	mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
-	mo->location(Point3d(0, 1, 0));
+	mo->location(Point3d(0, 2, 0));
 	mo->setName("apina2");
 	level->addObject(mo);
 	
 	RawLoader *r = new RawLoader();
 	mo = new MeshObject(r->load("..\\data\\model\\arby_whole.raw"));
-	mo->location(Point3d(0, 2, 0));
+	mo->location(Point3d(0, 3, 0));
 	mo->setName("arbyfish");
 	level->addObject(mo);
 	delete(r);
 
 	r = new RawLoader();
 	mo = new MeshObject(r->load("..\\data\\model\\blendertest.raw"));
-	mo->location(Point3d(0, -1.5, 0));
+	mo->location(Point3d(0, -3, 0));
 	mo->setName("blendertest");
 	level->addObject(mo);	
 	delete(r);

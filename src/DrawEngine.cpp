@@ -84,7 +84,7 @@ void DrawEngine::renderMesh(const Mesh &mesh)
 
 	/* move object in coords*/
 	glPushMatrix();	
-	glTranslatef(-this->m_location->x, -this->m_location->y, 0);	
+	glTranslatef(this->m_location->x, -this->m_location->y, this->m_location->z);	
 	glBegin( GL_TRIANGLES );
 	if(faces.empty()){
 		std::vector<Mesh::Vertex*>::iterator itr;
