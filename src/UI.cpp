@@ -15,7 +15,7 @@ UI* UI::m_instance = 0;
 
 UI::UI()
 {
-
+	this->m_srequest="";
 }
 
 UI::~UI()
@@ -35,6 +35,7 @@ UI* UI::instance()
 
 void UI::update(DrawEngine& engine)
 {
-    engine.renderText("jeshmup ver:nnnn", Point2d(5,5));
+    engine.renderText("jeshmup ver:0.1.81", Point2d(5,5));
+	engine.renderText(m_instance->m_srequest, Point2d(400, 5));
 }
 

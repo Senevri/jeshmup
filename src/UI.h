@@ -19,10 +19,12 @@ private:
 
 public:
     static UI* instance();
+	void requestWrite(std::string s){ m_srequest = s; }
 
     void update(DrawEngine& engine);
 
 private:
+	std::string m_srequest;
     static UI* m_instance;
 };
 

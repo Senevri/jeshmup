@@ -18,6 +18,7 @@
 #include "MeshObject.h" /* test hack */
 
 #include <iostream>
+#include <sstream>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 #define SCREEN_BPP 32
@@ -205,6 +206,8 @@ void CMyGame::mainLoop()
 		
 		/*hack end*/
 		location = &meshobj->location();
+
+
 		/*this isn't right - set move direction on keydown, clear on keyup.*/
         switch (motion) {
         case(QUIT):
@@ -237,12 +240,15 @@ void CMyGame::mainLoop()
             m_scene->Camera.location.z -=0.25f;
             break;
         }
-		m_drawEngine->renderText(meshobj->getName(), Point2d(5, 5));
-		
-        m_scene->updateScene(ticks);
-        if (motion != -1) {
+		std::ostringstream os;
+		os << "FPS:" << (1000/ticks);
+		std::string rq(os.str());
+		UI::instance()->requestWrite(rq);
+		m_scene->updateScene(ticks);
+        //if (motion != -1) {
             m_scene->drawScene();
-        }
+        //}
+
     }
     delete input;
 }
