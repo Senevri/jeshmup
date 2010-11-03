@@ -142,7 +142,7 @@ void GLScene::drawScene(void){
 	gluLookAt( this->Camera.location.x, 
 		this->Camera.location.y, 
 		this->Camera.location.z,
-		0, 0, 0, // look at origo - now we can look at object at some location
+		this->Camera.location.x, this->Camera.location.y, 0,//look at target - now we can move camera
 		0, 1, 0
 		);
 	//doesn't quite do what I want....
