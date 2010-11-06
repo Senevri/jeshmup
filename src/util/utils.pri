@@ -10,7 +10,7 @@ HEADERS += 3dsFileFormat.h \
     List.h \
     Conversion.h \
     Timer.h \
-    util/Math.h
+    util/MathHelp.h
 
 SOURCES += 3dsLoader.cpp \
     Logging.cpp \

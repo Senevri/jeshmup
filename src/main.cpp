@@ -2,7 +2,7 @@
 #include <iostream>
 #include <UnitTest++.h>
 
-#include "logging.h"
+#include "Logging.h"
 #include "game.h"
 #include "LevelFactory.h"
 #include "world.h"

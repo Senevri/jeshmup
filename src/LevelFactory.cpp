@@ -35,7 +35,7 @@ Level* LevelFactory::level(int index)
 	level->addObject(mo);
 	
 	RawLoader *r = new RawLoader();
-	mo = new MeshObject(r->load("..\\data\\model\\arby_whole.raw"));
+	mo = new MeshObject(r->load("..\\data\\model\\Arby_whole.raw"));
 	mo->location(Point3d(0, 3, 0));
 	mo->setName("arbyfish");
 	level->addObject(mo);

@@ -58,3 +58,6 @@ include(../libs/SDL_ttf.pri)
 
 include($$PWD/util/utils.pri)
 include($$PWD/tests/tests.pri)
+unix {
+	INCLUDEPATH += /usr/include/SDL
+}
