@@ -54,7 +54,7 @@ std::string Mesh::name() const
 	return this->m_name;
 }
 
-void Mesh::setName(std::string name)
+void Mesh::setName(const std::string &name)
 {
     m_name = name;
 }
@@ -83,22 +83,6 @@ std::vector<Mesh::Vertex *> Mesh::vertices() const
 std::vector<Mesh::Face*> Mesh::faces() const
 {
     return this->m_fpFaces;
-}
-
-void Mesh::setFaces(const unsigned short *faces, Mesh::Format type, int facesSize)
-{
-    for(int i = 0; i < facesSize; i += type)
-    {
-        Face *f = new Face;
-        unsigned int* tmpFace = new unsigned int[type];
-        for(int j = 0; j < type; j++)
-        {
-            tmpFace[j] = faces[i+j];
-        }
-        f->indices = tmpFace;
-        f->format = type;
-        m_fpFaces.push_back(f);
-    }
 }
 
 /*void Mesh::generateFaces()

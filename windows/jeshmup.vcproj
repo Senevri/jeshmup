@@ -27,7 +27,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description=""
 				CommandLine=""
+				Outputs=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -44,6 +46,7 @@
 				AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\libs\sources\UnitTest++\src&quot;;&quot;$(ProjectDir)\..\src&quot;;&quot;$(ProjectDir)\..\libs\windows\SDL_win\include&quot;;&quot;$(ProjectDir)\..\src\util&quot;;&quot;$(ProjectDir)\..\libs\sources\SDL_ttf-2.0.10&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
+				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="3"
@@ -51,7 +54,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -72,7 +75,7 @@
 				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				SubSystem="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -80,6 +83,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				UseUnicodeResponseFiles="false"
 				EmbedManifest="true"
 			/>
 			<Tool
@@ -262,18 +266,6 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\src\util\3dsFileFormat.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\util\3dsLoader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\util\ChunkReader.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\Color.h"
 				>
 			</File>
@@ -354,10 +346,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\util\RawLoader.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\util\Timer.h"
 				>
 			</File>
@@ -373,6 +361,30 @@
 				RelativePath="..\src\world.h"
 				>
 			</File>
+			<Filter
+				Name="FileImport"
+				>
+				<File
+					RelativePath="..\src\util\3dsFileFormat.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\util\3dsLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\util\ChunkReader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\util\JMFImport.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\util\RawLoader.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -385,14 +397,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\src\util\3dsLoader.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\util\ChunkReader.cpp"
-				>
-			</File>
 			<File
 				RelativePath="..\src\DirectionalLight.cpp"
 				>
@@ -454,10 +458,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\util\RawLoader.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\src\test.cpp"
 				>
 			</File>
@@ -467,6 +467,38 @@
 			</File>
 			<File
 				RelativePath="..\src\world.cpp"
+				>
+			</File>
+			<Filter
+				Name="FileImport"
+				>
+				<File
+					RelativePath="..\src\util\3dsLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\util\ChunkReader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\util\JMFImport.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\util\RawLoader.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="tests"
+			>
+			<File
+				RelativePath="..\src\tests\ChunkReaderTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\tests\ListTest.cpp"
 				>
 			</File>
 		</Filter>

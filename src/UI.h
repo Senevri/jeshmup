@@ -19,7 +19,7 @@ private:
 
 public:
     static UI* instance();
-	void requestWrite(std::string s){ m_srequest = s; }
+	void requestWrite(const std::string &s){ m_srequest = s; }
 
     void update(DrawEngine& engine);
 

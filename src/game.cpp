@@ -193,7 +193,7 @@ void CMyGame::mainLoop()
 		k=event.key.keysym.sym;
 
 		/*FIXME: hack start*/
-		Point3d * location;
+		Point3d location;
 		
 		MeshObject *meshobj = 0;
 
@@ -210,9 +210,11 @@ void CMyGame::mainLoop()
 			}
 		}
 		
+		if( meshobj )
+		{
+			location = meshobj->location();
+		}
 		/*hack end*/
-		location = &meshobj->location();
-
 
 		/*this isn't right - set move direction on keydown, clear on keyup.*/
         switch (motion) {
@@ -246,9 +248,12 @@ void CMyGame::mainLoop()
             m_scene->Camera.location.z -=0.25f;
             break;
         }
-		location->x+=player_motion.x;
-		location->y+=player_motion.y;
-		meshobj->location(*location);
+		location.x += player_motion.x;
+		location.y += player_motion.y;
+		if( meshobj )
+		{
+			meshobj->setLocation(location);
+		}
 		std::ostringstream os;
 		os << "FPS:" << (1000/ticks);
 		std::string rq(os.str());

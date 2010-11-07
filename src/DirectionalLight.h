@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _DIRECTIONALLIGHT_H
+#define _DIRECTIONALLIGHT_H
 
 #include "Light.h"
 #include "Point3d.h"
@@ -19,3 +20,4 @@ protected:
 
 };
 
+#endif //_DIRECTIONALLIGHT_H

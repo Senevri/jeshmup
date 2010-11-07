@@ -20,9 +20,11 @@ void MeshObject::draw(DrawEngine &engine)
 	}
 }
 
-Point3d MeshObject::location(){
+Point3d MeshObject::location()
+{
 	return this->m_location;
 }
-void MeshObject::location(Point3d location){
+
+void MeshObject::setLocation(const Point3d &location){
 	this->m_location = location;
 }

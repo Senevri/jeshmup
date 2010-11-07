@@ -58,6 +58,7 @@ void DrawEngine::renderMeshAt(const Mesh &mesh, Point3d &location){
 	renderMesh(mesh);
 	this->m_location = 0;
 }
+
 void DrawEngine::renderMesh(const Mesh &mesh)
 {
     std::vector<Mesh::Vertex *> vertices = mesh.vertices();

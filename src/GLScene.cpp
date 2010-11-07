@@ -147,7 +147,7 @@ void GLScene::drawScene(void){
 		);
 	//doesn't quite do what I want....
 	//EDIT: Started working, actually. Huh.
-    LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
+    //LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
 
     std::vector<Object*> objects = m_level->objects();
     std::vector<Object*>::const_iterator itr = objects.begin();

@@ -79,7 +79,7 @@ public:
 	void setType(Mesh::Format type);
     int getType() const;
     std::string name() const;
-    void setName(std::string name);
+    void setName(const std::string &name);
 
     void setMaterial(Color::RGB ambient,
                      Color::RGB diffuse,
@@ -88,7 +88,24 @@ public:
 	//std::vector<float *> getMesh(); /*FIXME: does not work: do not use*/
     std::vector<Vertex *> vertices() const;
     std::vector<Face*> faces() const;
-    void setFaces(const unsigned short *faces, Mesh::Format type, int length);
+
+	template<typename T>
+	void setFaces(const T* faces, Mesh::Format type, int facesSize)
+	{
+		for(int i = 0; i < facesSize; i += type)
+		{
+			Face *f = new Face;
+			unsigned int* tmpFace = new unsigned int[type];
+			for(int j = 0; j < type; j++)
+			{
+				tmpFace[j] = faces[i+j];
+			}
+			f->indices = tmpFace;
+			f->format = type;
+			m_fpFaces.push_back(f);
+		}
+	}
+
     void setUVMap(const float *coords, int length);
     void meshFromFloatArray(const float * mesh, int mesh_size);
     Vertex* vertexArrayFromMesh(void) const;

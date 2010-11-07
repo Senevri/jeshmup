@@ -14,14 +14,14 @@ int run_tests(void)
 
 int main( int argc, char *argv[] )
 {
-//    if( run_tests() )
-//    {
-//        return 5;
-//    }
-//    else
-//    {
-//        return 0;
-//    }
+//     if( run_tests() )
+//     {
+//         return 5;
+//     }
+//     else
+//     {
+//         return 0;
+//     }
 
     (void*)(argc);
     (void*)(argv);	

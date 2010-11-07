@@ -5,6 +5,7 @@
 #include "Logging.h"
 #include "3dsLoader.h"
 #include "RawLoader.h"
+#include "JMFImport.h"
 
 using namespace std;
 
@@ -26,29 +27,40 @@ Level* LevelFactory::level(int index)
 	mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
 	//mo->setVisibility(false);
     //loadObjectFromFile(*level, "data/model/monkey.3ds");
-	mo->location(Point3d(0, 0, -2));
+
+	mo->setLocation(Point3d(0, 0, -2));
 	mo->setName("apina");
 	level->addObject(mo);
+
+	JMFImport jmfImport("..\\data\\model\\player_ship.jmf");
+	if( !jmfImport.import() )
+	{
+		LOG_ERROR("Level creation failed!");
+	}
+	mo = new MeshObject(jmfImport.mesh());
+	mo->setLocation(Point3d(0,4,-5));
+	mo->setName("shippi");
+	level->addObject(mo);
+
 	mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
-	mo->location(Point3d(0, 2, 0));
+	mo->setLocation(Point3d(0, 2, 0));
 	mo->setName("apina2");
 	level->addObject(mo);
 	
 	RawLoader *r = new RawLoader();
 	mo = new MeshObject(r->load("..\\data\\model\\Arby_whole.raw"));
-	mo->location(Point3d(0, 3, 0));
+	mo->setLocation(Point3d(0, 3, 0));
 	mo->setName("arbyfish");
 	level->addObject(mo);
 	delete(r);
 
 	r = new RawLoader();
 	mo = new MeshObject(r->load("..\\data\\model\\blendertest.raw"));
-	mo->location(Point3d(0, -3, 0));
+	mo->setLocation(Point3d(0, -3, 0));
 	mo->setName("blendertest");
 	level->addObject(mo);	
 	delete(r);
 	
-    //loadObjectFromFile(*level, "data/model/japanese bridge.3ds");
     return level;
 }
 
