@@ -146,4 +146,104 @@ void List<T>::append(T item)
 
 }
 
+
+template <class T>
+class LinkedList{
+
+	struct ListNode{
+		ListNode() : next(0) {}
+		T item;
+		ListNode *next;
+	};
+
+public:
+	LinkedList() : m_first(0), m_last(0) {}
+	~LinkedList()
+	{
+		ListNode *temp = m_first;
+		while( temp )
+		{
+			ListNode *node = temp->next;
+			delete temp;
+			temp = node;
+		}
+	}
+
+	T at(const unsigned int index) const
+	{
+		ListNode *node = findIndex(index);
+		if( node )
+		{
+			return node->item;
+		}
+		else
+		{
+			return T();
+		}
+	}
+
+	unsigned int size() const
+	{
+		ListNode *temp = m_first;
+		unsigned int i = 0;
+		while( temp )
+		{
+			temp = temp->next;
+			++i;
+		}
+		return i;
+	}
+
+	void append(T item)
+	{
+		ListNode *toAdd = new ListNode();
+		toAdd->item = item;
+		if( !m_last )
+		{
+			m_last = m_first = toAdd;
+		}
+		else
+		{
+			m_last->next = toAdd;
+			m_last = toAdd;
+		}
+	}
+
+	void remove(const unsigned int index)
+	{
+		ListNode *temp = m_first;
+		if( index == 0 )
+		{
+			m_first = temp->next;
+			delete temp;
+		}
+		else
+		{
+			temp = findIndex(index -1);
+			if( temp )
+			{
+				ListNode *toRemove = temp->next;
+				temp->next = toRemove->next;
+				delete toRemove;
+			}
+		}
+	}
+
+private:
+	ListNode* findIndex(const unsigned int index) const
+	{
+		ListNode *temp = m_first;
+		unsigned int i = 0;
+		for( ; i < index && temp; ++i)
+		{
+			temp = temp->next;
+		}
+		return temp;
+	}
+
+private:
+	ListNode *m_first;
+	ListNode *m_last;
+};
+
 #endif // LIST_H

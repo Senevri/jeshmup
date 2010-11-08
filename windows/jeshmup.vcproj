@@ -294,6 +294,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\util\HashMap.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\InputHandler.h"
 				>
 			</File>
