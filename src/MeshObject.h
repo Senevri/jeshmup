@@ -16,11 +16,14 @@ public:
     void draw(DrawEngine &engine);
 
 	Point3d location();
-	void setLocation(const Point3d &location);
-	void setVisibility(bool val){ visible=val; }
+	void location(const Point3d &location);
+	void setVisibility(bool val){ this->visible=val; }
+	void rotation(const float rotation, const Point3d &vector);
 
 private:
     Mesh *m_mesh;
+	float m_arotation;
+	Point3d m_vrotation;
 	Point3d m_location;
 	bool visible:true;
 };

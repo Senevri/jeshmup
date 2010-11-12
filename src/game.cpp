@@ -205,7 +205,7 @@ void CMyGame::mainLoop()
 		for(; itr != itrEnd; itr++)
 		{
 			MeshObject * tmp = dynamic_cast<MeshObject *>(*itr);
-			if(0==tmp->getName().compare("arbyfish")){
+			if(0==tmp->getName().compare("shippi")){
 				meshobj = tmp;
 			}
 		}
@@ -252,7 +252,7 @@ void CMyGame::mainLoop()
 		location.y += player_motion.y;
 		if( meshobj )
 		{
-			meshobj->setLocation(location);
+			meshobj->location(location);
 		}
 		std::ostringstream os;
 		os << "FPS:" << (1000/ticks);

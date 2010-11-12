@@ -5,7 +5,7 @@ QT -= gui core # No qt is used
 
 DEFINES += DEBUG
 
-CXX_FLAGS += -Wall
+CXX_FLAGS += -g -Wall
 
 LIBS += -lGL -lGLU
 

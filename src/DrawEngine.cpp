@@ -5,6 +5,7 @@
 #include "Point2d.h"
 #include "MathHelp.h"
 #include "Logging.h"
+#include "Resource.h"
 
 #include "SDL_ttf.h"
 
@@ -34,11 +35,11 @@ bool DrawEngine::initialize()
         LOG("TTF_Init: %s", TTF_GetError());
         return false;
     }
-
-    //! \todo this path should come from some resource class...
-	// especially as it breaks windows :)
-	//std::string path = "data/fonts/ttf-bitstream-vera-1.10/Vera.ttf";
-	std::string path = "..\\data\\fonts\\ttf-bitstream-vera-1.10\\Vera.ttf";
+	/*still ugly but doesn't break.*/
+	std::string path = FONTPATH_;
+	path +="ttf-bitstream-vera-1.10";
+	path +=_SEPARATOR_;
+	path +="Vera.ttf";
 	m_uiFont=TTF_OpenFont(path.c_str(), 16);
     if( !m_uiFont )
     {
@@ -53,10 +54,13 @@ void DrawEngine::translateTo(const Point3d& point)
     glLoadIdentity();
     glTranslatef(point.x, point.y, point.z);
 }
-void DrawEngine::renderMeshAt(const Mesh &mesh, Point3d &location){
+void DrawEngine::renderMeshAt(const Mesh &mesh, Point3d &location, float angle, Point3d &vector){
 	this->m_location = &location;
+	this->m_rotation = &vector;
+	this->m_angle = angle;
 	renderMesh(mesh);
 	this->m_location = 0;
+	this->m_rotation = 0;
 }
 
 void DrawEngine::renderMesh(const Mesh &mesh)
@@ -83,9 +87,18 @@ void DrawEngine::renderMesh(const Mesh &mesh)
 	GLfloat diffmat[] = {0.8f, 0.8f, 0.8f, 1.0f};    
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffmat);
 
+	glPushMatrix();
 	/* move object in coords*/
-	glPushMatrix();	
 	glTranslatef(this->m_location->x, -this->m_location->y, this->m_location->z);	
+	/*rotate object */	
+	if (0 != this->m_angle ) {
+		glRotatef(this->m_angle, 
+			this->m_rotation->x,
+			this->m_rotation->y,
+			this->m_rotation->z);
+	}
+	/* problem! the whole coord system is now rotated! */
+
 	glBegin( GL_TRIANGLES );
 	if(faces.empty()){
 		std::vector<Mesh::Vertex*>::iterator itr;

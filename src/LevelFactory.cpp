@@ -6,6 +6,7 @@
 #include "3dsLoader.h"
 #include "RawLoader.h"
 #include "JMFImport.h"
+#include "Resource.h"
 
 using namespace std;
 
@@ -20,43 +21,45 @@ LevelFactory::~LevelFactory()
 
 Level* LevelFactory::level(int index)
 {
+	std::string path = MODELPATH_;
     Level *level = new Level();
     //this needs some logic or some way to read level description from file etc etc
     //this just a hack to get things rolling...
 	MeshObject * mo;
-	mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
+	//mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
+    	mo = loadObjectFromFile(*level, path + "monkey.3ds");
 	//mo->setVisibility(false);
-    //loadObjectFromFile(*level, "data/model/monkey.3ds");
 
-	mo->setLocation(Point3d(0, 0, -2));
+	mo->location(Point3d(2, 0, -2));
 	mo->setName("apina");
 	level->addObject(mo);
 
-	JMFImport jmfImport("..\\data\\model\\player_ship.jmf");
+	JMFImport jmfImport(path+"player_ship.jmf");
 	if( !jmfImport.import() )
 	{
 		LOG_ERROR("Level creation failed!");
 	}
 	mo = new MeshObject(jmfImport.mesh());
-	mo->setLocation(Point3d(0,4,-5));
+	mo->location(Point3d(0,4,-5));
+	mo->rotation(90, Point3d(0, 1, 0));
 	mo->setName("shippi");
 	level->addObject(mo);
 
-	mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
-	mo->setLocation(Point3d(0, 2, 0));
+	mo = loadObjectFromFile(*level, path+"monkey.3ds");
+	mo->location(Point3d(3, 2, 0));
 	mo->setName("apina2");
 	level->addObject(mo);
 	
 	RawLoader *r = new RawLoader();
-	mo = new MeshObject(r->load("..\\data\\model\\Arby_whole.raw"));
-	mo->setLocation(Point3d(0, 3, 0));
+	mo = new MeshObject(r->load(path+"Arby_whole.raw"));
+	mo->location(Point3d(0, 3, 0));
 	mo->setName("arbyfish");
 	level->addObject(mo);
 	delete(r);
 
 	r = new RawLoader();
-	mo = new MeshObject(r->load("..\\data\\model\\blendertest.raw"));
-	mo->setLocation(Point3d(0, -3, 0));
+	mo = new MeshObject(r->load(path+"blendertest.raw"));
+	mo->location(Point3d(0, -3, 0));
 	mo->setName("blendertest");
 	level->addObject(mo);	
 	delete(r);
