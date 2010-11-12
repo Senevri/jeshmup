@@ -31,23 +31,23 @@
 *By: Esa Karjalainen, 04. June, 2005
 ***********************************************************************/
 CMyGame::CMyGame(World &world, LevelFactory &factory) :
-        m_screen(0),
-        m_scene(0),
-        m_drawEngine(new DrawEngine),
-        m_world(world),
-        m_levelFactory(factory)
+		m_screen(0),
+		m_scene(0),
+		m_drawEngine(new DrawEngine),
+		m_world(world),
+		m_levelFactory(factory)
 {
-    initialize();
+	initialize();
 }
 
 //destructor
 CMyGame::~CMyGame()
 {
-    // Shutdown all subsystems
-    SDL_Quit();
+	// Shutdown all subsystems
+	SDL_Quit();
 
-    delete m_drawEngine;
-    delete m_scene;
+	delete m_drawEngine;
+	delete m_scene;
 }
 
 // ***methods start
@@ -60,9 +60,9 @@ CMyGame::~CMyGame()
 ***********************************************************************/
 void CMyGame::runGame()
 {
-    Level *level = m_levelFactory.level(0);
-    m_scene->setLevel(level);
-    mainLoop();
+	Level *level = m_levelFactory.level(0);
+	m_scene->setLevel(level);
+	mainLoop();
 }
 
 
@@ -75,70 +75,70 @@ void CMyGame::runGame()
 
 void CMyGame::initialize()
 {
-    Uint32 screenflags = 0;
-    const SDL_VideoInfo * videoinfo = NULL;
-    // Initialize defaults, Video and Audio
-    Uint32 initflags = SDL_INIT_VIDEO|
-                       SDL_INIT_AUDIO|
-                       SDL_INIT_TIMER|
-                       SDL_INIT_JOYSTICK;
-    if((SDL_Init(initflags)==-1)) {
-        printf("Could not initialize SDL: %s.\n", SDL_GetError());
-        exit(-1);
-    }
-    videoinfo = SDL_GetVideoInfo( );
+	Uint32 screenflags = 0;
+	const SDL_VideoInfo * videoinfo = NULL;
+	// Initialize defaults, Video and Audio
+	Uint32 initflags = SDL_INIT_VIDEO|
+					   SDL_INIT_AUDIO|
+					   SDL_INIT_TIMER|
+					   SDL_INIT_JOYSTICK;
+	if((SDL_Init(initflags)==-1)) {
+		printf("Could not initialize SDL: %s.\n", SDL_GetError());
+		exit(-1);
+	}
+	videoinfo = SDL_GetVideoInfo( );
 
-    if( !videoinfo ) {
-        /* This should probably never happen. */
-        fprintf( stderr, "Video query failed: %s\n",
-                 SDL_GetError( ) );
-        exit(1);
-    }
+	if( !videoinfo ) {
+		/* This should probably never happen. */
+		fprintf( stderr, "Video query failed: %s\n",
+				 SDL_GetError( ) );
+		exit(1);
+	}
 
-    screenflags = SDL_OPENGL;
+	screenflags = SDL_OPENGL;
 
-    /* This checks to see if surfaces can be stored in memory */
-    if ( videoinfo->hw_available )
-    {
-        screenflags |= SDL_HWSURFACE;
-    }
-    else
-    {
-        screenflags |= SDL_SWSURFACE;
-    }
+	/* This checks to see if surfaces can be stored in memory */
+	if ( videoinfo->hw_available )
+	{
+		screenflags |= SDL_HWSURFACE;
+	}
+	else
+	{
+		screenflags |= SDL_SWSURFACE;
+	}
 
-    /* This checks if hardware blits can be done */
-    if ( videoinfo->blit_hw )
-    {
-        screenflags |= SDL_HWACCEL;
-    }
+	/* This checks if hardware blits can be done */
+	if ( videoinfo->blit_hw )
+	{
+		screenflags |= SDL_HWACCEL;
+	}
 
-    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8);
-    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
+	SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
+	SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8);
+	SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
 
-    m_screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, screenflags);
-    if ( m_screen == NULL ) {
-        LOG_ERROR("Unable to set video: %s\n", SDL_GetError());
-        exit(1);
-    }
-    else
-    {
-        LOG("Screen size h:%d w:%d", m_screen->h, m_screen->w);
-    }
+	m_screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, screenflags);
+	if ( m_screen == NULL ) {
+		LOG_ERROR("Unable to set video: %s\n", SDL_GetError());
+		exit(1);
+	}
+	else
+	{
+		LOG("Screen size h:%d w:%d", m_screen->h, m_screen->w);
+	}
 
-    if( !m_drawEngine->initialize() )
-    {
-        LOG_ERROR("Cannot initialize drawing engine!");
-        exit(3);
-    }
+	if( !m_drawEngine->initialize() )
+	{
+		LOG_ERROR("Cannot initialize drawing engine!");
+		exit(3);
+	}
 
-    // this maybe stupid ::: scene not responsible for videomode.
-    m_scene = new GLScene(m_drawEngine);
-    m_scene->init();
-    m_scene->setup(SCREEN_WIDTH, SCREEN_HEIGHT);
+	// this maybe stupid ::: scene not responsible for videomode.
+	m_scene = new GLScene(m_drawEngine);
+	m_scene->init();
+	m_scene->setup(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 /***********************************************************************
@@ -149,29 +149,30 @@ void CMyGame::initialize()
 
 void CMyGame::mainLoop()
 {
-    enum Actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT, CLEAR};
-    unsigned int now = SDL_GetTicks();
-    unsigned int ticks = now;
-    bool bFlagQuit = false;
-    SDL_Event event;
+	enum Actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT, CLEAR};
+	unsigned int now = SDL_GetTicks();
+	unsigned int ticks = now;
+	bool bFlagQuit = false;
+	int angle=0;
+	SDL_Event event;
 	Point2d player_motion;
 	SDLKey k;
 
-    SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL);
+	SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL);
 
-    InputHandler * input = new InputHandler();
-    input->registerAction("quit", QUIT, SDL_QUIT, 0);
-    input->registerAction("quit_esc", QUIT, SDL_KEYDOWN, SDLK_ESCAPE);
-    input->registerAction("up", UP, SDL_KEYDOWN, SDLK_UP);
-    input->registerAction("down", DOWN, SDL_KEYDOWN, SDLK_DOWN);
-    input->registerAction("left", LEFT, SDL_KEYDOWN, SDLK_LEFT);
-    input->registerAction("right", RIGHT, SDL_KEYDOWN, SDLK_RIGHT);
-    input->registerAction("in", ZOOM_IN, SDL_KEYDOWN, SDLK_PAGEUP);
-    input->registerAction("out", ZOOM_OUT, SDL_KEYDOWN, SDLK_PAGEDOWN);
-    input->registerAction("joy_up", UP, SDL_JOYAXISMOTION, input->JOYUP);
-    input->registerAction("joy_down", DOWN, SDL_JOYAXISMOTION, input->JOYDOWN);
-    input->registerAction("joy_left", LEFT, SDL_JOYAXISMOTION, input->JOYLEFT);
-    input->registerAction("joy_right", RIGHT, SDL_JOYAXISMOTION, input->JOYRIGHT);
+	InputHandler * input = new InputHandler();
+	input->registerAction("quit", QUIT, SDL_QUIT, 0);
+	input->registerAction("quit_esc", QUIT, SDL_KEYDOWN, SDLK_ESCAPE);
+	input->registerAction("up", UP, SDL_KEYDOWN, SDLK_UP);
+	input->registerAction("down", DOWN, SDL_KEYDOWN, SDLK_DOWN);
+	input->registerAction("left", LEFT, SDL_KEYDOWN, SDLK_LEFT);
+	input->registerAction("right", RIGHT, SDL_KEYDOWN, SDLK_RIGHT);
+	input->registerAction("in", ZOOM_IN, SDL_KEYDOWN, SDLK_PAGEUP);
+	input->registerAction("out", ZOOM_OUT, SDL_KEYDOWN, SDLK_PAGEDOWN);
+	input->registerAction("joy_up", UP, SDL_JOYAXISMOTION, input->JOYUP);
+	input->registerAction("joy_down", DOWN, SDL_JOYAXISMOTION, input->JOYDOWN);
+	input->registerAction("joy_left", LEFT, SDL_JOYAXISMOTION, input->JOYLEFT);
+	input->registerAction("joy_right", RIGHT, SDL_JOYAXISMOTION, input->JOYRIGHT);
 	input->registerAction("clear", CLEAR, SDL_KEYUP, SDLK_LEFT);
 	input->registerAction("clear", CLEAR, SDL_KEYUP, SDLK_RIGHT);
 	input->registerAction("clear", CLEAR, SDL_KEYUP, SDLK_UP);
@@ -179,17 +180,17 @@ void CMyGame::mainLoop()
 
 	m_scene->drawScene(); //don't wait for input to draw the scene
 	
-    while ( (SDL_PollEvent(&event) || bFlagQuit == false))
-    {
-        ticks = SDL_GetTicks() - now;
-        if(ticks < 40) 
+	while ( (SDL_PollEvent(&event) || bFlagQuit == false))
+	{
+		ticks = SDL_GetTicks() - now;
+		if(ticks < 40) 
 		{
-            SDL_Delay(40-ticks);
-        }
-        ticks = SDL_GetTicks() - now;
-        now += ticks;
+			SDL_Delay(40-ticks);
+		}
+		ticks = SDL_GetTicks() - now;
+		now += ticks;
 
-        int motion = input->queryEvent(&event);
+		int motion = input->queryEvent(&event);
 		k=event.key.keysym.sym;
 
 		/*FIXME: hack start*/
@@ -217,22 +218,22 @@ void CMyGame::mainLoop()
 		/*hack end*/
 
 		/*this isn't right - set move direction on keydown, clear on keyup.*/
-        switch (motion) {
-        case(QUIT):
-            bFlagQuit = true;
-            break;
-        case(UP):
+		switch (motion) {
+		case(QUIT):
+			bFlagQuit = true;
+			break;
+		case(UP):
 			player_motion.y=-0.1f;
-            break;
-        case(DOWN):
+			break;
+		case(DOWN):
 			player_motion.y=0.1f;
-            break;
-        case(LEFT):
+			break;
+		case(LEFT):
 			player_motion.x=-0.1f;
-            break;
-        case(RIGHT):
+			break;
+		case(RIGHT):
 			player_motion.x=0.1f;
-            break;
+			break;
 		case(CLEAR):			
 			if (k==SDLK_LEFT ||k==SDLK_RIGHT){
 				player_motion.x=0;
@@ -241,30 +242,33 @@ void CMyGame::mainLoop()
 				player_motion.y=0;
 			}			
 			break;
-        case(ZOOM_IN):
-            m_scene->Camera.location.z +=0.25f;
-            break;
-        case(ZOOM_OUT):
-            m_scene->Camera.location.z -=0.25f;
-            break;
-        }
+		case(ZOOM_IN):
+			m_scene->Camera.location.z +=0.25f;
+			break;
+		case(ZOOM_OUT):
+			m_scene->Camera.location.z -=0.25f;
+			break;
+		}
 		location.x += player_motion.x;
 		location.y += player_motion.y;
 		if( meshobj )
 		{
 			meshobj->location(location);
+			meshobj->rotation(angle, Point3d(0, 1, 0));
+			angle+=3;
+			if(357<angle) angle = 0;
 		}
 		std::ostringstream os;
 		os << "FPS:" << (1000/ticks);
 		std::string rq(os.str());
 		UI::instance()->requestWrite(rq);
 		m_scene->updateScene(ticks);
-        //if (motion != -1) {
-            m_scene->drawScene();
-        //}
+		//if (motion != -1) {
+			m_scene->drawScene();
+		//}
 
-    }
-    delete input;
+	}
+	delete input;
 }
 
 //EOF
