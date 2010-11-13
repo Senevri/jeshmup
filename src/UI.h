@@ -24,7 +24,7 @@ public:
     void update(DrawEngine& engine);
 
 private:
-	std::string m_srequest;
+	std::string m_srequest;	
     static UI* m_instance;
 };
 

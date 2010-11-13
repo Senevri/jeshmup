@@ -155,8 +155,10 @@
     <ClInclude Include="..\src\Level.h" />
     <ClInclude Include="..\src\LevelFactory.h" />
     <ClInclude Include="..\src\Light.h" />
+    <ClInclude Include="..\src\util\JMFImport.h" />
     <ClInclude Include="..\src\util\List.h" />
     <ClInclude Include="..\src\util\Logging.h" />
+    <ClInclude Include="..\src\util\lwoLoader.h" />
     <ClInclude Include="..\src\util\MathHelp.h" />
     <ClInclude Include="..\src\Mesh.h" />
     <ClInclude Include="..\src\MeshMaterial.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="..\src\Point2d.h" />
     <ClInclude Include="..\src\Point3d.h" />
     <ClInclude Include="..\src\util\RawLoader.h" />
+    <ClInclude Include="..\src\util\Resource.h" />
     <ClInclude Include="..\src\util\Timer.h" />
     <ClInclude Include="..\src\UI.h" />
     <ClInclude Include="..\src\Vector.h" />
@@ -181,6 +184,7 @@
     <ClCompile Include="..\src\Level.cpp" />
     <ClCompile Include="..\src\LevelFactory.cpp" />
     <ClCompile Include="..\src\Light.cpp" />
+    <ClCompile Include="..\src\util\JMFImport.cpp" />
     <ClCompile Include="..\src\util\List.cpp" />
     <ClCompile Include="..\src\util\Logging.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -188,6 +192,7 @@
     <ClCompile Include="..\src\MeshMaterial.cpp" />
     <ClCompile Include="..\src\MeshObject.cpp" />
     <ClCompile Include="..\src\object.cpp" />
+    <ClCompile Include="..\src\util\lwoLoader.cpp" />
     <ClCompile Include="..\src\util\RawLoader.cpp" />
     <ClCompile Include="..\src\test.cpp" />
     <ClCompile Include="..\src\UI.cpp" />

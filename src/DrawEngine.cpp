@@ -175,6 +175,7 @@ void DrawEngine::renderText(const std::string &text, const Point2d &position)
         /* prepare to render our texture */
         glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
+		glDisable(GL_LIGHTING);
         glBindTexture(GL_TEXTURE_2D, texture);
         glColor3f(1.0f, 1.0f, 1.0f);
 
@@ -210,6 +211,7 @@ void DrawEngine::renderText(const std::string &text, const Point2d &position)
         glEnable(GL_DEPTH_TEST);
         glDisable2D();
 		glDisable(GL_BLEND);
+		glEnable(GL_LIGHTING);
     }
 }
 
