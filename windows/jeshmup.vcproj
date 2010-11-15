@@ -21,6 +21,7 @@
 			OutputDirectory="..\windows\Debug"
 			IntermediateDirectory="..\windows\Debug"
 			ConfigurationType="1"
+			UseOfMFC="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -338,6 +339,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\MessageBus.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\object.h"
 				>
 			</File>
@@ -458,6 +463,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\MessageBus.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\object.cpp"
 				>
 			</File>
@@ -499,6 +508,10 @@
 			>
 			<File
 				RelativePath="..\src\tests\ChunkReaderTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\tests\HashMapTests.cpp"
 				>
 			</File>
 			<File

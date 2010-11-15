@@ -2,7 +2,6 @@
 #define LIST_H
 
 #include <stdlib.h>
-#include <cstring>
 #include <assert.h>
 
 template<typename T>
@@ -10,9 +9,17 @@ class BruteList
 {
 public:
 
-    BruteList() : m_data(0), m_size(0)
+    BruteList() : m_data(0), m_size(8), m_usedSize(0)
     {
+		m_data = new T[(m_size) * sizeof(T)];
+		memset(m_data, 0, (m_size) * sizeof(T));
     }
+
+	BruteList(int size) :  m_size(size), m_usedSize(0)
+	{
+		m_data = new T[(m_size) * sizeof(T)];
+		memset(m_data, 0, (m_size) * sizeof(T));
+	}
 
     ~BruteList()
     {
@@ -21,21 +28,19 @@ public:
 
     void append(const T& item)
     {
-        //T *data = static_cast<T*>(malloc((m_size + 1) * sizeof(T)));
-        T *newData = new T[(m_size +1) * sizeof(T)];
-        assert(newData);
-        if( m_size > 0)
-        {
-            for(int i = 0; i < m_size; i++)
-            {
-                newData[i] = m_data[i];
-            }
-            delete[] m_data;
-        }
-        m_data = newData;
-        m_data[m_size] = item;
-        ++m_size;
+		if( m_usedSize == m_size )
+		{
+			resize(m_size *2);
+		}
+        m_data[m_usedSize] = item;
+        ++m_usedSize;
     }
+
+	void replace(int index, const T &item)
+	{
+		assert(index >= 0 && index < m_usedSize);
+		m_data[index] = item;
+	}
 
     const T& at(int index) const
     {
@@ -45,13 +50,33 @@ public:
 
     int size() const
     {
-        return m_size;
+        return m_usedSize;
     }
 
+	void resize(int newSize)
+	{
+		assert(newSize > m_size);
+
+		m_size = newSize;
+		T *newData = new T[(m_size) * sizeof(T)];
+		assert(newData);
+		memset(newData, 0, (m_size) * sizeof(T));
+		
+		if( m_size > 0)
+		{
+			for(int i = 0; i < m_size; i++)
+			{
+				newData[i] = m_data[i];
+			}
+			delete[] m_data;
+		}
+		m_data = newData;
+	}
 
 private:
     T *m_data;
     int m_size;
+	int m_usedSize;
 };
 
 template<typename T>
