@@ -3,7 +3,8 @@
 #include "ChunkReader.h"
 #include "Mesh.h"
 #include "Logging.h"
-
+#include <stdlib.h>
+#include <stdio.h>
 #include <fstream>
 #include <iostream>
 
@@ -24,7 +25,7 @@ bool JMFImport::import()
 {
 	if( m_mesh )
 	{
-		LOG_ERROR("Already loaded mesh: %s", m_mesh->name());
+		//LOG_ERROR("Already loaded mesh: %s", m_mesh->name());
 		return false;
 	}
 
