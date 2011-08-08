@@ -3,4 +3,6 @@ jeshmup.pro.user
 Makefile
 libs
 src/Makefile
-
+*.svn
+*~
+*.obj
