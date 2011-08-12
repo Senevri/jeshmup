@@ -7,7 +7,7 @@ DEFINES += DEBUG
 
 CXX_FLAGS += -g -Wall
 
-LIBS += -lGL -lGLU
+LIBS += -lGL -lGLU -lUnitTest++
 
 CONFIG += link_pkgconfig
 PKGCONFIG += sdl
