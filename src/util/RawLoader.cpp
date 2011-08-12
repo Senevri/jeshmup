@@ -1,4 +1,5 @@
 #include "RawLoader.h"
+#include "Logging.h"
 #include<string>
 #include<iostream>
 #include<fstream>
@@ -93,7 +94,8 @@ float RawLoader::strToFloat(string str){
 	float f=0;
 	std::istringstream i(str);
 	if (!(i >> f )){
-		throw "could not convert string to float";
+		//throw "could not convert string to float";
+		LOG_ERROR("could not convert string to float: %s", str.c_str());
 	}
 	return f;
 }
