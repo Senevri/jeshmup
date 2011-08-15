@@ -43,6 +43,7 @@ Mesh* RawLoader::load(string filename){
 				ncoords++;
 				break;
 			case '\n':
+                        case '\r':
 				if(!strcoord.empty()) {
 					coords[ncoords] = strToFloat(strcoord);
 					strcoord = "";

@@ -1,16 +1,26 @@
 TARGET = jeshmup
 TEMPLATE = app
-DESTDIR = ../.
+DESTDIR = ../bin
 QT -= gui core # No qt is used
+
 
 DEFINES += DEBUG
 
 CXX_FLAGS += -g -Wall
 
-LIBS += -lGL -lGLU
+win32 {
+LIBS += -lmingw32 -lOPENGL32 -lGLU32 -lSDLmain
+INCLUDEPATH += $$PWD/../libs/windows/SDL-1.2.14/include/SDL $$PWD/../src
+CONFIG -= qt
 
+}
+
+unix {
+LIBS += -lGL -lGLU
 CONFIG += link_pkgconfig
 PKGCONFIG += sdl
+
+}
 
 DEPENDPATH += util
 INCLUDEPATH += util
@@ -53,11 +63,21 @@ HEADERS += game.h \
     Point2d.h
 
 #include(../libs/SOIL.pri)
-include(../libs/UnitTest++.pri)
-include(../libs/SDL_ttf.pri)
+
+include($$PWD/../libs/SDL_ttf.pri)
 
 include($$PWD/util/utils.pri)
-include($$PWD/tests/tests.pri)
+
 unix {
-	INCLUDEPATH += /usr/include/SDL
+   include($$PWD/../libs/UnitTest++.pri)
+   include($$PWD/tests/tests.pri)
+    INCLUDEPATH += /usr/include/SDL
 }
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../libs/windows/SDL-1.2.14/lib -lSDL
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../libs/windows/SDL-1.2.14/lib -lSDL
+
+INCLUDEPATH += $$PWD/../libs/windows
+DEPENDPATH += $$PWD/../libs/windows
+
