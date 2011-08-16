@@ -22,10 +22,11 @@ LevelFactory::~LevelFactory()
 Level* LevelFactory::level(int index)
 {
 	std::string path = MODELPATH_;
-    Level *level = new Level();
+	Level *level = new Level();
     //this needs some logic or some way to read level description from file etc etc
     //this just a hack to get things rolling...
 	MeshObject * mo;
+	Light * lt;
 	//mo = loadObjectFromFile(*level, "..\\data\\model\\monkey.3ds");
     	mo = loadObjectFromFile(*level, path + "monkey.3ds");
 	//mo->setVisibility(false);
@@ -59,10 +60,25 @@ Level* LevelFactory::level(int index)
 
 	r = new RawLoader();
 	mo = new MeshObject(r->load(path+"blendertest.raw"));
-	mo->location(Point3d(0, -3, 0));
+	mo->location(Point3d(0, -3, -6));
 	mo->setName("blendertest");
 	level->addObject(mo);	
 	delete(r);
+
+	/* set up some test lights*/
+	lt = new Light(Point3d(0,0,5));
+	lt->setDistant(true);
+	//lt->setAmbient(Color::BLACK);
+	lt->setDiffuse(Color::RGBA(0.0f, 0.5f, 0.0f, 0.6f));
+
+	level->addLight(lt);
+	/*t = new Light(Point3d(10,0,0));
+	//lt->setDistant(true);
+	//lt->setAmbient(Color::BLACK);
+	//lt->setSpecular(Color::RGBA(0.0f, 0.1f, 0.6f, 0.0f));
+	level->addLight(lt);
+	*/
+
 	
     return level;
 }

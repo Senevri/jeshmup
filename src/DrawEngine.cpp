@@ -85,8 +85,8 @@ void DrawEngine::renderMesh(const Mesh &mesh)
     //how we incorporate material to mesh....
     GLfloat reddish[] = {0.3f, 0.3f, 0.5f, 1.0f};
     glMaterialfv(GL_FRONT, GL_AMBIENT, reddish);
-	GLfloat diffmat[] = {0.8f, 0.8f, 0.8f, 1.0f};    
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffmat);
+    GLfloat diffmat[] = {0.8f, 0.8f, 0.8f, 1.0f};
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffmat);
 
 	glPushMatrix();
 	/* move object in coords*/

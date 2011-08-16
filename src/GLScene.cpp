@@ -31,7 +31,7 @@ GLScene::GLScene(DrawEngine *drawEngine) :
 
     Point3d point(0.0f, -5.0f, -5.0f);
     m_mainLight.setPosition(point);
-	m_mainLight.setAmbient(Color::DARKGRAY);
+    m_mainLight.setAmbient(Color::DARKGRAY);
     m_mainLight.setDiffuse(Color::RED);
 
 }
@@ -169,7 +169,7 @@ void GLScene::drawLights()
     GLfloat tmp[4];
     m_mainLight.ambient().fillArray(tmp);
     //glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, tmp);
+    //glLightfv(GL_LIGHT0, GL_AMBIENT, tmp);
 
     m_mainLight.diffuse().fillArray(tmp);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, tmp);
@@ -182,6 +182,41 @@ void GLScene::drawLights()
     //automatically rescales normals
     //should the removed, and implemented faster by ourselves
     //glEnable( GL_NORMALIZE );
+
+    /* Load lights from Level
+	Hox: only handles one light, right now.
+    */
+    const std::vector<Light*>& lights = m_level->lights();
+    std::vector<Light*>::const_iterator itr = lights.begin();
+    std::vector<Light*>::const_iterator itrEnd = lights.end();
+    Light * lt;
+    bool enable = false;
+    itr = lights.begin();
+    for(; itr != itrEnd; ++itr)
+    {
+	lt = *itr;
+	if(lt->isAmbient()){
+	    lt->ambient().fillArray(tmp);
+	    glLightfv(GL_LIGHT1, GL_AMBIENT, tmp);
+	    enable = true;
+	}
+	if(lt->isDiffuse()){
+	    lt->diffuse().fillArray(tmp);
+	    glLightfv(GL_LIGHT1, GL_DIFFUSE, tmp);
+	    enable = true;
+	}
+	if(lt->isSpecular()){
+	    lt->specular().fillArray(tmp);
+	    glLightfv(GL_LIGHT1, GL_SPECULAR, tmp);
+	    enable = true;
+	}
+	if (enable) {
+	    glEnable(GL_LIGHT1);
+	    lt->fillWithPosition(tmp);
+	    glLightfv(GL_LIGHT1, GL_POSITION, tmp);
+	}
+	//(*itr)->update(ticks);
+    }
 }
 
 

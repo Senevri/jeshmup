@@ -6,7 +6,7 @@
 struct MeshMaterial
 {
     MeshMaterial();
-    MeshMaterial(Color::RGB ambien,
+    MeshMaterial(Color::RGB ambient,
                  Color::RGB diffuse,
                  Color::RGB specular);
     virtual ~MeshMaterial();

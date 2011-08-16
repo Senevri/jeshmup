@@ -15,9 +15,9 @@ void MeshObject::draw(DrawEngine &engine)
 {
 
     //engine.renderMesh(*m_mesh);
-	if(this->visible){
-		engine.renderMeshAt(*m_mesh, m_location, m_arotation, m_vrotation);
-	}
+    if(this->visible){
+	engine.renderMeshAt(*m_mesh, m_location, m_arotation, m_vrotation);
+    }
 }
 
 Point3d MeshObject::location()

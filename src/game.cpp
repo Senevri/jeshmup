@@ -198,7 +198,7 @@ void CMyGame::mainLoop()
 		
 		MeshObject *meshobj = 0;
 
-		const std::vector<Object*>& objects = m_scene->getLevel()->objects();
+		const std::vector<Object*>& objects = m_scene->getLevel()->objects();		
 		std::vector<Object*>::const_iterator itr = objects.begin();
 		std::vector<Object*>::const_iterator itrEnd = objects.end();
 
