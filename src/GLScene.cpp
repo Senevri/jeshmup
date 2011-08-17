@@ -23,15 +23,19 @@ GLScene::GLScene(DrawEngine *drawEngine) :
         m_drawEngine(drawEngine)
 {
     this->Camera.location.x = 0.0f;
-    this->Camera.location.y = 0.0f;
-    this->Camera.location.z = 10.0f;
+    this->Camera.location.y = -4.5f;
+    this->Camera.location.z = 6.0f;
     this->Camera.angle.x = 0.0f;
     this->Camera.angle.y = 0.0f;
     this->Camera.angle.z = 0.0f;
+    this->Camera.target.x = 0.0f;
+    this->Camera.target.y = 0.0f;
+    this->Camera.target.z = 0.0f;
+
 
     Point3d point(0.0f, -5.0f, -5.0f);
     m_mainLight.setPosition(point);
-    m_mainLight.setAmbient(Color::DARKGRAY);
+    //m_mainLight.setAmbient(Color::DARKGRAY);
     m_mainLight.setDiffuse(Color::RED);
 
 }
@@ -100,9 +104,9 @@ void GLScene::setup(int width, int height)
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(50.0f, static_cast<float>(width) / static_cast<float>(height), 0.01f, 100.0f);
+    gluPerspective(80.0f, static_cast<float>(width) / static_cast<float>(height), 0.01f, 100.0f);
     glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+    glLoadIdentity();
 }
 
 void GLScene::setLevel(Level* level)
@@ -132,27 +136,31 @@ void GLScene::drawScene(void){
     /* clear buffers */
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+
     //glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );
-
+	this->m_drawEngine->renderBackground();
 	//how to handle moving lights? etc...
-    drawLights();
+	drawLights();
 
 	//glTranslatef( -this->Camera.location.x, this->Camera.location.y, this->Camera.location.z );
 	gluLookAt( this->Camera.location.x, 
 		this->Camera.location.y, 
 		this->Camera.location.z,
-		this->Camera.location.x, this->Camera.location.y, 0,//look at target - now we can move camera
+		this->Camera.target.x, this->Camera.target.y, this->Camera.target.z,//look at target - now we can move camera
 		0, 1, 0
 		);
 	//doesn't quite do what I want....
 	//EDIT: Started working, actually. Huh.
     //LOG("Camera at: %f %f %f", Camera.location.x, Camera.location.y, Camera.location.z);
 
+
     std::vector<Object*> objects = m_level->objects();
     std::vector<Object*>::const_iterator itr = objects.begin();
     std::vector<Object*>::const_iterator itrEnd = objects.end();
-
+    //glPushMatrix();
+    //this->m_drawEngine->renderBackground();
+    //glPopMatrix();
     for(; itr != itrEnd; ++itr)
     {
         (*itr)->draw(*m_drawEngine);

@@ -154,6 +154,9 @@ void CMyGame::mainLoop()
 	unsigned int ticks = now;
 	bool bFlagQuit = false;
 	int angle=0;
+	signed int a=4;
+	signed int b=0;
+
 	SDL_Event event;
 	Point2d player_motion;
 	SDLKey k;
@@ -196,7 +199,7 @@ void CMyGame::mainLoop()
 		/*FIXME: hack start*/
 		Point3d location;
 		
-		MeshObject *meshobj = 0;
+		MeshObject * meshobj[2] = {0,0};
 
 		const std::vector<Object*>& objects = m_scene->getLevel()->objects();		
 		std::vector<Object*>::const_iterator itr = objects.begin();
@@ -206,14 +209,20 @@ void CMyGame::mainLoop()
 		for(; itr != itrEnd; itr++)
 		{
 			MeshObject * tmp = dynamic_cast<MeshObject *>(*itr);
-			if(0==tmp->getName().compare("shippi")){
-				meshobj = tmp;
+			int val = tmp->getName().compare("shippi");
+			if(0==val){
+			    meshobj[0] = tmp;
+			} else {
+			    int val = tmp->getName().compare("blendertest");
+			    if(0==val){
+				meshobj[1] = tmp;
+			    }
 			}
 		}
 		
-		if( meshobj )
+		if( meshobj[0] )
 		{
-			location = meshobj->location();
+			location = meshobj[0]->location();
 		}
 		/*hack end*/
 
@@ -251,12 +260,24 @@ void CMyGame::mainLoop()
 		}
 		location.x += player_motion.x;
 		location.y += player_motion.y;
-		if( meshobj )
-		{
-			meshobj->location(location);
-			meshobj->rotation(angle, Point3d(0, 1, 0));
-			angle+=3;
-			if(357<angle) angle = 0;
+		if( meshobj[1] )
+		{			
+			meshobj[0]->location(location);
+			meshobj[0]->rotation(angle, Point3d(0, 1, 0));
+			angle=angle+a;
+			if(a==4 && angle>40) {
+			   //angle=40;
+			   a=-4;
+			}
+			if(a==-4 && angle<-40) {
+			    //angle=-39
+			    a=4;
+			}
+			meshobj[1]->rotation(b, Point3d(1, 1, 1));
+			b++;
+			if (b>355) {
+			    b=0;
+			}
 		}
 		std::ostringstream os;
 		os << "FPS:" << (1000/ticks);
