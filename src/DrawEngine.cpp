@@ -16,7 +16,6 @@
 #include <SDL_video.h>
 #include <stdlib.h>
 
-
 #ifndef GL_BGRA
 #define GL_BGRA GL_BGRA_EXT
 #endif
@@ -232,13 +231,21 @@ void DrawEngine::renderBackground(void){
 
     GLuint picture[800*600];
     GLuint c=255;
+    GLuint c2=0;
+    memset(picture, 0 , 800*600*4);
+    while(i<(48000)){
 
-    while(i<(800*600)){
-	c = (0) |
-		((0)<<8)|
-		((128*rand())<<16)|
-		((255)<<24);
-	picture[i] = c;
+	c = (32) | // Alpha
+		((128)<<8)| //Red
+		(96+((rand() % 96)<<16))| //green
+		((255)<<24); //blue
+	//c2= c-(0<<24 | 32<<16 | 32<<8 | 32);
+	int position = (800+(rand() % 799)* (rand() % 600));
+	picture[position] = c;
+	picture[position-801] = c2;
+	picture[position-800] = c2;
+	picture[position-799] = c2;
+	picture[position-1600] = c2;
 	i++;
     }
     //glOrtho(0, data[2][0], 0, data[2][1], -1, 1);
@@ -246,8 +253,8 @@ void DrawEngine::renderBackground(void){
     GLuint texture;
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, 4, 800, 600, 0, GL_RGBA,
-		 GL_UNSIGNED_INT_8_8_8_8_REV, picture );
+    glTexImage2D(GL_TEXTURE_2D, 0, 4, 800, 600, 0, GL_BGRA,
+		 GL_UNSIGNED_INT_8_8_8_8, picture );
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // Linear Filtering
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // Linear Filtering
 
@@ -259,16 +266,21 @@ void DrawEngine::renderBackground(void){
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_TEXTURE);
     glColor3f(1,1,1);
+    /* for some reason this is super-slow*/
+    /*
+    glRasterPos2s(0,0);
+    glDrawPixels(800, 600, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, picture);
 
+    */
     /* no texture yet... */
     /* end temp material */
-
-    glBegin(GL_QUADS);
     /*for (i=0; i!=3; i++){
 	glTexCoord2i(data[i][0], data[i][1]);
 	glVertex2i(data[i][0], data[i][1]);
     }
     */
+
+    glBegin(GL_QUADS);
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex2i(0, 0);
 
