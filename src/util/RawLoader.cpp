@@ -43,9 +43,9 @@ Mesh* RawLoader::load(string filename){
 				strcoord = "";
 				ncoords++;
 				break;
-				if(!strcoord.empty()) {
 			case '\n':
 			case '\r':
+				if(!strcoord.empty()) {
 					coords[ncoords] = strToFloat(strcoord);
 					strcoord = "";
 					ncoords++;
@@ -93,8 +93,8 @@ std::vector<Mesh::Vertex *> RawLoader::getVertices(){
 /* convert std::string to float */
 float RawLoader::strToFloat(string str){
 	float f=0;
-	std::istringstream i(str);
-	if (!(i >> f )){
+	std::istringstream iss(str);
+	if (!(iss >> f)) {
 		//throw "could not convert string to float";
 		LOG_ERROR("could not convert string to float: %s", str.c_str());
 	}
