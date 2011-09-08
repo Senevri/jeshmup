@@ -12,6 +12,7 @@ HEADERS += 3dsFileFormat.h \
 	Timer.h \
 	MathHelp.h \
 	JMFImport.h \
+	XmlReader.h \ 
 	Resource.h
 
 SOURCES += 3dsLoader.cpp \
@@ -21,5 +22,6 @@ SOURCES += 3dsLoader.cpp \
 	ChunkReader.cpp \
 	JMFImport.cpp \
 	List.cpp \
+	XmlReader.cpp \
 	Timer.cpp 
 	

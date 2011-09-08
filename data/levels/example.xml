@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<level>
+	<object>
+		<name>endboss</name>
+		<reference>123_EndBoss</reference>
+		<attribute health="1000" />
+		<attribute script="bossfight" />
+	</object>
+
+	<object>
+		<name>player</name>
+		<reference>000_Player</reference>
+		<attribute script="bossfight" />
+	</object>
+
+	<map>
+		<height>40000</height>
+		<width>2000</width>
+		<location x="1000" y="100">
+			<object>endboss</object>
+		</location>
+
+		<location x="1000" y="39900">
+			<object>player</object>
+		</location>
+	</map>
+</level>

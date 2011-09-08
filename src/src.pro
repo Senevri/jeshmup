@@ -55,7 +55,7 @@ HEADERS += game.h \
 #include(../libs/SOIL.pri)
 include(../libs/UnitTest++.pri)
 include(../libs/SDL_ttf.pri)
-
+include(../libs/ticpp.pri)
 include($$PWD/util/utils.pri)
 include($$PWD/tests/tests.pri)
 unix {

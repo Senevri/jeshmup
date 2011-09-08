@@ -61,8 +61,8 @@ CMyGame::~CMyGame()
 void CMyGame::runGame()
 {
 	Level *level = m_levelFactory.level(0);
-	m_scene->setLevel(level);
-	mainLoop();
+//	m_scene->setLevel(level);
+//	mainLoop();
 }
 
 
