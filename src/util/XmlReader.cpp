@@ -28,9 +28,6 @@ void XmlReader::parse(ticpp::Node *n){
 		//had no further children
 		std::cout <<"alt xmlerr " << e.what() <<std::endl;
 	}
-		
-	//if(n->NoChildren())
-	//	parse(n->IterateChildren(n));
 	parse (n->FirstChild(false));
 	parse (n->NextSibling(false));
 
