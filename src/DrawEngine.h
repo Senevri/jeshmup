@@ -21,6 +21,7 @@ public:
     void renderMesh(const Mesh &mesh);
     void renderLine(const Point3d &start, const Point3d &end);
     void renderText(const std::string &text, const Point2d &position);
+    void renderBackground(void); /*param fileref`?*/
 
 private:
 	Point3d * m_location; /* where to shift */

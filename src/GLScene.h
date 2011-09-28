@@ -39,7 +39,7 @@ public:
     void setLevel(Level* level);
 
     void drawScene();
-    void updateScene(int ticks);
+    void updateScene(int ticks);  
 
     /**
      * "Draws" the lights i.e. sets up the lights in the GL scene
@@ -48,8 +48,9 @@ public:
 
     /* TODO: seems insufficient */
     struct Camera {
-        Mesh::Vertex location;
-        Mesh::Vertex angle; /* hey, it's an array of three floats. */
+	Point3d location;
+	Point3d angle;
+	Point3d target; /* for gluLookat */
     } Camera;
 
 private:

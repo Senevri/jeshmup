@@ -18,18 +18,23 @@ public:
     void virtual setPosition(const GLfloat x, const GLfloat y, const GLfloat z);
 
     void virtual setSpecular(Color::RGBA specular);
-    Color::RGBA virtual specular();
+    Color::RGBA virtual specular();    
+    bool virtual isSpecular();
 
     void virtual setDiffuse(Color::RGBA diffuse);
     Color::RGBA virtual diffuse();
+    bool virtual isDiffuse();
 
     void virtual setAmbient(Color::RGBA ambient);
     Color::RGBA virtual ambient();
+    bool virtual isAmbient();
 
     void virtual setDistant(bool isDistant);
     bool virtual isDistant();
 
     void virtual fillWithPosition(GLfloat *array);
+private:
+    void init();
 
 protected:
     Point3d m_position;
@@ -39,4 +44,7 @@ protected:
     Color::RGBA m_specular;
     Color::RGBA m_diffuse;
     Color::RGBA m_ambient;
+    bool m_bspecular;
+    bool m_bdiffuse;
+    bool m_bambient;
 };
