@@ -233,20 +233,27 @@ void DrawEngine::renderBackground(void){
     GLuint c=255;
     GLuint c2=0;
     memset(picture, 0 , 800*600*4);
-    while(i<(48000)){
+    while(i<(480000)){
 
-	c = (32) | // Alpha
+/*	c = (32) | // Alpha
 		((128)<<8)| //Red
 		(96+((rand() % 96)<<16))| //green
 		((255)<<24); //blue
+  */
+        c = (32) | // Alpha
+                ((0)<<8)| //Red
+                (0)| //green
+                ((255-(255*i/480000))<<24); //blue
+
 	//c2= c-(0<<24 | 32<<16 | 32<<8 | 32);
-	int position = (800+(rand() % 799)* (rand() % 600));
-	picture[position] = c;
-	picture[position-801] = c2;
+        //int position = (800+(rand() % 799)* (rand() % 600));
+        picture[i] = c;
+        /*picture[position-801] = c2;
 	picture[position-800] = c2;
 	picture[position-799] = c2;
 	picture[position-1600] = c2;
-	i++;
+        */
+        i++;
     }
     //glOrtho(0, data[2][0], 0, data[2][1], -1, 1);
     glDisable(GL_LIGHTING);

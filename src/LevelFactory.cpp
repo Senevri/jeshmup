@@ -24,7 +24,7 @@ Level* LevelFactory::level(int index)
 {
 
 	XmlReader xml;
-	xml.load("./data/levels/example.xml");
+        xml.load("../data/levels/example.xml");
 	std::string path = MODELPATH_;
 	Level *level = new Level();
     //this needs some logic or some way to read level description from file etc etc

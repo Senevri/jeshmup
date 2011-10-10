@@ -3,22 +3,33 @@
 #include<string>
 #include<iostream>
 #include<fstream>
-#include<sstream>
-using namespace std;
-RawLoader::RawLoader(){
-}
+#include<sstream>
+
+using namespace std;
+
+RawLoader::RawLoader()
+{
+
+}
+
 RawLoader::~RawLoader()
-{
+{
+
 if(!this->m_vpVertices.empty()){
 		this->m_vpVertices.clear();
 		//this->m_vpVertices.assign; // leak some memory; hopefully someone keeps us in mind...
 	}
-}
-
+}
+
+
+
 /* loads vertices from a raw file to a private vector */
-Mesh* RawLoader::load(string filename){
-	
-
+Mesh* RawLoader::load(string filename){
+
+	
+
+
+
     m_InputFile.open(filename.c_str(), ios::binary);
 	/* estimated line max length: 4*(7+10)+2 for a quad. */
 	if(!m_InputFile.is_open()){
@@ -40,7 +51,8 @@ Mesh* RawLoader::load(string filename){
 				ncoords++;
 				break;
 			case '\n':
-			case '\r'				if(!strcoord.empty()) {
+                        case '\r':
+				if(!strcoord.empty()) {
 					coords[ncoords] = strToFloat(strcoord);
 					strcoord = "";
 					ncoords++;
