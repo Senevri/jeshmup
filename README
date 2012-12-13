@@ -10,23 +10,33 @@ UnitTest++
 ----------
 Get it from
 
-	http://unittest.cpp.sourceforge.net 
+	http://unittest-cpp.sourceforge.net 
 
 Simple Directmedia Library
 --------------------------
 Get it from
 
-	http://www.libsdl.org
+	http://www.libsdl.org̈́
+
+SDL_ttf 2.0
+-----------
+	http://www.libsdl.org/projects/SDL_ttf/
+
+Simple OpenGL Image Library
+---------------------------
+	https://github.com/smibarber/libSOIL
+
+TinyXML++
+---------
+	http://code.google.com/p/ticpp/
 
 
 Compiling on Linux:
 -------------------
 
-1. Compile UnitTest++ and SDL as needed
-2. Modify the Makefile
-	SDL should point to SDL root directory, 
-	UNITTEST should point to UnitTest++ root directory.
-
-	You can change the bindir to point wherever you want, naturally.
-	
-
+1. Make sure SDL dev is successfully installed
+2. unzip libs.zip
+3. recompile included libraries
+4. copy each .a file to libs/linux/
+5. in root, qmake, make
+6. execute bin in bin-dir, otherwise paths break currently

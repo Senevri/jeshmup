@@ -9,14 +9,15 @@ DEFINES += DEBUG
 CXX_FLAGS += -g -Wall
 
 win32 {
-LIBS += -lmingw32 -lOPENGL32 -lGLU32 -lSDLmain
-INCLUDEPATH += $$PWD/../libs/windows/SDL-1.2.14/include/SDL $$PWD/../src
+LIBS += -lmingw32 -lOPENGL32 -lGLU32 -lSDLmain -lticpp -lSDL_ttf
+INCLUDEPATH += $$PWD/../libs/windows/SDL-1.2.15/include/SDL $$PWD/../src $$PWD/../libs/sources/ticpp
 CONFIG -= qt
 
 }
 
 unix {
-LIBS += -lGL -lGLU
+LIBS += -lGL -lGLU -lticpp -lSDL_ttf -lfreetype
+INCLUDEPATH += $$PWD/../libs/sources/ticpp
 CONFIG += link_pkgconfig
 PKGCONFIG += sdl
 
@@ -62,10 +63,10 @@ HEADERS += game.h \
     UI.h \
     Point2d.h
 
-#include(../libs/SOIL.pri)
-include(../libs/UnitTest++.pri)
+#jinclude(../libs/SOIL.pri)
+#include($$PWD/../libs/UnitTest++.pri)
 #include(../libs/SDL_ttf.pri)
-include(../libs/ticpp.pri)
+include($$PWD/../libs/TiCPP.pri)
 
 include($$PWD/../libs/SDL_ttf.pri)
 
@@ -74,7 +75,7 @@ include($$PWD/util/utils.pri)
 unix {
    include($$PWD/../libs/UnitTest++.pri)
    include($$PWD/tests/tests.pri)
-    INCLUDEPATH += /usr/include/SDL
+   INCLUDEPATH += /usr/include/SDL
 }
 
 
