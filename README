@@ -2,6 +2,10 @@ JESHMUP: Jarin ja Esan Shoot 'Em UP!
 
 To compile, you need UnitTest++ and SDL (Simple Directmedia Library).
 
+#Current:
+Next step will be updating everything to SDL2, among other things. I've added links to some changed/updated libraries for now.
+ - Esa
+
 FIXME:
 You shouldn't need UnitTest++ to compile the Release version, though...
 
@@ -11,6 +15,7 @@ UnitTest++
 Get it from
 
 	http://unittest-cpp.sourceforge.net 
+	http://unittest-cpp.github.io/
 
 Simple Directmedia Library
 --------------------------
@@ -25,10 +30,12 @@ SDL_ttf 2.0
 Simple OpenGL Image Library
 ---------------------------
 	https://github.com/smibarber/libSOIL
+	http://www.lonesock.net/soil.html
 
 TinyXML++
 ---------
 	http://code.google.com/p/ticpp/
+	https://github.com/wxFormBuilder/ticpp
 
 
 Compiling on Linux:
