@@ -30,7 +30,7 @@
 *
 *By: Esa Karjalainen, 04. June, 2005
 ***********************************************************************/
-CMyGame::CMyGame(World &world, LevelFactory &factory) :
+MyGame::MyGame(World &world, LevelFactory &factory) :
 		m_screen(0),
 		m_scene(0),
 		m_drawEngine(new DrawEngine),
@@ -41,10 +41,11 @@ CMyGame::CMyGame(World &world, LevelFactory &factory) :
 }
 
 //destructor
-CMyGame::~CMyGame()
+MyGame::~MyGame()
 {
 	// Shutdown all subsystems
-	SDL_Quit();
+	// TODO: Wrap all SDL stuff.
+	sys_quit();
 
 	delete m_drawEngine;
 	delete m_scene;
@@ -58,7 +59,7 @@ CMyGame::~CMyGame()
 *
 *By: Esa Karjalainen, 04. June, 2005
 ***********************************************************************/
-void CMyGame::runGame()
+void MyGame::runGame()
 {
 	Level *level = m_levelFactory.level(0);
 	m_scene->setLevel(level);
@@ -73,55 +74,17 @@ void CMyGame::runGame()
 *By: Esa Karjalainen, 04. June, 2005
 ***********************************************************************/
 
-void CMyGame::initialize()
+void MyGame::initialize()
 {
-	Uint32 screenflags = 0;
-	const SDL_VideoInfo * videoinfo = NULL;
-	// Initialize defaults, Video and Audio
-	Uint32 initflags = SDL_INIT_VIDEO|
-					   SDL_INIT_AUDIO|
-					   SDL_INIT_TIMER|
-					   SDL_INIT_JOYSTICK;
-	if((SDL_Init(initflags)==-1)) {
-		printf("Could not initialize SDL: %s.\n", SDL_GetError());
-		exit(-1);
-	}
-	videoinfo = SDL_GetVideoInfo( );
+	
+	Uint32 screenflags = sys_initvideo();
+	
 
-	if( !videoinfo ) {
-		/* This should probably never happen. */
-		fprintf( stderr, "Video query failed: %s\n",
-				 SDL_GetError( ) );
-		exit(1);
-	}
-
-	screenflags = SDL_OPENGL;
-
-	/* This checks to see if surfaces can be stored in memory */
-	if ( videoinfo->hw_available )
-	{
-		screenflags |= SDL_HWSURFACE;
-	}
-	else
-	{
-		screenflags |= SDL_SWSURFACE;
-	}
-
-	/* This checks if hardware blits can be done */
-	if ( videoinfo->blit_hw )
-	{
-		screenflags |= SDL_HWACCEL;
-	}
-
-	SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
-	SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
-	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
-	SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8);
-	SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-
-	m_screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, screenflags);
+	m_screen = sys_setvideomode(SCREEN_WIDTH, SCREEN_HEIGHT, screenflags);
+		
+		
 	if ( m_screen == NULL ) {
-		LOG_ERROR("Unable to set video: %s\n", SDL_GetError());
+		LOG_ERROR("Unable to set video: %s\n", sys_get_error_string());
 		exit(1);
 	}
 	else
@@ -144,10 +107,11 @@ void CMyGame::initialize()
 /***********************************************************************
 *Desc: The game's Main Loop Event
 *
+* TODO: Wrap SDL calls
 *By: Esa Karjalainen, 04. June, 2005
 ***********************************************************************/
 
-void CMyGame::mainLoop()
+void MyGame::mainLoop()
 {
 	enum Actions{LEFT, RIGHT, UP, DOWN, SHOOT, QUIT, ZOOM_IN, ZOOM_OUT, CLEAR};
 	unsigned int now = SDL_GetTicks();

@@ -8,7 +8,8 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include <SDL.h>
+
+#include "system.h"
 
 class LevelFactory;
 class GLScene;
@@ -16,25 +17,25 @@ class DrawEngine;
 class World;
 //class SDL_Surface;
 
-class CMyGame{
+class MyGame{
 
 public:
 	//constructor, destructor
-    CMyGame(World &world, LevelFactory &factory);
-	~CMyGame();
+    MyGame(World &world, LevelFactory &factory);
+	~MyGame();
 
 	//methods
 	void runGame();
 
 private:
     void initialize();
-    char* initSDL(SDL_Surface **screen);
+    char* initSystem(SURFACE **screen);
     void myWaitEvent();
     void mainLoop();
     void setupTestObject();
 
 private: //data
-	SDL_Surface *m_screen;
+	SURFACE *m_screen;
     GLScene *m_scene;
     DrawEngine *m_drawEngine;
 
